@@ -140,6 +140,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="AccessDenied.aspx" />
     <Content Include="AssessRite\Admin\AcademicYear.aspx" />
     <Content Include="AssessRite\Admin\Class.aspx" />
     <Content Include="AssessRite\Admin\Concepts.aspx" />
@@ -400,6 +401,13 @@
     <Content Include="SuperAdmin\superadmin.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessDenied.aspx.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AccessDenied.aspx.designer.cs">
+      <DependentUpon>AccessDenied.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AssessRite\Admin\AcademicYear.aspx.cs">
