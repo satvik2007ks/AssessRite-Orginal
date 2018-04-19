@@ -1,0 +1,794 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{691FFFE1-098A-4559-A057-DF97C39A4AF2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AssessRite</RootNamespace>
+    <AssemblyName>AssessRite</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.8.0.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.0\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\packages\iTextSharp.5.5.13\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.FriendlyUrls">
+      <HintPath>..\..\AssessRite\AssessRite 1.3\bin\Microsoft.AspNet.FriendlyUrls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Select.HtmlToPdf, Version=18.1.0.0, Culture=neutral, PublicKeyToken=e0ae9f6e27a97018, processorArchitecture=MSIL">
+      <HintPath>..\packages\Select.HtmlToPdf.18.1.0\lib\net40\Select.HtmlToPdf.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http">
+      <HintPath>..\..\AssessRite\AssessRite 1.3\bin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AssessRite\Admin\admin.Master" />
+    <Content Include="AssessRite\DE\de.Master" />
+    <Content Include="AssessRite\SME\sme.Master" />
+    <Content Include="AssessRite\Student\student.Master" />
+    <Content Include="AssessRite\Teacher\teacher.Master" />
+    <Content Include="css\main.less" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <None Include="packages.config" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.woff" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\FontAwesome.otf" />
+    <Content Include="Scripts\vendor\font-awesome\less\animated.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\bordered-pulled.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\core.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\fixed-width.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\font-awesome.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\icons.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\larger.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\list.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\mixins.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\path.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\rotated-flipped.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\screen-reader.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\stacked.less" />
+    <Content Include="Scripts\vendor\font-awesome\less\variables.less" />
+    <Content Include="Scripts\vendor\font-awesome\scss\font-awesome.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_animated.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_bordered-pulled.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_core.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_fixed-width.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_icons.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_larger.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_list.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_mixins.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_path.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_rotated-flipped.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_screen-reader.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_stacked.scss" />
+    <Content Include="Scripts\vendor\font-awesome\scss\_variables.scss" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="AssessRite\Admin\AcademicYear.aspx" />
+    <Content Include="AssessRite\Admin\Class.aspx" />
+    <Content Include="AssessRite\Admin\Concepts.aspx" />
+    <Content Include="AssessRite\Admin\Home.aspx" />
+    <Content Include="AssessRite\Admin\ManageDE.aspx" />
+    <Content Include="AssessRite\Admin\ManageSME.aspx" />
+    <Content Include="AssessRite\Admin\ManageStudent.aspx" />
+    <Content Include="AssessRite\Admin\ManageTeacher.aspx" />
+    <Content Include="AssessRite\Admin\MoveStudents.aspx" />
+    <Content Include="AssessRite\Admin\Objectives.aspx" />
+    <Content Include="AssessRite\Admin\Question.aspx" />
+    <Content Include="AssessRite\Admin\ReviewQuestion.aspx" />
+    <Content Include="AssessRite\Admin\Subject.aspx" />
+    <Content Include="AssessRite\Admin\ViewQuestion.aspx" />
+    <Content Include="AssessRite\DE\ApprovalStatus.aspx" />
+    <Content Include="AssessRite\DE\Class.aspx" />
+    <Content Include="AssessRite\DE\Concept.aspx" />
+    <Content Include="AssessRite\DE\Home.aspx" />
+    <Content Include="AssessRite\DE\Objectives.aspx" />
+    <Content Include="AssessRite\DE\Question.aspx" />
+    <Content Include="AssessRite\DE\Subject.aspx" />
+    <Content Include="AssessRite\DE\ViewQuestion.aspx" />
+    <Content Include="AssessRite\SME\Home.aspx" />
+    <Content Include="AssessRite\SME\Question.aspx" />
+    <Content Include="AssessRite\SME\ReviewQuestion.aspx" />
+    <Content Include="AssessRite\Student\Home.aspx" />
+    <Content Include="AssessRite\Student\StudentQuestionPaper.aspx" />
+    <Content Include="AssessRite\Student\TakeTest.aspx" />
+    <Content Include="AssessRite\Student\Test.aspx" />
+    <Content Include="AssessRite\Student\ViewResult.aspx" />
+    <Content Include="AssessRite\Teacher\CreateTest.aspx" />
+    <Content Include="AssessRite\Teacher\Home.aspx" />
+    <Content Include="AssessRite\Teacher\ManualResultEntry.aspx" />
+    <Content Include="AssessRite\Teacher\QuestionPaper.aspx" />
+    <Content Include="AssessRite\Teacher\Report.aspx" />
+    <Content Include="AssessRite\Teacher\Results.aspx" />
+    <Content Include="AssessRite\Teacher\ScheduledTests.aspx" />
+    <Content Include="AssessRite\Teacher\StudentResults.aspx" />
+    <Content Include="AssessRite\Teacher\ViewTests.aspx" />
+    <Content Include="AssessRite\testImages\196_484.jpg" />
+    <Content Include="AssessRite\testImages\196_485.jpg" />
+    <Content Include="AssessRite\testImages\196_486.jpg" />
+    <Content Include="AssessRite\testImages\196_487.jpg" />
+    <Content Include="AssessRite\testImages\197_488.jpg" />
+    <Content Include="AssessRite\testImages\197_489.jpg" />
+    <Content Include="AssessRite\testImages\197_490.jpg" />
+    <Content Include="AssessRite\testImages\197_491.jpg" />
+    <Content Include="AssessRite\testImages\199_496.jpg" />
+    <Content Include="AssessRite\testImages\199_593.PNG" />
+    <Content Include="AssessRite\testImages\200_497.jpg" />
+    <Content Include="AssessRite\testImages\200_498.jpg" />
+    <Content Include="AssessRite\testImages\200_499.jpg" />
+    <Content Include="AssessRite\testImages\200_500.jpg" />
+    <Content Include="AssessRite\WebMethods\GetData.asmx" />
+    <Content Include="css\animate.min.css" />
+    <Content Include="css\bootstrap-timepicker.min.css" />
+    <Content Include="css\bootstrap.min.css" />
+    <Content Include="css\custom.css" />
+    <Content Include="css\font-awesome.css" />
+    <Content Include="css\font-awesome.min.css" />
+    <Content Include="css\jquery-ui.css" />
+    <Content Include="css\main.css" />
+    <Content Include="css\owl.carousel.css" />
+    <Content Include="css\owl.transitions.css" />
+    <Content Include="css\prettyPhoto.css" />
+    <Content Include="css\responsive.css" />
+    <Content Include="css\sb-admin.css" />
+    <Content Include="css\sb-admin.min.css" />
+    <Content Include="Error.html" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\abort-146072_960_720.png" />
+    <Content Include="Images\animated-number\bg.jpg" />
+    <Content Include="Images\AssessRite.TV.Content.png" />
+    <Content Include="Images\AssessRiteLogo.Full.png" />
+    <Content Include="Images\blog\01.jpg" />
+    <Content Include="Images\blog\02.jpg" />
+    <Content Include="Images\blog\03.jpg" />
+    <Content Include="Images\cta2\cta2-bg.jpg" />
+    <Content Include="Images\cta2\cta2-img.png" />
+    <Content Include="Images\download.gif" />
+    <Content Include="Images\favicon1.ico" />
+    <Content Include="Images\ico\apple-touch-icon-114-precomposed.png" />
+    <Content Include="Images\ico\apple-touch-icon-144-precomposed.png" />
+    <Content Include="Images\ico\apple-touch-icon-57-precomposed.png" />
+    <Content Include="Images\ico\apple-touch-icon-72-precomposed.png" />
+    <Content Include="Images\ico\favicon.ico" />
+    <Content Include="Images\ico\New folder\favicon1.ico" />
+    <Content Include="Images\ico\New folder\favicon3.ico" />
+    <Content Include="Images\loading.gif" />
+    <Content Include="Images\logo.png" />
+    <Content Include="Images\logo2.png" />
+    <Content Include="Images\logo5.png" />
+    <Content Include="Images\main-feature.png" />
+    <Content Include="Images\portfolio\01.jpg" />
+    <Content Include="Images\portfolio\02.jpg" />
+    <Content Include="Images\portfolio\03.jpg" />
+    <Content Include="Images\portfolio\04.jpg" />
+    <Content Include="Images\portfolio\05.jpg" />
+    <Content Include="Images\portfolio\06.jpg" />
+    <Content Include="Images\portfolio\07.jpg" />
+    <Content Include="Images\portfolio\08.jpg" />
+    <Content Include="Images\portfolio\full.jpg" />
+    <Content Include="Images\prettyPhoto\dark_rounded\btnNext.png" />
+    <Content Include="Images\prettyPhoto\dark_rounded\btnPrevious.png" />
+    <Content Include="Images\prettyPhoto\dark_rounded\contentPattern.png" />
+    <Content Include="Images\prettyPhoto\dark_rounded\default_thumbnail.gif" />
+    <Content Include="Images\prettyPhoto\dark_rounded\loader.gif" />
+    <Content Include="Images\prettyPhoto\dark_rounded\sprite.png" />
+    <Content Include="Images\prettyPhoto\dark_square\btnNext.png" />
+    <Content Include="Images\prettyPhoto\dark_square\btnPrevious.png" />
+    <Content Include="Images\prettyPhoto\dark_square\contentPattern.png" />
+    <Content Include="Images\prettyPhoto\dark_square\default_thumbnail.gif" />
+    <Content Include="Images\prettyPhoto\dark_square\loader.gif" />
+    <Content Include="Images\prettyPhoto\dark_square\sprite.png" />
+    <Content Include="Images\prettyPhoto\default\default_thumb.png" />
+    <Content Include="Images\prettyPhoto\default\loader.gif" />
+    <Content Include="Images\prettyPhoto\default\sprite.png" />
+    <Content Include="Images\prettyPhoto\default\sprite_next.png" />
+    <Content Include="Images\prettyPhoto\default\sprite_prev.png" />
+    <Content Include="Images\prettyPhoto\default\sprite_x.png" />
+    <Content Include="Images\prettyPhoto\default\sprite_y.png" />
+    <Content Include="Images\prettyPhoto\facebook\btnNext.png" />
+    <Content Include="Images\prettyPhoto\facebook\btnPrevious.png" />
+    <Content Include="Images\prettyPhoto\facebook\contentPatternBottom.png" />
+    <Content Include="Images\prettyPhoto\facebook\contentPatternLeft.png" />
+    <Content Include="Images\prettyPhoto\facebook\contentPatternRight.png" />
+    <Content Include="Images\prettyPhoto\facebook\contentPatternTop.png" />
+    <Content Include="Images\prettyPhoto\facebook\default_thumbnail.gif" />
+    <Content Include="Images\prettyPhoto\facebook\loader.gif" />
+    <Content Include="Images\prettyPhoto\facebook\sprite.png" />
+    <Content Include="Images\prettyPhoto\light_rounded\btnNext.png" />
+    <Content Include="Images\prettyPhoto\light_rounded\btnPrevious.png" />
+    <Content Include="Images\prettyPhoto\light_rounded\default_thumbnail.gif" />
+    <Content Include="Images\prettyPhoto\light_rounded\loader.gif" />
+    <Content Include="Images\prettyPhoto\light_rounded\sprite.png" />
+    <Content Include="Images\prettyPhoto\light_square\btnNext.png" />
+    <Content Include="Images\prettyPhoto\light_square\btnPrevious.png" />
+    <Content Include="Images\prettyPhoto\light_square\default_thumbnail.gif" />
+    <Content Include="Images\prettyPhoto\light_square\loader.gif" />
+    <Content Include="Images\prettyPhoto\light_square\sprite.png" />
+    <Content Include="Images\right.png" />
+    <Content Include="Images\slider\bg1.jpg" />
+    <Content Include="Images\slider\bg10.jpg" />
+    <Content Include="Images\slider\bg11.jpg" />
+    <Content Include="Images\slider\bg12.jpg" />
+    <Content Include="Images\slider\bg13.jpg" />
+    <Content Include="Images\slider\bg14.jpg" />
+    <Content Include="Images\slider\bg2.jpg" />
+    <Content Include="Images\slider\bg3.jpg" />
+    <Content Include="Images\slider\bg4.jpg" />
+    <Content Include="Images\slider\bg5.jpg" />
+    <Content Include="Images\slider\bg6.jpg" />
+    <Content Include="Images\slider\bg7.jpg" />
+    <Content Include="Images\slider\bg9.jpg" />
+    <Content Include="Images\team\01.jpg" />
+    <Content Include="Images\team\02.jpg" />
+    <Content Include="Images\team\03.jpg" />
+    <Content Include="Images\team\04.jpg" />
+    <Content Include="Images\testimonial\01.jpg" />
+    <Content Include="Images\testimonial\02.jpg" />
+    <Content Include="Images\testimonial\bg.jpg" />
+    <Content Include="Images\testimonial\Boy.png" />
+    <Content Include="Images\testimonial\Girl.png" />
+    <Content Include="Images\work-process\bg.jpg" />
+    <Content Include="Images\wrong.png" />
+    <Content Include="index.html" />
+    <Content Include="js\bootstrap.min.js" />
+    <Content Include="js\html5shiv.js" />
+    <Content Include="js\jquery.inview.min.js" />
+    <Content Include="js\jquery.isotope.min.js" />
+    <Content Include="js\jquery.js" />
+    <Content Include="js\jquery.prettyPhoto.js" />
+    <Content Include="js\main.js" />
+    <Content Include="js\mousescroll.js" />
+    <Content Include="js\owl.carousel.min.js" />
+    <Content Include="js\respond.min.js" />
+    <Content Include="js\sb-admin-charts.js" />
+    <Content Include="js\sb-admin-charts.min.js" />
+    <Content Include="js\sb-admin-datatables.js" />
+    <Content Include="js\sb-admin-datatables.min.js" />
+    <Content Include="js\sb-admin.js" />
+    <Content Include="js\sb-admin.min.js" />
+    <Content Include="js\smoothscroll.js" />
+    <Content Include="js\tinymce.min.js" />
+    <Content Include="js\wow.min.js" />
+    <Content Include="login.aspx" />
+    <Content Include="Scripts\ai.0.15.0-build58334.js" />
+    <Content Include="Scripts\ai.0.15.0-build58334.min.js" />
+    <Content Include="Scripts\app.js" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap-timepicker.min.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\jquery-1.11.1.min.js" />
+    <Content Include="Scripts\jquery-ui.js" />
+    <Content Include="Scripts\jquery.maskedinput.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\plugins.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\WebForms\DetailsView.js" />
+    <Content Include="Scripts\WebForms\Focus.js" />
+    <Content Include="Scripts\WebForms\GridView.js" />
+    <Content Include="Scripts\WebForms\Menu.js" />
+    <Content Include="Scripts\WebForms\MenuStandards.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjax.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxApplicationServices.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxComponentModel.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxCore.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxGlobalization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxHistory.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxNetwork.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxSerialization.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxTimer.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebForms.js" />
+    <Content Include="Scripts\WebForms\MSAjax\MicrosoftAjaxWebServices.js" />
+    <Content Include="Scripts\WebForms\SmartNav.js" />
+    <Content Include="Scripts\WebForms\TreeView.js" />
+    <Content Include="Scripts\WebForms\WebForms.js" />
+    <Content Include="Scripts\WebForms\WebParts.js" />
+    <Content Include="Scripts\WebForms\WebUIValidation.js" />
+    <None Include="Scripts\_references.js" />
+    <Content Include="SessionExpired.html" />
+    <Content Include="Scripts\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Scripts\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Scripts\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Scripts\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Scripts\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Scripts\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Scripts\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Scripts\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Scripts\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Scripts\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Scripts\vendor\chart.js\Chart.bundle.js" />
+    <Content Include="Scripts\vendor\chart.js\Chart.bundle.min.js" />
+    <Content Include="Scripts\vendor\chart.js\Chart.js" />
+    <Content Include="Scripts\vendor\chart.js\Chart.min.js" />
+    <Content Include="Scripts\vendor\datatables\dataTables.bootstrap4.css" />
+    <Content Include="Scripts\vendor\datatables\dataTables.bootstrap4.js" />
+    <Content Include="Scripts\vendor\datatables\jquery.dataTables.js" />
+    <Content Include="Scripts\vendor\font-awesome\css\font-awesome.css" />
+    <Content Include="Scripts\vendor\font-awesome\css\font-awesome.min.css" />
+    <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.svg" />
+    <Content Include="Scripts\vendor\jquery-easing\jquery.easing.compatibility.js" />
+    <Content Include="Scripts\vendor\jquery-easing\jquery.easing.js" />
+    <Content Include="Scripts\vendor\jquery-easing\jquery.easing.min.js" />
+    <Content Include="Scripts\vendor\jquery\jquery.js" />
+    <Content Include="Scripts\vendor\jquery\jquery.min.js" />
+    <Content Include="SuperAdmin\ManageAdmins.aspx" />
+    <Content Include="SuperAdmin\SchoolInfo.aspx" />
+    <Content Include="Web.config" />
+    <Content Include="SuperAdmin\superadmin.Master" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="AssessRite\Admin\AcademicYear.aspx.cs">
+      <DependentUpon>AcademicYear.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\AcademicYear.aspx.designer.cs">
+      <DependentUpon>AcademicYear.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\admin.Master.cs">
+      <DependentUpon>admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\admin.Master.designer.cs">
+      <DependentUpon>admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Class.aspx.cs">
+      <DependentUpon>Class.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Class.aspx.designer.cs">
+      <DependentUpon>Class.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Concepts.aspx.cs">
+      <DependentUpon>Concepts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Concepts.aspx.designer.cs">
+      <DependentUpon>Concepts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ManageDE.aspx.cs">
+      <DependentUpon>ManageDE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ManageDE.aspx.designer.cs">
+      <DependentUpon>ManageDE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ManageSME.aspx.cs">
+      <DependentUpon>ManageSME.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ManageSME.aspx.designer.cs">
+      <DependentUpon>ManageSME.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ManageStudent.aspx.cs">
+      <DependentUpon>ManageStudent.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ManageStudent.aspx.designer.cs">
+      <DependentUpon>ManageStudent.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ManageTeacher.aspx.cs">
+      <DependentUpon>ManageTeacher.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ManageTeacher.aspx.designer.cs">
+      <DependentUpon>ManageTeacher.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\MoveStudents.aspx.cs">
+      <DependentUpon>MoveStudents.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\MoveStudents.aspx.designer.cs">
+      <DependentUpon>MoveStudents.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Objectives.aspx.cs">
+      <DependentUpon>Objectives.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Objectives.aspx.designer.cs">
+      <DependentUpon>Objectives.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Question.aspx.cs">
+      <DependentUpon>Question.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Question.aspx.designer.cs">
+      <DependentUpon>Question.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ReviewQuestion.aspx.cs">
+      <DependentUpon>ReviewQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ReviewQuestion.aspx.designer.cs">
+      <DependentUpon>ReviewQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Subject.aspx.cs">
+      <DependentUpon>Subject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\Subject.aspx.designer.cs">
+      <DependentUpon>Subject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ViewQuestion.aspx.cs">
+      <DependentUpon>ViewQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Admin\ViewQuestion.aspx.designer.cs">
+      <DependentUpon>ViewQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\DE\ApprovalStatus.aspx.cs">
+      <DependentUpon>ApprovalStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\DE\ApprovalStatus.aspx.designer.cs">
+      <DependentUpon>ApprovalStatus.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\DE\Class.aspx.cs">
+      <DependentUpon>Class.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\DE\Class.aspx.designer.cs">
+      <DependentUpon>Class.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\DE\Concept.aspx.cs">
+      <DependentUpon>Concept.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\DE\Concept.aspx.designer.cs">
+      <DependentUpon>Concept.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\DE\de.Master.cs">
+      <DependentUpon>de.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\DE\de.Master.designer.cs">
+      <DependentUpon>de.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\DE\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\DE\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\DE\Objectives.aspx.cs">
+      <DependentUpon>Objectives.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\DE\Objectives.aspx.designer.cs">
+      <DependentUpon>Objectives.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\DE\Question.aspx.cs">
+      <DependentUpon>Question.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\DE\Question.aspx.designer.cs">
+      <DependentUpon>Question.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\DE\Subject.aspx.cs">
+      <DependentUpon>Subject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\DE\Subject.aspx.designer.cs">
+      <DependentUpon>Subject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\DE\ViewQuestion.aspx.cs">
+      <DependentUpon>ViewQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\DE\ViewQuestion.aspx.designer.cs">
+      <DependentUpon>ViewQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\SME\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\SME\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\SME\Question.aspx.cs">
+      <DependentUpon>Question.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\SME\Question.aspx.designer.cs">
+      <DependentUpon>Question.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\SME\ReviewQuestion.aspx.cs">
+      <DependentUpon>ReviewQuestion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\SME\ReviewQuestion.aspx.designer.cs">
+      <DependentUpon>ReviewQuestion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\SME\sme.Master.cs">
+      <DependentUpon>sme.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\SME\sme.Master.designer.cs">
+      <DependentUpon>sme.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Student\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Student\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Student\student.Master.cs">
+      <DependentUpon>student.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Student\student.Master.designer.cs">
+      <DependentUpon>student.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Student\StudentQuestionPaper.aspx.cs">
+      <DependentUpon>StudentQuestionPaper.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Student\StudentQuestionPaper.aspx.designer.cs">
+      <DependentUpon>StudentQuestionPaper.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Student\TakeTest.aspx.cs">
+      <DependentUpon>TakeTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Student\TakeTest.aspx.designer.cs">
+      <DependentUpon>TakeTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Student\Test.aspx.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Student\Test.aspx.designer.cs">
+      <DependentUpon>Test.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Student\ViewResult.aspx.cs">
+      <DependentUpon>ViewResult.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Student\ViewResult.aspx.designer.cs">
+      <DependentUpon>ViewResult.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\CreateTest.aspx.cs">
+      <DependentUpon>CreateTest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\CreateTest.aspx.designer.cs">
+      <DependentUpon>CreateTest.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\ManualResultEntry.aspx.cs">
+      <DependentUpon>ManualResultEntry.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\ManualResultEntry.aspx.designer.cs">
+      <DependentUpon>ManualResultEntry.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\QuestionPaper.aspx.cs">
+      <DependentUpon>QuestionPaper.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\QuestionPaper.aspx.designer.cs">
+      <DependentUpon>QuestionPaper.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\Report.aspx.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\Report.aspx.designer.cs">
+      <DependentUpon>Report.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\Results.aspx.cs">
+      <DependentUpon>Results.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\Results.aspx.designer.cs">
+      <DependentUpon>Results.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\ScheduledTests.aspx.cs">
+      <DependentUpon>ScheduledTests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\ScheduledTests.aspx.designer.cs">
+      <DependentUpon>ScheduledTests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\StudentResults.aspx.cs">
+      <DependentUpon>StudentResults.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\StudentResults.aspx.designer.cs">
+      <DependentUpon>StudentResults.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\teacher.Master.cs">
+      <DependentUpon>teacher.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\teacher.Master.designer.cs">
+      <DependentUpon>teacher.Master</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\ViewTests.aspx.cs">
+      <DependentUpon>ViewTests.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AssessRite\Teacher\ViewTests.aspx.designer.cs">
+      <DependentUpon>ViewTests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AssessRite\WebMethods\GetData.asmx.cs">
+      <DependentUpon>GetData.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Library\dbLibrary.cs" />
+    <Compile Include="login.aspx.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="login.aspx.designer.cs">
+      <DependentUpon>login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SuperAdmin\ManageAdmins.aspx.cs">
+      <DependentUpon>ManageAdmins.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageAdmins.aspx.designer.cs">
+      <DependentUpon>ManageAdmins.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperAdmin\SchoolInfo.aspx.cs">
+      <DependentUpon>SchoolInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\SchoolInfo.aspx.designer.cs">
+      <DependentUpon>SchoolInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperAdmin\superadmin.Master.cs">
+      <DependentUpon>superadmin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\superadmin.Master.designer.cs">
+      <DependentUpon>superadmin.Master</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Generic Content DE\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58588</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:58464/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.4.0\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
