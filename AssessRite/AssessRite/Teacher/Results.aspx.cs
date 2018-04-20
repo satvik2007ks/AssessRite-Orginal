@@ -27,7 +27,15 @@ namespace AssessRite
 
         private void LoadGrids()
         {
-            string qur = dbLibrary.idBuildQuery("[proc_getResults]", Session["UserId"].ToString(), DateTime.Today.ToString("yyyy-MM-dd"), Session["SchoolId"].ToString());
+            string qur = "";
+            if ((Session["UserType"].ToString() == "2") && (Session["AdminId"] != null))
+            {
+                qur = dbLibrary.idBuildQuery("[proc_getResultsForAdmin]", DateTime.Today.ToString("yyyy-MM-dd"), Session["SchoolId"].ToString());
+            }
+            else
+            {
+                qur = dbLibrary.idBuildQuery("[proc_getResults]", Session["UserId"].ToString(), DateTime.Today.ToString("yyyy-MM-dd"), Session["SchoolId"].ToString());
+            }
             DataSet ds = dbLibrary.idGetCustomResult(qur);
             // ViewState["Tests"] = ds.Tables[0];
             //  ViewState["TestsOffline"] = ds.Tables[1];

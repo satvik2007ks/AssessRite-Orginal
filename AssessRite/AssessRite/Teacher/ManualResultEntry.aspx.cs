@@ -25,7 +25,15 @@ namespace AssessRite
 
         private void LoadDropDown()
         {
-            string qur = "SELECT Test.TestId, Test.TestKey FROM Test LEFT OUTER JOIN Class AS Class_1 ON Test.ClassId = Class_1.ClassId LEFT OUTER JOIN Subject ON Test.SubjectId = Subject.SubjectId where Test.IsDeleted='0' and Class_1.IsDeleted='0' and Subject.IsDeleted='0' and Test.CreatedBy='" + Session["UserId"].ToString() + "' and Test.TestType='Offline' order by Test.TestId desc";
+            string qur = "";
+            if ((Session["UserType"].ToString() == "2") && (Session["AdminId"] != null))
+            {
+                qur = "SELECT Test.TestId, Test.TestKey FROM Test LEFT OUTER JOIN Class AS Class_1 ON Test.ClassId = Class_1.ClassId LEFT OUTER JOIN Subject ON Test.SubjectId = Subject.SubjectId where Test.IsDeleted='0' and Class_1.IsDeleted='0' and Subject.IsDeleted='0' and Test.TestType='Offline' and Class_1.SchoolId='" + Session["SchoolId"].ToString() + "' order by Test.TestId desc";
+            }
+            else
+            {
+                qur = "SELECT Test.TestId, Test.TestKey FROM Test LEFT OUTER JOIN Class AS Class_1 ON Test.ClassId = Class_1.ClassId LEFT OUTER JOIN Subject ON Test.SubjectId = Subject.SubjectId where Test.IsDeleted='0' and Class_1.IsDeleted='0' and Subject.IsDeleted='0' and Test.CreatedBy='" + Session["UserId"].ToString() + "' and Test.TestType='Offline' and Class_1.SchoolId='" + Session["SchoolId"].ToString() + "' order by Test.TestId desc";
+            }
             DataSet ds = dbLibrary.idGetCustomResult(qur);
             if (ds.Tables[0].Rows.Count > 0)
             {

@@ -25,8 +25,15 @@ namespace AssessRite
 
         private void loadGrid()
         {
-            // string qur = "SELECT Class_1.ClassName, Subject.SubjectName, Test.TestId, Test.TestCreationDate, Test.TestType, Test.TestKey, Test.NoOfQuestions, Test.TotalQuestions, Test.TestKey AS TestKey, TestSchedule.TestDate, CONVERT(VARCHAR,TestSchedule.TestActiveFrom,100) as TestActiveFrom, CONVERT(VARCHAR,TestSchedule.TestActiveTo,100) as TestActiveTo, Class.ClassName AS AssignedTo FROM  Class INNER JOIN TestSchedule ON Class.ClassId = TestSchedule.AssignedClassId RIGHT OUTER JOIN Test ON TestSchedule.TestId = Test.TestId LEFT OUTER JOIN Class AS Class_1 ON Test.ClassId = Class_1.ClassId LEFT OUTER JOIN Subject ON Test.SubjectId = Subject.SubjectId where Test.CreatedBy='" + Session["UserId"].ToString() + "' order by Test.TestId desc";
-            string qur = "SELECT Class_1.ClassName, Subject.SubjectName, Test.TestId, Test.TestCreationDate, Test.TestType, Test.TestKey, Test.NoOfQuestions, Test.TotalQuestions FROM Test LEFT OUTER JOIN Class AS Class_1 ON Test.ClassId = Class_1.ClassId LEFT OUTER JOIN Subject ON Test.SubjectId = Subject.SubjectId where Test.IsDeleted='0' and Class_1.IsDeleted='0' and Subject.IsDeleted='0' and Test.CreatedBy='" + Session["UserId"].ToString() + "' order by Test.TestId desc";
+            string qur = "";
+            if ((Session["UserType"].ToString() == "2") && (Session["AdminId"] != null))
+            {
+                qur = "SELECT Class_1.ClassName, Subject.SubjectName, Test.TestId, Test.TestCreationDate, Test.TestType, Test.TestKey, Test.NoOfQuestions, Test.TotalQuestions FROM Test LEFT OUTER JOIN Class AS Class_1 ON Test.ClassId = Class_1.ClassId LEFT OUTER JOIN Subject ON Test.SubjectId = Subject.SubjectId where Test.IsDeleted='0' and Class_1.IsDeleted='0' and Subject.IsDeleted='0' and Class_1.SchoolId='" + Session["SchoolId"].ToString() + "' order by Test.TestId desc";
+            }
+            else
+            {
+                qur = "SELECT Class_1.ClassName, Subject.SubjectName, Test.TestId, Test.TestCreationDate, Test.TestType, Test.TestKey, Test.NoOfQuestions, Test.TotalQuestions FROM Test LEFT OUTER JOIN Class AS Class_1 ON Test.ClassId = Class_1.ClassId LEFT OUTER JOIN Subject ON Test.SubjectId = Subject.SubjectId where Test.IsDeleted='0' and Class_1.IsDeleted='0' and Subject.IsDeleted='0' and Test.CreatedBy='" + Session["UserId"].ToString() + "' and Class_1.SchoolId='" + Session["SchoolId"].ToString() + "' order by Test.TestId desc";
+            }
             DataSet ds = dbLibrary.idGetCustomResult(qur);
             ViewState["Tests"] = ds;
             grdTests.DataSource = ds;
