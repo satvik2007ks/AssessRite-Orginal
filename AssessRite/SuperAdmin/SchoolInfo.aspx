@@ -259,7 +259,7 @@
             var tableName = "Table";
             $.ajax({
                 type: "POST",
-                url: "../WebMethods/GetData.asmx/LoadSchoolDropdownCountry",
+                url: "../WebService/SuperAdminWebService.asmx/LoadSchoolDropdownCountry",
                 data: '{tableName: "' + tableName + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -295,7 +295,7 @@
             ddlStateDropDownListXML.empty();
             $.ajax({
                 type: "POST",
-                url: "../WebMethods/GetData.asmx/LoadSchoolDropdownState",
+                url: "../WebService/SuperAdminWebService.asmx/LoadSchoolDropdownState",
                 data: '{countryid: "' + countryid + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -335,7 +335,7 @@
         function loadtable(defaultpage) {
             $.ajax({
                 type: "POST",
-                url: "../WebMethods/GetData.asmx/GetSchoolData",
+                url: "../WebService/SuperAdminWebService.asmx/GetSchoolData",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
@@ -401,7 +401,7 @@
             var tableName = "Table";
             $.ajax({
                 type: "POST",
-                url: "../WebMethods/GetData.asmx/getAllTestTypesForSchool",
+                url: "../WebService/SuperAdminWebService.asmx/getAllTestTypesForSchool",
                 data: '{schoolid: "' + schoolid + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",

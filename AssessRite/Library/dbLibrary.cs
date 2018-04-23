@@ -13,6 +13,7 @@ namespace AssessRite
 {
     public class dbLibrary
     {
+        public static string MasterconStr = ConfigurationManager.ConnectionStrings["MasterDB"].ToString();
         public static string conStr = ConfigurationManager.ConnectionStrings["assessrite"].ToString();
 
         public static DataSet idGetCustomResult(string qry)
@@ -270,7 +271,49 @@ namespace AssessRite
             return qur.ToString();
         }
 
+        //New Libraries
 
+        public static DataSet idGetDataAsDataset(string qry, string connection)
+        {
+            DataSet ds = new DataSet();
+            SqlConnection conn1 = new SqlConnection(connection);
+            SqlDataAdapter dataadapter1 = new SqlDataAdapter(qry, conn1);
+            try
+            {
+                conn1.Open();
+                dataadapter1.Fill(ds);
+                return ds;
+
+            }
+            catch
+            {
+                ds = null;
+                return ds;
+            }
+            finally
+            {
+                conn1.Close();
+            }
+        }
+
+        public static void idExecuteWithConnectionString(string qur, string connection)
+        {
+            try
+            {
+                SqlConnection conn = new SqlConnection(connection);
+                SqlCommand cmd = new SqlCommand();
+
+                cmd.Connection = conn;
+                conn.Open();
+                cmd.CommandText = qur;
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch
+            {
+
+            }
+        }
     }
 
 }

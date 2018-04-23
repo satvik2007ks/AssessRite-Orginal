@@ -97,6 +97,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="WebService\SuperAdminWebService.asmx" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -396,6 +397,10 @@
     <Content Include="Scripts\vendor\jquery\jquery.js" />
     <Content Include="Scripts\vendor\jquery\jquery.min.js" />
     <Content Include="SuperAdmin\ManageAdmins.aspx" />
+    <Content Include="SuperAdmin\ManageCountries.aspx" />
+    <Content Include="SuperAdmin\ManageCurriculumTypes.aspx" />
+    <Content Include="SuperAdmin\ManageInstitutionTypes.aspx" />
+    <Content Include="SuperAdmin\ManageStates.aspx" />
     <Content Include="SuperAdmin\SchoolInfo.aspx" />
     <Content Include="Web.config" />
     <Content Include="SuperAdmin\superadmin.Master" />
@@ -741,6 +746,34 @@
     <Compile Include="SuperAdmin\ManageAdmins.aspx.designer.cs">
       <DependentUpon>ManageAdmins.aspx</DependentUpon>
     </Compile>
+    <Compile Include="SuperAdmin\ManageCountries.aspx.cs">
+      <DependentUpon>ManageCountries.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageCountries.aspx.designer.cs">
+      <DependentUpon>ManageCountries.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageCurriculumTypes.aspx.cs">
+      <DependentUpon>ManageCurriculumTypes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageCurriculumTypes.aspx.designer.cs">
+      <DependentUpon>ManageCurriculumTypes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageInstitutionTypes.aspx.cs">
+      <DependentUpon>ManageInstitutionTypes.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageInstitutionTypes.aspx.designer.cs">
+      <DependentUpon>ManageInstitutionTypes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageStates.aspx.cs">
+      <DependentUpon>ManageStates.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageStates.aspx.designer.cs">
+      <DependentUpon>ManageStates.aspx</DependentUpon>
+    </Compile>
     <Compile Include="SuperAdmin\SchoolInfo.aspx.cs">
       <DependentUpon>SchoolInfo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -754,6 +787,10 @@
     </Compile>
     <Compile Include="SuperAdmin\superadmin.Master.designer.cs">
       <DependentUpon>superadmin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="WebService\SuperAdminWebService.asmx.cs">
+      <DependentUpon>SuperAdminWebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>

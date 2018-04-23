@@ -54,12 +54,12 @@ namespace AssessRite
                     Session["AdminId"] = ds.Tables[0].Rows[0]["AdminId"].ToString();
                     Response.Redirect("AssessRite/Admin/Home.aspx");
                 }
-                //if (Session["UserType"].ToString() == "1")
-                //{
-                //    // Session["SuperAdminId"] = ds.Tables[0].Rows[0]["SuperAdminId"].ToString();
-                //    Response.Redirect("SuperAdmin/SchoolInfo.aspx");
-                //}
-                // Response.Redirect("Home.aspx");
+                if (Session["UserType"].ToString() == "1")
+                {
+                    // Session["SuperAdminId"] = ds.Tables[0].Rows[0]["SuperAdminId"].ToString();
+                    Response.Redirect("SuperAdmin/SchoolInfo.aspx");
+                }
+                Response.Redirect("Home.aspx");
             }
             else
             {

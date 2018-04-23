@@ -220,7 +220,7 @@
             var tableName = "Table";
             $.ajax({
                 type: "POST",
-                url: "../WebMethods/GetData.asmx/LoadSchoolDropdownSchool",
+                url: "../WebService/SuperAdminWebService.asmx/LoadSchoolDropdownSchool",
                 data: '{tableName: "' + tableName + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -250,7 +250,7 @@
                 function loadtable(defaultpage) {
                     $.ajax({
                         type: "POST",
-                        url: "../WebMethods/GetData.asmx/GetAdminDataForSuperAdmin",
+                        url: "../WebService/SuperAdminWebService.asmx/GetAdminDataForSuperAdmin",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (data) {
