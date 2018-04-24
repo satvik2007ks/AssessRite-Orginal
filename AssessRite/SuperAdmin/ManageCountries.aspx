@@ -134,12 +134,17 @@
                 table.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
             }
-            $("#btnSaveCountry").html('Update');
-            $("#btnDeleteCountry").css("display", "block");
-            $('#hdnCountryId').val($(this).find('td:nth-child(2)').text());
-            $('#<%=txtCountry.ClientID%>').val($(this).find('td:nth-child(1)').text());
-            var info = table.page.info();
-            $('#hdnpage').val(info.page + 1);
+            if ($(this).find("td:eq(0)").text() == 'No data available in table') {
+                table.$('tr.selected').removeClass('selected');
+            }
+            else {
+                $("#btnSaveCountry").html('Update');
+                $("#btnDeleteCountry").css("display", "block");
+                $('#hdnCountryId').val($(this).find('td:nth-child(2)').text());
+                $('#<%=txtCountry.ClientID%>').val($(this).find('td:nth-child(1)').text());
+                var info = table.page.info();
+                $('#hdnpage').val(info.page + 1);
+            }
         });
 
 

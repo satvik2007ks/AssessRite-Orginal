@@ -375,26 +375,30 @@
                 table.$('tr.selected').removeClass('selected');
                 $(this).addClass('selected');
             }
+            if ($(this).find("td:eq(0)").text() == 'No data available in table') {
+                table.$('tr.selected').removeClass('selected');
+            }
+            else {
+                $("#btnSaveSchool").html('Update');
+                $("#btnDeleteSchool").css("display", "block");
 
-            $("#btnSaveSchool").html('Update');
-            $("#btnDeleteSchool").css("display", "block");
-
-            $('#hdnSchoolId').val($(this).find('td:nth-child(11)').text());
-            $('#<%=txtSchoolName.ClientID%>').val($(this).find('td:nth-child(1)').text());
-            $('#<%=txtSchoolAddress.ClientID%>').val($(this).find('td:nth-child(2)').text());
-            var countryid = $(this).find('td:nth-child(12)').text();
-            $('#<%=ddlCountry.ClientID%>').val($(this).find('td:nth-child(12)').text());
-            var stateid = $(this).find('td:nth-child(13)').text();
-            loadState(countryid, stateid);
-            $('#<%=txtZipCode.ClientID%>').val($(this).find('td:nth-child(8)').text());
-            $('#<%=txtContactNo.ClientID%>').val($(this).find('td:nth-child(5)').text());
-            $('#<%=txtEmailID.ClientID%>').val($(this).find('td:nth-child(6)').text());
-            $('#<%=txtNoOfStudent.ClientID%>').val($(this).find('td:nth-child(7)').text());
-            $('#<%=txtPrincipalName.ClientID%>').val($(this).find('td:nth-child(9)').text());
-            $('#<%=txtEmergencyContact.ClientID%>').val($(this).find('td:nth-child(10)').text());
-            loadSchoolTestTypes($(this).find('td:nth-child(11)').text());
-            var info = table.page.info();
-            $('#hdnpage').val(info.page + 1);
+                $('#hdnSchoolId').val($(this).find('td:nth-child(11)').text());
+                $('#<%=txtSchoolName.ClientID%>').val($(this).find('td:nth-child(1)').text());
+                $('#<%=txtSchoolAddress.ClientID%>').val($(this).find('td:nth-child(2)').text());
+                var countryid = $(this).find('td:nth-child(12)').text();
+                $('#<%=ddlCountry.ClientID%>').val($(this).find('td:nth-child(12)').text());
+                var stateid = $(this).find('td:nth-child(13)').text();
+                loadState(countryid, stateid);
+                $('#<%=txtZipCode.ClientID%>').val($(this).find('td:nth-child(8)').text());
+                $('#<%=txtContactNo.ClientID%>').val($(this).find('td:nth-child(5)').text());
+                $('#<%=txtEmailID.ClientID%>').val($(this).find('td:nth-child(6)').text());
+                $('#<%=txtNoOfStudent.ClientID%>').val($(this).find('td:nth-child(7)').text());
+                $('#<%=txtPrincipalName.ClientID%>').val($(this).find('td:nth-child(9)').text());
+                $('#<%=txtEmergencyContact.ClientID%>').val($(this).find('td:nth-child(10)').text());
+                loadSchoolTestTypes($(this).find('td:nth-child(11)').text());
+                var info = table.page.info();
+                $('#hdnpage').val(info.page + 1);
+            }
         });
 
         function loadSchoolTestTypes(schoolid) {

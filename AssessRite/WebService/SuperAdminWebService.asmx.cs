@@ -173,5 +173,21 @@ namespace AssessRite.WebMethods
             else
                 return null;
         }
+
+        [WebMethod]
+        public string GetInstitutionTypes()
+        {
+            string qur = "Select * from InstitutionType where IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string JSONresult;
+                JSONresult = JsonConvert.SerializeObject(dt);
+                return JSONresult;
+            }
+            else
+                return null;
+        }
     }
 }
