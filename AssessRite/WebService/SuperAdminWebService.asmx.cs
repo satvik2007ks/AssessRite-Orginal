@@ -189,5 +189,21 @@ namespace AssessRite.WebMethods
             else
                 return null;
         }
+
+        [WebMethod]
+        public string GetCurriculumTypes()
+        {
+            string qur = "SELECT CurriculumType.CurriculumTypeId, CurriculumType.InstitutionTypeId, CurriculumType.CurriculumType, InstitutionType.InstitutionType FROM CurriculumType INNER JOIN InstitutionType ON CurriculumType.InstitutionTypeId = InstitutionType.InstitutionTypeId where CurriculumType.IsDeleted='0' and InstitutionType.IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string JSONresult;
+                JSONresult = JsonConvert.SerializeObject(dt);
+                return JSONresult;
+            }
+            else
+                return null;
+        }
     }
 }

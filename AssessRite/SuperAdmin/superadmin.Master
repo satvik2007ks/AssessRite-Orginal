@@ -141,7 +141,7 @@
                             <a href="ManageCurriculumtypes.aspx">Add/View Curriculum Type</a>
                         </li>
                         <li id="liLevel">
-                            <a href="#">View/Edit Level</a>
+                            <a href="#">Add/View Level</a>
                         </li>
                     </ul>
                 </li>

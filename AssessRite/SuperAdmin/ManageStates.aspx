@@ -21,7 +21,7 @@
         <div class="card-body">
             <div style="display: none; text-align: center" id="myMessage1" runat="server" class="alert alert-success col-sm-12">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <asp:Label ID="lblMsg" runat="server" Text="Subject Saved Successfully"></asp:Label>
+                <asp:Label ID="lblMsg" runat="server" Text="State Saved Successfully"></asp:Label>
             </div>
             <div class="row">
                 <div class="col-lg-5">
@@ -40,7 +40,7 @@
                         <asp:Label ID="lblState" runat="server" Text="State"></asp:Label>
                         <asp:TextBox ID="txtState" runat="server" CssClass="form-control" MaxLength="48"></asp:TextBox>
                         <div class="help-block" id="divError" runat="server" style="display: none">
-                            <asp:Label ID="lblError" runat="server" Style="color: red" Text="Please Enter Country Name"></asp:Label>
+                            <asp:Label ID="lblError" runat="server" Style="color: red" Text="Please Enter State Name"></asp:Label>
                         </div>
                     </div>
                     <input type="hidden" id="hdnStateId" />
@@ -159,17 +159,17 @@
                 var english = /^[A-Za-z0-9 ]*$/;
                 var trimmedValue = jQuery.trim($('#<%=txtState.ClientID%>').val());
                 if ($("#<%=ddlCountry.ClientID%>").val() == '-1') {
-                    $("#<%=lblError.ClientID%>").html('Please Select Class');
+                    $("#<%=lblError.ClientID%>").html('Please Select Country');
                     $("#<%=divError.ClientID%>").css("display", "block");
                     return false;
                 }
                 else if ($("#<%=txtState.ClientID%>").val() == '') {
-                    $("#<%=lblError.ClientID%>").html('Please Enter Subject');
+                    $("#<%=lblError.ClientID%>").html('Please Enter State');
                     $("#<%=divError.ClientID%>").css("display", "block");
                     return false;
                 }
                 else if (trimmedValue == '') {
-                    $("#<%=lblError.ClientID%>").html('Subject Cannot Be Blank');
+                    $("#<%=lblError.ClientID%>").html('State Cannot Be Blank');
                     $("#<%=divError.ClientID%>").css("display", "block");
                     return false;
                 }
@@ -269,6 +269,17 @@
             $('#<%=txtState.ClientID%>').val('');
             $("[id*=hdnStateId]").val('');
             $("#<%=divError.ClientID%>").css("display", "none");
+        }
+    </script>
+    <script type="text/javascript">
+        function runEffect1() {
+            $("#<%=myMessage1.ClientID%>").show();
+            setTimeout(function () {
+                var selectedEffect = 'blind';
+                var options = {};
+                $("#<%=myMessage1.ClientID%>").hide();
+            }, 8000);
+            return false;
         }
     </script>
 </asp:Content>
