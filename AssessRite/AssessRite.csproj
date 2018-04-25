@@ -97,6 +97,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="SuperAdmin\ManageLevels.aspx" />
     <Content Include="WebService\SuperAdminWebService.asmx" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
@@ -766,6 +767,13 @@
     </Compile>
     <Compile Include="SuperAdmin\ManageInstitutionTypes.aspx.designer.cs">
       <DependentUpon>ManageInstitutionTypes.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageLevels.aspx.cs">
+      <DependentUpon>ManageLevels.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageLevels.aspx.designer.cs">
+      <DependentUpon>ManageLevels.aspx</DependentUpon>
     </Compile>
     <Compile Include="SuperAdmin\ManageStates.aspx.cs">
       <DependentUpon>ManageStates.aspx</DependentUpon>

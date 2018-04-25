@@ -44,11 +44,11 @@ namespace AssessRite.SuperAdmin
         }
 
         [System.Web.Services.WebMethod]
-        public static string SaveCurriculumType(int curriculumtypeid, string curriculumtype, int institutiontypeid, string buttontext)
+        public static string SaveCurriculumType(int curriculumtypeid, int countryid, int stateid, string curriculumtype, int institutiontypeid, string buttontext)
         {
             //  return string.Format("subjectId: {0}{2}subject: {1}{2}classid: {3}{2}OtherLanguage: {4}", subjectid, subject, Environment.NewLine,classid,isotherlanguage);
 
-            string qur = "Select CurriculumTypeId from CurriculumType where CurriculumType='" + curriculumtype + "' and InstitutionTypeId='" + institutiontypeid + "' and IsDeleted='0'";
+            string qur = "Select CurriculumTypeId from CurriculumType where CurriculumType='" + curriculumtype + "' and CountryId='" + countryid + "' and StateId='" + stateid + "' and InstitutionTypeId='" + institutiontypeid + "' and IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -62,7 +62,7 @@ namespace AssessRite.SuperAdmin
                     if (id == curriculumtypeid)
                     {
 
-                        qur = "Update CurriculumType set CurriculumType='" + curriculumtype + "' where InstitutionTypeId='" + institutiontypeid + "' and CurriculumTypeId='" + curriculumtypeid + "'";
+                        qur = "Update CurriculumType set CurriculumType='" + curriculumtype + "', CountryId='" + countryid + "', StateId='" + stateid + "', InstitutionTypeId='" + institutiontypeid + "' where  CurriculumTypeId='" + curriculumtypeid + "'";
                         dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
                         return "Curriculum Type Updated Successfully";
                     }
@@ -76,16 +76,16 @@ namespace AssessRite.SuperAdmin
             {
                 if (buttontext == "Save")
                 {
-                    qur = "Insert Into CurriculumType(CurriculumType, InstitutionTypeId) values('" + curriculumtype + "','" + institutiontypeid + "')";
+                    qur = "Insert Into CurriculumType(CountryId, StateId, InstitutionTypeId, CurriculumType) values('" + countryid + "','" + stateid + "','" + institutiontypeid + "','" + curriculumtype + "')";
                     dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
                     return "Curriculum Type Saved Successfully";
                 }
                 else
                 {
-                    qur = "Update CurriculumType set CurriculumType='" + curriculumtype + "' where InstitutionTypeId='" + institutiontypeid + "' and CurriculumTypeId='" + curriculumtypeid + "'";
+                    qur = "Update CurriculumType set CurriculumType='" + curriculumtype + "', CountryId='" + countryid + "', StateId='" + stateid + "', InstitutionTypeId='" + institutiontypeid + "' where  CurriculumTypeId='" + curriculumtypeid + "'";
+
                     dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
                     return "Curriculum Type Updated Successfully";
-
                 }
             }
         }

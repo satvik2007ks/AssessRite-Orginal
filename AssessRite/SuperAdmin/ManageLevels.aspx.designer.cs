@@ -10,7 +10,7 @@
 namespace AssessRite.SuperAdmin {
     
     
-    public partial class ManageCurriculumTypes {
+    public partial class ManageLevels {
         
         /// <summary>
         /// myMessage1 control.
@@ -85,22 +85,40 @@ namespace AssessRite.SuperAdmin {
         protected global::System.Web.UI.WebControls.DropDownList ddlInstitutionType;
         
         /// <summary>
-        /// lblcurriculum control.
+        /// Label2 control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblcurriculum;
+        protected global::System.Web.UI.WebControls.Label Label2;
         
         /// <summary>
-        /// txtCurriculumType control.
+        /// ddlCurriculumType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCurriculumType;
+        protected global::System.Web.UI.WebControls.DropDownList ddlCurriculumType;
+        
+        /// <summary>
+        /// lblLevel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblLevel;
+        
+        /// <summary>
+        /// txtLevel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtLevel;
         
         /// <summary>
         /// divError control.

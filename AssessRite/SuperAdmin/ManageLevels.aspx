@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SuperAdmin/superadmin.Master" AutoEventWireup="true" CodeBehind="ManageCurriculumTypes.aspx.cs" Inherits="AssessRite.SuperAdmin.ManageCurriculumTypes" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SuperAdmin/superadmin.Master" AutoEventWireup="true" CodeBehind="ManageLevels.aspx.cs" Inherits="AssessRite.SuperAdmin.ManageLevels" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -8,27 +8,27 @@
     </style>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="breadcrumb">
-        <h5 class="breadcrumbheading">Add/View/Update/Delete Curriculum Type</h5>
+      <div class="breadcrumb">
+        <h5 class="breadcrumbheading">Add/View/Update/Delete Level</h5>
     </div>
     <div class="card mb-3">
         <div class="card-header">
             <div class="row">
-                <div class="col-lg-5" style="text-align: center">Add / Update Curriculum Type</div>
-                <div class="col-lg-7" style="text-align: center">View / Delete Curriculum Type</div>
+                <div class="col-lg-5" style="text-align: center">Add / Update Level</div>
+                <div class="col-lg-7" style="text-align: center">View / Delete Level</div>
             </div>
         </div>
         <div class="card-body">
             <div style="display: none; text-align: center" id="myMessage1" runat="server" class="alert alert-success col-sm-12">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <asp:Label ID="lblMsg" runat="server" Text="Curriculum Type Saved Successfully"></asp:Label>
+                <asp:Label ID="lblMsg" runat="server" Text="Level Saved Successfully"></asp:Label>
             </div>
             <div class="row">
                 <div class="col-lg-5">
                     <div class="row" style="margin-top: 20px;">
                         <div class="col-md-4"></div>
                         <div class="col-md-4" style="text-align: center">
-                            <button id="btnNewCurriculumType" class="btn btn-primary">New</button>
+                            <button id="btnNewLevel" class="btn btn-primary">New</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -44,29 +44,35 @@
                         <asp:Label ID="lblInstitutionType" runat="server" Text="Institution Type"></asp:Label>
                         <asp:DropDownList ID="ddlInstitutionType" runat="server" CssClass="form-control"></asp:DropDownList>
                     </div>
+                     <div class="form-group">
+                        <asp:Label ID="Label2" runat="server" Text="Curriculum Type"></asp:Label>
+                        <asp:DropDownList ID="ddlCurriculumType" runat="server" CssClass="form-control"></asp:DropDownList>
+                    </div>
                     <div class="form-group">
-                        <asp:Label ID="lblcurriculum" runat="server" Text="Curriculum Type"></asp:Label>
-                        <asp:TextBox ID="txtCurriculumType" runat="server" CssClass="form-control" MaxLength="48"></asp:TextBox>
+                        <asp:Label ID="lblLevel" runat="server" Text="Level"></asp:Label>
+                        <asp:TextBox ID="txtLevel" runat="server" CssClass="form-control" MaxLength="48"></asp:TextBox>
                         <div class="help-block" id="divError" runat="server" style="display: none">
-                            <asp:Label ID="lblError" runat="server" Style="color: red" Text="Please Enter Curriculum Type"></asp:Label>
+                            <asp:Label ID="lblError" runat="server" Style="color: red" Text="Please Enter Level"></asp:Label>
                         </div>
                     </div>
-                    <input type="hidden" id="hdnCurriculumTypeId" />
-                    <a href="#" id="btnSaveCurriculumType" class="btn btn-primary">Save</a>
+                    <input type="hidden" id="hdnLevelId" />
+                    <a href="#" id="btnSaveLevel" class="btn btn-primary">Save</a>
                 </div>
                 <div class="col-lg-7">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="tblCurriculumType" style="width: 100%">
+                        <table class="table table-bordered" id="tblLevel" style="width: 100%">
                             <thead>
                                 <tr>
                                     <th style="display: none">CountryId</th>
                                     <th style="display: none">StateId</th>
                                     <th style="display: none">InstitutionTypeId</th>
                                     <th style="display: none">CurriculumTypeId</th>
+                                    <th style="display: none">LevelId</th>
                                     <th>Country</th>
                                     <th>State</th>
                                     <th>Institution Type</th>
                                     <th>Curriculum Type</th>
+                                    <th>Level</th>
                                 </tr>
                             </thead>
                         </table>
@@ -74,7 +80,7 @@
                     <div class="row" style="margin-top: 10px;">
                         <div class="col-md-4"></div>
                         <div class="col-md-4" style="text-align: center; margin-bottom: 10px;">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" id="btnDeleteCurriculumType" style="display: none;">Delete</button>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" id="btnDeleteLevel" style="display: none;">Delete</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -85,7 +91,7 @@
                                     <h5 class="modal-title" id="H3">Delete ?</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">x</span></button>
                                 </div>
-                                <div class="modal-body">Deleting this Curriculum Type might impact all its dependencies. Are you sure you want to delete this Curriculum Type?</div>
+                                <div class="modal-body">Deleting this Level might impact all its dependencies. Are you sure you want to delete this Level?</div>
                                 <div class="modal-footer" style="text-align: center; margin-top: 2px; border-top: none !important">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
                                     <button id="btnDeleteYes" class="btn btn-primary">Yes</button>
@@ -106,7 +112,7 @@
     <script>
         $(document).ready(function () {
             $('#collapseExamplePages li').removeClass("current-menu-item");
-            $('#liCurriculum').addClass('current-menu-item');
+            $('#liLevel').addClass('current-menu-item');
             $("#collapseExamplePages").addClass('sidenav-second-level collapse show');
         });
     </script>

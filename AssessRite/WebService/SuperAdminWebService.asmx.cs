@@ -193,7 +193,13 @@ namespace AssessRite.WebMethods
         [WebMethod]
         public string GetCurriculumTypes()
         {
-            string qur = "SELECT CurriculumType.CurriculumTypeId, CurriculumType.InstitutionTypeId, CurriculumType.CurriculumType, InstitutionType.InstitutionType FROM CurriculumType INNER JOIN InstitutionType ON CurriculumType.InstitutionTypeId = InstitutionType.InstitutionTypeId where CurriculumType.IsDeleted='0' and InstitutionType.IsDeleted='0'";
+            string qur = "SELECT CurriculumType.CurriculumTypeId, CurriculumType.InstitutionTypeId, CurriculumType.CurriculumType, InstitutionType.InstitutionType, CurriculumType.CountryId, "+
+                         " CurriculumType.StateId, Country.CountryName, State.StateName "+
+                         " FROM CurriculumType INNER JOIN "+
+                         " InstitutionType ON CurriculumType.InstitutionTypeId = InstitutionType.InstitutionTypeId INNER JOIN "+
+                         " Country ON CurriculumType.CountryId = Country.CountryId INNER JOIN "+
+                         " State ON CurriculumType.StateId = State.StateId "+
+                         " WHERE(CurriculumType.IsDeleted = '0') AND(InstitutionType.IsDeleted = '0')";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
