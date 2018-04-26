@@ -119,29 +119,29 @@
 
         function loadCountry() {
             var ddlCountryDropDownListXML = $('#<%=ddlCountry.ClientID%>');
-             ddlCountryDropDownListXML.empty();
-             var tableName = "Table";
-             $.ajax({
-                 type: "POST",
-                 url: "../WebService/SuperAdminWebService.asmx/LoadSchoolDropdownCountry",
-                 data: '{tableName: "' + tableName + '"}',
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 success: function (response) {
-                     //console.log(response.d);
-                     var xmlDoc = $.parseXML(response.d);
-                     //  console.log(xmlDoc);
-                     // Now find the Table from response and loop through each item (row).
-                     $(xmlDoc).find('Table').each(function () {
-                         // Get the OptionValue and OptionText Column values.
-                         var OptionValue = $(this).find('CountryId').text();
-                         var OptionText = $(this).find('CountryName').text();
-                         // Create an Option for DropDownList.
-                         var option = $("<option>" + OptionText + "</option>");
-                         option.attr("value", OptionValue);
-                         ddlCountryDropDownListXML.append(option);
-                     });
-                     $('#<%=ddlCountry.ClientID%>').prepend('<option value="-1" selected="selected">--Select Country--</option>');
+            ddlCountryDropDownListXML.empty();
+            var tableName = "Table";
+            $.ajax({
+                type: "POST",
+                url: "../WebService/SuperAdminWebService.asmx/LoadSchoolDropdownCountry",
+                data: '{tableName: "' + tableName + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    //console.log(response.d);
+                    var xmlDoc = $.parseXML(response.d);
+                    //  console.log(xmlDoc);
+                    // Now find the Table from response and loop through each item (row).
+                    $(xmlDoc).find('Table').each(function () {
+                        // Get the OptionValue and OptionText Column values.
+                        var OptionValue = $(this).find('CountryId').text();
+                        var OptionText = $(this).find('CountryName').text();
+                        // Create an Option for DropDownList.
+                        var option = $("<option>" + OptionText + "</option>");
+                        option.attr("value", OptionValue);
+                        ddlCountryDropDownListXML.append(option);
+                    });
+                    $('#<%=ddlCountry.ClientID%>').prepend('<option value="-1" selected="selected">--Select Country--</option>');
                 },
                 failure: function (response) {
                     alert(response.d);
@@ -156,41 +156,41 @@
 
         function loadState(countryid, selectvalue) {
             var ddlStateDropDownListXML = $('#<%=ddlState.ClientID%>');
-             ddlStateDropDownListXML.empty();
-             $.ajax({
-                 type: "POST",
-                 url: "../WebService/SuperAdminWebService.asmx/LoadSchoolDropdownState",
-                 data: '{countryid: "' + countryid + '"}',
-                 contentType: "application/json; charset=utf-8",
-                 dataType: "json",
-                 success: function (response) {
-                     // console.log(response.d);
-                     $("#<%=divError.ClientID%>").css("display", "none");
-                    var xmlDoc = $.parseXML(response.d);
-                    // console.log(xmlDoc);
-                    // Now find the Table from response and loop through each item (row).
-                    $(xmlDoc).find('Table').each(function () {
-                        // Get the OptionValue and OptionText Column values.
-                        var OptionValue = $(this).find('StateId').text();
-                        var OptionText = $(this).find('StateName').text();
-                        // Create an Option for DropDownList.
-                        var option = $("<option>" + OptionText + "</option>");
-                        option.attr("value", OptionValue);
-                        ddlStateDropDownListXML.append(option);
-                    });
-                    $('#<%=ddlState.ClientID%>').prepend('<option value="-1" selected="selected">--Select State--</option>');
-                },
-                error: function (response) {
-                    $("#<%=lblError.ClientID%>").html('No State Found For This Country');
+            ddlStateDropDownListXML.empty();
+            $.ajax({
+                type: "POST",
+                url: "../WebService/SuperAdminWebService.asmx/LoadSchoolDropdownState",
+                data: '{countryid: "' + countryid + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    // console.log(response.d);
+                    $("#<%=divError.ClientID%>").css("display", "none");
+                     var xmlDoc = $.parseXML(response.d);
+                     // console.log(xmlDoc);
+                     // Now find the Table from response and loop through each item (row).
+                     $(xmlDoc).find('Table').each(function () {
+                         // Get the OptionValue and OptionText Column values.
+                         var OptionValue = $(this).find('StateId').text();
+                         var OptionText = $(this).find('StateName').text();
+                         // Create an Option for DropDownList.
+                         var option = $("<option>" + OptionText + "</option>");
+                         option.attr("value", OptionValue);
+                         ddlStateDropDownListXML.append(option);
+                     });
+                     $('#<%=ddlState.ClientID%>').prepend('<option value="-1" selected="selected">--Select State--</option>');
+                 },
+                 error: function (response) {
+                     $("#<%=lblError.ClientID%>").html('No State Found For This Country');
                     $("#<%=divError.ClientID%>").css("display", "block");
-                     return;
-                 }
-             });
-             var interval = setInterval(function () {
-                 if (document.querySelectorAll('#<%=ddlState.ClientID%> option').length > 0) {
-                    //console.log('List is definitely populated!');
-                    clearInterval(interval);
-                    $("#<%=ddlState.ClientID%>").val(selectvalue);
+                    return;
+                }
+            });
+            var interval = setInterval(function () {
+                if (document.querySelectorAll('#<%=ddlState.ClientID%> option').length > 0) {
+                     //console.log('List is definitely populated!');
+                     clearInterval(interval);
+                     $("#<%=ddlState.ClientID%>").val(selectvalue);
                 }
             }, 200);
         }
@@ -237,16 +237,23 @@
                 table.$('tr.selected').removeClass('selected');
             }
             else {
+                $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
+                $('#<%= ddlState.ClientID %>').prop('disabled', false);
+                $('#<%= ddlInstitutionType.ClientID %>').prop('disabled', false);
+
                 $("#btnSaveCurriculumType").html('Update');
                 $("#btnDeleteCurriculumType").css("display", "block");
-                var CountryId =$(this).find('td:nth-child(1)').text();
-                var StateId=$(this).find('td:nth-child(2)').text();
+                var CountryId = $(this).find('td:nth-child(1)').text();
+                var StateId = $(this).find('td:nth-child(2)').text();
                 var InstitutionTypeId = $(this).find('td:nth-child(3)').text();
                 $('#hdnCurriculumTypeId').val($(this).find('td:nth-child(4)').text());
                 $('#<%=txtCurriculumType.ClientID%>').val($(this).find('td:nth-child(8)').text());
                 $("#<%=ddlCountry.ClientID%>").val(CountryId);
                 loadState(CountryId, StateId);
                 $("#<%=ddlInstitutionType.ClientID%>").val(InstitutionTypeId);
+                $('#<%= ddlCountry.ClientID %>').prop('disabled', true);
+                $('#<%= ddlState.ClientID %>').prop('disabled', true);
+                $('#<%= ddlInstitutionType.ClientID %>').prop('disabled', true);
                 var info = table.page.info();
                 $('#hdnpage').val(info.page + 1);
             }
@@ -257,41 +264,41 @@
                 //  alert('fd');
                 var english = /^[A-Za-z0-9 ]*$/;
                 var trimmedValue = jQuery.trim($('#<%=txtCurriculumType.ClientID%>').val());
-                 if ($("#<%=ddlCountry.ClientID%>").val() == '-1') {
+                if ($("#<%=ddlCountry.ClientID%>").val() == '-1') {
                     $("#<%=lblError.ClientID%>").html('Please Select Country');
-                    $("#<%=divError.ClientID%>").css("display", "block");
-                    return false;
-                }
+                     $("#<%=divError.ClientID%>").css("display", "block");
+                     return false;
+                 }
                  else if ($("#<%=ddlState.ClientID%>").val() == '-1') {
-                    $("#<%=lblError.ClientID%>").html('Please Select State');
-                    $("#<%=divError.ClientID%>").css("display", "block");
-                    return false;
-                }
-                else if ($("#<%=ddlInstitutionType.ClientID%>").val() == '-1') {
-                    $("#<%=lblError.ClientID%>").html('Please Select Institution Type');
-                    $("#<%=divError.ClientID%>").css("display", "block");
-                    return false;
-                }
-                else if ($("#<%=txtCurriculumType.ClientID%>").val() == '') {
-                    $("#<%=lblError.ClientID%>").html('Please Enter Curriculum Type');
-                    $("#<%=divError.ClientID%>").css("display", "block");
-                    return false;
-                }
-                else if (trimmedValue == '') {
-                    $("#<%=lblError.ClientID%>").html('Curriculum Type Cannot Be Blank');
-                    $("#<%=divError.ClientID%>").css("display", "block");
-                    return false;
-                }
-                else {
-                    $("#<%=divError.ClientID%>").css("display", "none");
+                     $("#<%=lblError.ClientID%>").html('Please Select State');
+                     $("#<%=divError.ClientID%>").css("display", "block");
+                     return false;
+                 }
+                 else if ($("#<%=ddlInstitutionType.ClientID%>").val() == '-1') {
+                     $("#<%=lblError.ClientID%>").html('Please Select Institution Type');
+                     $("#<%=divError.ClientID%>").css("display", "block");
+                     return false;
+                 }
+                 else if ($("#<%=txtCurriculumType.ClientID%>").val() == '') {
+                     $("#<%=lblError.ClientID%>").html('Please Enter Curriculum Type');
+                     $("#<%=divError.ClientID%>").css("display", "block");
+                     return false;
+                 }
+                 else if (trimmedValue == '') {
+                     $("#<%=lblError.ClientID%>").html('Curriculum Type Cannot Be Blank');
+                     $("#<%=divError.ClientID%>").css("display", "block");
+                     return false;
+                 }
+                 else {
+                     $("#<%=divError.ClientID%>").css("display", "none");
                 }
                 var obj = {};
                 obj.curriculumtypeid = "0";
                 if ($('#hdnCurriculumTypeId').val() != '') {
                     obj.curriculumtypeid = $.trim($("[id*=hdnCurriculumTypeId]").val());
                 }
-                 obj.countryid = $.trim($("[id*=<%=ddlCountry.ClientID%>]").val());
-                obj.stateid =$.trim($("[id*=<%=ddlState.ClientID%>]").val());
+                obj.countryid = $.trim($("[id*=<%=ddlCountry.ClientID%>]").val());
+                obj.stateid = $.trim($("[id*=<%=ddlState.ClientID%>]").val());
                 obj.curriculumtype = $.trim($("[id*=<%=txtCurriculumType.ClientID%>]").val());
                 obj.institutiontypeid = $.trim($("[id*=<%=ddlInstitutionType.ClientID%>]").val());
                 obj.buttontext = $("#btnSaveCurriculumType").html();
@@ -375,11 +382,14 @@
             $("#btnSaveCurriculumType").html('Save');
             $("#btnDeleteCurriculumType").css("display", "none");
             $("#<%=ddlCountry.ClientID%>").val('-1');
-             $('#<%=ddlState.ClientID%>').empty();
+            $('#<%=ddlState.ClientID%>').empty();
             $("#<%=ddlInstitutionType.ClientID%>").val('-1');
             $('#<%=txtCurriculumType.ClientID%>').val('');
             $("[id*=hdnCurriculumTypeId]").val('');
             $("#<%=divError.ClientID%>").css("display", "none");
+            $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
+            $('#<%= ddlState.ClientID %>').prop('disabled', false);
+            $('#<%= ddlInstitutionType.ClientID %>').prop('disabled', false);
         }
     </script>
     <script type="text/javascript">

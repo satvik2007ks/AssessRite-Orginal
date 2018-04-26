@@ -21,7 +21,7 @@ namespace AssessRite
         {
             divError.Attributes.Add("Style", "display:none");
             string qur = "SELECT Login.UserName, Login.UserId, Login.UserTypeId, Login.SchoolId, SchoolInfo.SchoolName, Login.TeacherId, Login.StudentId, Login.AdminId, Login.DEId,Login.SMEId FROM Login INNER JOIN SchoolInfo ON Login.SchoolId = SchoolInfo.schoolId where Login.UserName='" + txtUserName.Text + "' and Login.Password='" + txtPassword.Text + "' and Login.IsDeleted='0'";
-            DataSet ds = dbLibrary.idGetCustomResult(qur);
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
                 Session["UserId"] = ds.Tables[0].Rows[0]["UserId"].ToString();
@@ -64,7 +64,7 @@ namespace AssessRite
             else
             {
                 qur = "SELECT Login.UserName, Login.UserId, Login.UserTypeId FROM Login where Login.UserName='" + txtUserName.Text + "' and Login.Password='" + txtPassword.Text + "' and Login.IsDeleted='0'";
-                DataSet ds1 = dbLibrary.idGetCustomResult(qur);
+                DataSet ds1 = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
                 if (ds1.Tables[0].Rows.Count > 0)
                 {
                     if (ds1.Tables[0].Rows[0]["UserTypeId"].ToString() == "1")
@@ -72,7 +72,7 @@ namespace AssessRite
                         Session["UserId"] = ds1.Tables[0].Rows[0]["UserId"].ToString();
                         Session["UserType"] = ds1.Tables[0].Rows[0]["UserTypeId"].ToString();
                         Session["UserName"] = ds1.Tables[0].Rows[0]["UserName"].ToString();
-                        Response.Redirect("SuperAdmin/SchoolInfo.aspx");
+                        Response.Redirect("SuperAdmin/Home.aspx");
                     }
                 }
                 else

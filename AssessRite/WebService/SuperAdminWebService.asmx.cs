@@ -77,7 +77,7 @@ namespace AssessRite.WebMethods
         [WebMethod]
         public string LoadSchoolDropdownState(int countryid)
         {
-            string qur = "Select * from State where CountryId='" + countryid +"' and IsDeleted='0'" ;
+            string qur = "Select * from State where CountryId='" + countryid + "' and IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -193,12 +193,12 @@ namespace AssessRite.WebMethods
         [WebMethod]
         public string GetCurriculumTypes()
         {
-            string qur = "SELECT CurriculumType.CurriculumTypeId, CurriculumType.InstitutionTypeId, CurriculumType.CurriculumType, InstitutionType.InstitutionType, CurriculumType.CountryId, "+
-                         " CurriculumType.StateId, Country.CountryName, State.StateName "+
-                         " FROM CurriculumType INNER JOIN "+
-                         " InstitutionType ON CurriculumType.InstitutionTypeId = InstitutionType.InstitutionTypeId INNER JOIN "+
-                         " Country ON CurriculumType.CountryId = Country.CountryId INNER JOIN "+
-                         " State ON CurriculumType.StateId = State.StateId "+
+            string qur = "SELECT CurriculumType.CurriculumTypeId, CurriculumType.InstitutionTypeId, CurriculumType.CurriculumType, InstitutionType.InstitutionType, CurriculumType.CountryId, " +
+                         " CurriculumType.StateId, Country.CountryName, State.StateName " +
+                         " FROM CurriculumType INNER JOIN " +
+                         " InstitutionType ON CurriculumType.InstitutionTypeId = InstitutionType.InstitutionTypeId INNER JOIN " +
+                         " Country ON CurriculumType.CountryId = Country.CountryId INNER JOIN " +
+                         " State ON CurriculumType.StateId = State.StateId " +
                          " WHERE(CurriculumType.IsDeleted = '0') AND(InstitutionType.IsDeleted = '0')";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
@@ -211,5 +211,72 @@ namespace AssessRite.WebMethods
             else
                 return null;
         }
+
+        [WebMethod]
+        public string LoadDropDownCurriculumType(int countryid, int stateid, int institutionTypeId)
+        {
+            string qur = "SELECT  CurriculumTypeId, CurriculumType FROM  CurriculumType where CountryId='" + countryid + "' and StateId='" + stateid + "' and InstitutionTypeId='" + institutionTypeId + "' and  IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+        }
+
+        [WebMethod]
+        public string GetLevels()
+        {
+            string qur = "SELECT  [Level].LevelId, [Level].CurriculumTypeId, [Level].LevelName, CurriculumType.CountryId, CurriculumType.StateId, CurriculumType.InstitutionTypeId, CurriculumType.CurriculumType, Country.CountryName, State.StateName, " +
+                         " InstitutionType.InstitutionType " +
+                         " FROM  CurriculumType INNER JOIN " +
+                         " Country ON CurriculumType.CountryId = Country.CountryId INNER JOIN " +
+                         " InstitutionType ON CurriculumType.InstitutionTypeId = InstitutionType.InstitutionTypeId INNER JOIN " +
+                         " [Level] ON CurriculumType.CurriculumTypeId = [Level].CurriculumTypeId INNER JOIN " +
+                         " State ON CurriculumType.StateId = State.StateId " +
+                         " Where Country.IsDeleted = '0' and State.IsDeleted = '0' and InstitutionType.IsDeleted = '0' and CurriculumType.IsDeleted = '0' and[Level].IsDeleted = '0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string JSONresult;
+                JSONresult = JsonConvert.SerializeObject(dt);
+                return JSONresult;
+            }
+            else
+                return null;
+        }
+
+        [WebMethod]
+        public string GetGCAdmins()
+        {
+            string qur = "SELECT Admin.AdminId, Admin.AdminName, Admin.AdminAddress, Admin.AdminContactNo, Admin.AdminEmailId, Login.UserName, Login.Password, Admin.CountryId, "+
+                         " Admin.StateId, Country.CountryName, State.StateName "+
+                         " FROM  Admin INNER JOIN "+
+                         " Login ON Admin.AdminId = Login.AdminId INNER JOIN "+
+                         " Country ON Admin.CountryId = Country.CountryId INNER JOIN "+
+                         " State ON Admin.StateId = State.StateId "+
+                         " WHERE(Admin.IsDeleted = '0')";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                //DataSet ds = dbLibrary.idGetCustomResult(qur);
+                DataTable dt = ds.Tables[0];
+                string JSONresult;
+                JSONresult = JsonConvert.SerializeObject(dt);
+                return JSONresult;
+            }
+            else
+                return null;
+        }
+
     }
 }

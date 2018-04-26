@@ -142,12 +142,14 @@
                 table.$('tr.selected').removeClass('selected');
             }
             else {
+                $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
                 $("#btnSaveState").html('Update');
                 $("#btnDeleteState").css("display", "block");
                 var CountryId = $(this).find('td:nth-child(1)').text();
                 $('#hdnStateId').val($(this).find('td:nth-child(2)').text());
                 $('#<%=txtState.ClientID%>').val($(this).find('td:nth-child(4)').text());
                 $("#<%=ddlCountry.ClientID%>").val(CountryId);
+                $('#<%= ddlCountry.ClientID %>').prop('disabled', true);
                 var info = table.page.info();
                 $('#hdnpage').val(info.page + 1);
             }
@@ -269,6 +271,8 @@
             $('#<%=txtState.ClientID%>').val('');
             $("[id*=hdnStateId]").val('');
             $("#<%=divError.ClientID%>").css("display", "none");
+            $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
+
         }
     </script>
     <script type="text/javascript">

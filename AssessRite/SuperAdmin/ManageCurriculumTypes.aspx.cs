@@ -91,7 +91,7 @@ namespace AssessRite.SuperAdmin
         }
 
         [System.Web.Services.WebMethod]
-        public static string DeleteState(int curriculumtypeid)
+        public static string DeleteCurriculumType(int curriculumtypeid)
         {
             string qur = "Update CurriculumType set IsDeleted='1' where CurriculumTypeId='" + curriculumtypeid + "'";
             dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);

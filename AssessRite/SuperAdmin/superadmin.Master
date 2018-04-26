@@ -125,7 +125,7 @@
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu">
                     <a class="nav-link nav-link-collapse" data-toggle="collapse" id="liMenu" href="#collapseExamplePages" data-parent="#exampleAccordion">
                         <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Menu</span>
+                        <span class="nav-link-text">Generic Content Menu</span>
                     </a>
                     <ul class="sidenav-second-level collapse" id="collapseExamplePages">
                         <li id="liCountry">
@@ -141,7 +141,10 @@
                             <a href="ManageCurriculumtypes.aspx">Add/View Curriculum Type</a>
                         </li>
                         <li id="liLevel">
-                            <a href="#">Add/View Level</a>
+                            <a href="ManageLevels.aspx">Add/View Level</a>
+                        </li>
+                        <li id="liGCAdmin">
+                            <a href="ManageGCAdmins.aspx">Manage GC Admins</a>
                         </li>
                     </ul>
                 </li>
