@@ -97,10 +97,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Generic Content\Admin\ManageSubLevel.aspx" />
     <Content Include="SuperAdmin\Home.aspx" />
     <Content Include="SuperAdmin\ManageGCAdmins.aspx" />
     <Content Include="SuperAdmin\ManageLevels.aspx" />
     <Content Include="WebService\SuperAdminWebService.asmx" />
+    <Content Include="Generic Content\Admin\GCAdmin.Master" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -730,6 +732,20 @@
       <DependentUpon>GetData.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Generic Content\Admin\GCAdmin.Master.cs">
+      <DependentUpon>GCAdmin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic Content\Admin\GCAdmin.Master.designer.cs">
+      <DependentUpon>GCAdmin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Generic Content\Admin\ManageSubLevel.aspx.cs">
+      <DependentUpon>ManageSubLevel.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic Content\Admin\ManageSubLevel.aspx.designer.cs">
+      <DependentUpon>ManageSubLevel.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -819,7 +835,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Generic Content DE\" />
+    <Folder Include="Generic Content\DE\" />
+    <Folder Include="Generic Content\SME\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
