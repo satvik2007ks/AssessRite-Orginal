@@ -75,6 +75,26 @@ namespace AssessRite.WebMethods
         }
 
         [WebMethod]
+        public string GetInstitutionTypesForDropDown()
+        {
+            string qur = "Select * from InstitutionType where IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+        }
+
+        [WebMethod]
         public string LoadSchoolDropdownState(int countryid)
         {
             string qur = "Select * from State where CountryId='" + countryid + "' and IsDeleted='0'";

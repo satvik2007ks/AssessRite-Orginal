@@ -70,57 +70,7 @@
             <asp:Label ID="lblMsg" runat="server" Text="Scheduled Test Deleted Successfully"></asp:Label>
         </div>
         <div class="card-body">
-            <%--  <asp:UpdatePanel ID="updPnl" runat="server">
-                <ContentTemplate>--%>
             <div class="table-responsive hide">
-                <%--OnPageIndexChanging="grdTests_PageIndexChanging"  AllowPaging="true" PageSize="50" --%>
-                <%--<asp:GridView ID="grdTests" runat="server" CssClass="table table-bordered" AutoGenerateColumns="false" EmptyDataRowStyle-BorderStyle="None" EmptyDataRowStyle-BorderColor="#F1F1F1" DataKeyNames="TestId" HeaderStyle-Font-Bold="true" HeaderStyle-BackColor="Gray" HeaderStyle-ForeColor="White" HeaderStyle-BorderColor="White" Style="width: 100%; text-align: center; margin-bottom: 10px;" PagerStyle-BorderColor="White">
-                    <Columns>
-                        <asp:BoundField HeaderText="TestId" DataField="TestId" Visible="false" />
-                        <asp:BoundField HeaderText="Test Key" DataField="TestKey" HeaderStyle-HorizontalAlign="Center" />
-                        <asp:BoundField HeaderText="Test Type" DataField="TestType" HeaderStyle-HorizontalAlign="Center" />
-                        <asp:BoundField HeaderText="Class" DataField="ClassName" HeaderStyle-HorizontalAlign="Center" />
-                        <asp:BoundField HeaderText="Subject" DataField="SubjectName" HeaderStyle-HorizontalAlign="Center" />
-                        <asp:TemplateField ShowHeader="True" HeaderText="Concepts">
-                            <ItemTemplate>
-                                <div>
-                                    <asp:Button ID="btnViewConcepts" runat="server" CausesValidation="false" CommandName='<%# Eval("TestKey") %>' CssClass="btn-link" OnClick="btnViewConcepts_Click"
-                                        Text="View" CommandArgument='<%# Eval("TestId") %>' Style="border: none; cursor: pointer;" />
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:BoundField HeaderText="Questions per Concept" DataField="NoOfQuestions" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="120px" />
-                        <asp:BoundField HeaderText="Total No. of Questions" DataField="TotalQuestions" HeaderStyle-HorizontalAlign="Center" HeaderStyle-Width="120px" />
-                        <asp:BoundField HeaderText="Test Date" DataField="TestDate" DataFormatString="{0:d}" HeaderStyle-HorizontalAlign="Center" />
-                        <asp:TemplateField ShowHeader="True" HeaderText="Active From">
-                            <ItemTemplate>
-                                <div>
-                                    <asp:Label ID="lblTimeFrom" runat="server" Text='<%# DateTime.Parse(Eval("TestActiveFrom").ToString()).ToString("hh:mm tt") %>'></asp:Label>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                        <asp:TemplateField ShowHeader="True" HeaderText="Active To" HeaderStyle-Width="87px">
-                            <ItemTemplate>
-                                <div>
-                                    <asp:Label ID="lblTimeTo" runat="server" Text='<%# DateTime.Parse(Eval("TestActiveTo").ToString()).ToString("hh:mm tt") %>'></asp:Label>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                       
-                        <asp:BoundField HeaderText="Assigned To (Class)" DataField="AssignedTo" HeaderStyle-HorizontalAlign="Center" />
-
-                        <asp:TemplateField ShowHeader="False">
-                            <ItemTemplate>
-                                <div>
-                                    <asp:HyperLink ID="lnkViewTest" runat="server" Text="View Question Paper" CssClass="btn-link" Target="_blank" NavigateUrl='<%# "QuestionPaper.aspx?TestId="+ Eval("TestId") +"&Mode=Offline" %>'></asp:HyperLink>
-                                </div>
-                            </ItemTemplate>
-                        </asp:TemplateField>
-                    </Columns>
-                    <EmptyDataTemplate>
-                        <asp:Label ID="lblEmpty" runat="server" Text="No Data Found" Style="color: red; font-size: small;"></asp:Label>
-                    </EmptyDataTemplate>
-                </asp:GridView>--%>
             </div>
             <input type="hidden" id="hdnTestScheduledId" />
             <div class="table-responsive">
@@ -160,14 +110,6 @@
 
                         </div>
                         <div class="modal-body" style="text-align: center">
-                            <%-- <asp:GridView ID="grdConcepts" runat="server" CssClass="grid hide" AutoGenerateColumns="false" HeaderStyle-Font-Bold="true" HeaderStyle-BackColor="Gray" HeaderStyle-ForeColor="White" Style="width: 50%; text-align: center; margin-bottom: 10px; margin: 0 auto;" EmptyDataRowStyle-BorderColor="White">
-                                <Columns>
-                                    <asp:BoundField DataField="ConceptName" HeaderText="Concepts" HeaderStyle-HorizontalAlign="Center" />
-                                </Columns>
-                                <EmptyDataTemplate>
-                                    <label style="color: red;">No Data Found</label>
-                                </EmptyDataTemplate>
-                            </asp:GridView>--%>
                             <div class="table-responsive">
                                 <table id="mytable2" class="table table-bordered" style="width: 100% !important">
                                     <thead>
@@ -184,8 +126,7 @@
                     </div>
                 </div>
             </div>
-            <%--  </ContentTemplate>
-            </asp:UpdatePanel>--%>
+           
             <%--Modal for Viewing Assigned Students --%>
             <div class="modal fade" id="myModalAssigned" role="dialog" data-backdrop="static" data-keyboard="false">
                 <div class="modal-dialog modal-lg">
@@ -243,15 +184,7 @@
             <img src="../../Images/loading.gif" />
         </div>
     </div>
-    <%-- <script>
-        function pageLoad(sender, args) {
-            $(".dataTable tbody").before("<thead><tr></tr></thead>");
-            $(".dataTable thead tr").append($(".dataTable th"));
-            $(".dataTable tbody tr:first").remove();
-            $(".dataTable").DataTable();
-        }
-        // });
-    </script>--%>
+ 
     <script type="text/javascript">
         function openModal() {
             $("#myModal").modal("show");

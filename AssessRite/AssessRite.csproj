@@ -99,6 +99,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Generic Content\Admin\ManageSubLevel.aspx" />
     <Content Include="SuperAdmin\Home.aspx" />
+    <Content Include="SuperAdmin\InstitutionRegistration.aspx" />
     <Content Include="SuperAdmin\ManageGCAdmins.aspx" />
     <Content Include="SuperAdmin\ManageLevels.aspx" />
     <Content Include="WebService\SuperAdminWebService.asmx" />
@@ -764,6 +765,13 @@
     </Compile>
     <Compile Include="SuperAdmin\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperAdmin\InstitutionRegistration.aspx.cs">
+      <DependentUpon>InstitutionRegistration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\InstitutionRegistration.aspx.designer.cs">
+      <DependentUpon>InstitutionRegistration.aspx</DependentUpon>
     </Compile>
     <Compile Include="SuperAdmin\ManageAdmins.aspx.cs">
       <DependentUpon>ManageAdmins.aspx</DependentUpon>

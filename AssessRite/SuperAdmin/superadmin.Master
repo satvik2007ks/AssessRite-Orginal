@@ -109,11 +109,16 @@
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
-
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage Schools">
+                    <a class="nav-link" href="InstitutionRegistration.aspx">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">Institution Registration</span>
+                    </a>
+                </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage Schools">
                     <a class="nav-link" href="SchoolInfo.aspx">
                         <i class="fa fa-fw fa-file"></i>
-                        <span class="nav-link-text">Manage Schools</span>
+                        <span class="nav-link-text">Manage Insitutions</span>
                     </a>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage Admins">
