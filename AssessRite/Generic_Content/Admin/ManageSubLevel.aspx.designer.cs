@@ -94,6 +94,24 @@ namespace AssessRite.Generic_Content.Admin {
         protected global::System.Web.UI.WebControls.DropDownList ddlLevel;
         
         /// <summary>
+        /// Label3 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label3;
+        
+        /// <summary>
+        /// chkClass control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBoxList chkClass;
+        
+        /// <summary>
         /// lblSubLevel control.
         /// </summary>
         /// <remarks>
@@ -103,13 +121,13 @@ namespace AssessRite.Generic_Content.Admin {
         protected global::System.Web.UI.WebControls.Label lblSubLevel;
         
         /// <summary>
-        /// ddlClass control.
+        /// txtSubLevel control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlClass;
+        protected global::System.Web.UI.WebControls.TextBox txtSubLevel;
         
         /// <summary>
         /// divError control.
@@ -130,39 +148,21 @@ namespace AssessRite.Generic_Content.Admin {
         protected global::System.Web.UI.WebControls.Label lblError;
         
         /// <summary>
-        /// btnClassSave control.
+        /// hdnCountry control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnClassSave;
+        protected global::System.Web.UI.WebControls.HiddenField hdnCountry;
         
         /// <summary>
-        /// gridClass control.
+        /// hdnState control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gridClass;
-        
-        /// <summary>
-        /// btnDelete control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnDelete;
-        
-        /// <summary>
-        /// btnYes control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btnYes;
+        protected global::System.Web.UI.WebControls.HiddenField hdnState;
     }
 }

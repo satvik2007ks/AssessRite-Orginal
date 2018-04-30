@@ -472,13 +472,13 @@ namespace AssessRite.SuperAdmin {
         protected global::System.Web.UI.WebControls.Label Label34;
         
         /// <summary>
-        /// chkTestType control.
+        /// chkAssessmentType control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBoxList chkTestType;
+        protected global::System.Web.UI.WebControls.CheckBoxList chkAssessmentType;
         
         /// <summary>
         /// Label19 control.
@@ -515,24 +515,6 @@ namespace AssessRite.SuperAdmin {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSubscriptionEndDate;
-        
-        /// <summary>
-        /// Label25 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label Label25;
-        
-        /// <summary>
-        /// ddlPaymentMode control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPaymentMode;
         
         /// <summary>
         /// div4 control.

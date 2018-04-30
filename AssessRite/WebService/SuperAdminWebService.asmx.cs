@@ -298,5 +298,25 @@ namespace AssessRite.WebMethods
                 return null;
         }
 
+        [WebMethod]
+        public string LoadDropDownLevels(int curriculumtypeId)
+        {
+            string qur = "SELECT  LevelName, LevelId from Level where CurriculumTypeId='"+ curriculumtypeId + "' and  IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+        }
+
     }
 }

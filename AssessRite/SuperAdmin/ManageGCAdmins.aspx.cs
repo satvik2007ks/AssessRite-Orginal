@@ -41,7 +41,7 @@ namespace AssessRite.SuperAdmin
                         }
                         else
                         {
-                            qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), username, password, "Update");
+                            qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(),"1", username, password, "Update");
                             dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
                             return "Admin Info Updated Successfully";
                         }
@@ -64,7 +64,7 @@ namespace AssessRite.SuperAdmin
                     }
                     else
                     {
-                        qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", "", "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), username, password, "Insert");
+                        qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", "", "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(),"1", username, password, "Insert");
                         dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
                         return "Admin Added Successfully";
                     }
@@ -79,7 +79,7 @@ namespace AssessRite.SuperAdmin
                     }
                     else
                     {
-                        qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), username, password, "Update");
+                        qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(),"1", username, password, "Update");
                         dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
                         return "Admin Info Updated Successfully";
                     }

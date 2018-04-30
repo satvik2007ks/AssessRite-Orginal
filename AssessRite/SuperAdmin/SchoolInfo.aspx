@@ -231,12 +231,11 @@
             //$(".dataTable").DataTable();
         }
     </script>
-    <script>
+     <script>
         $(document).ready(function () {
-            $("#navbar li").removeClass("current-menu-item");//this will remove the active class from  
-            //$("#navbar1 li").removeClass("current-menu-item");//this will remove the active class from  
-            $('#liMenu').addClass('active');
-            //$('#liStudent1').addClass('current-menu-item');
+            $('#collapseSubscriptionPages li').removeClass("current-menu-item");
+            $('#liManageInstitution').addClass('current-menu-item');
+            $("#collapseSubscriptionPages").addClass('sidenav-second-level collapse show');
         });
     </script>
     <script>

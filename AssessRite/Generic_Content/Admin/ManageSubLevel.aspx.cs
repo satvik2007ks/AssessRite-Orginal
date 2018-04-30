@@ -11,7 +11,11 @@ namespace AssessRite.Generic_Content.Admin
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (!IsPostBack)
+            {
+                hdnCountry.Value = Session["CountryId"].ToString();
+                hdnState.Value = Session["StateId"].ToString();
+            }
         }
     }
 }

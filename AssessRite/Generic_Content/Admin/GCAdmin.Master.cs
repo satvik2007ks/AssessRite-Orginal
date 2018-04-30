@@ -25,6 +25,10 @@ namespace AssessRite.Generic_Content.Admin
             }
             if (Session["IsAdmin"] != null)
             {
+                if (Session["IsGCAdmin"].ToString() != "1")
+                {
+                    Response.Redirect("../../AccessDenied.aspx");
+                }
                 if (Session["IsAdmin"].ToString() != "True")
                 {
                     Response.Redirect("../../Login.aspx");

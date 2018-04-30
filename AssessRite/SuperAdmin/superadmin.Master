@@ -22,8 +22,6 @@
     <%--<script src="../Scripts/bootstrap.min.js"></script>--%>
     <%--<script src="../Scripts/jquery-1.11.1.min.js"></script>--%>
     <style>
-      
-
         .sidenav-toggled #lblSchoolName {
             visibility: hidden;
         }
@@ -66,24 +64,27 @@
         .odd, .even {
             cursor: pointer !important;
         }
+         .current-menu-item {
+            background-color: black;
+        }
     </style>
 
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
     <script type="text/javascript">
-        function SessionExpireAlert(timeout) {
-            var seconds = timeout / 1000;
-            setInterval(function () {
-                seconds--;
-            }, 1000);
-            //setTimeout(function () {
-            //    alert("Your session will expire in approx. 2 Minute. Please save your unsaved data.")
-            //    window.focus();
-            //}, timeout - 120 * 1000);
-            setTimeout(function () {
-                window.location = "../SessionExpired.html";
-            }, timeout);
-        };
+            function SessionExpireAlert(timeout) {
+                var seconds = timeout / 1000;
+                setInterval(function () {
+                    seconds--;
+                }, 1000);
+                //setTimeout(function () {
+                //    alert("Your session will expire in approx. 2 Minute. Please save your unsaved data.")
+                //    window.focus();
+                //}, timeout - 120 * 1000);
+                setTimeout(function () {
+                    window.location = "../SessionExpired.html";
+                }, timeout);
+            };
     </script>
 </head>
 <body class="fixed-nav sticky-footer bg-dark" id="page-top">
@@ -109,7 +110,23 @@
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage Schools">
+
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu">
+                    <a class="nav-link nav-link-collapse" data-toggle="collapse" id="liSubscriptionMenu" href="#collapseSubscriptionPages" data-parent="#exampleAccordion">
+                        <i class="fa fa-fw fa-table"></i>
+                        <span class="nav-link-text">Subscription Menu</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseSubscriptionPages">
+                     <li id="liRegistration">
+                            <a href="InstitutionRegistration.aspx">Institution Registration</a>
+                        </li>
+                        <li id="liManageInstitution">
+                            <a href="SchoolInfo.aspx">Manage Insitutions</a>
+                        </li>
+                    </ul>
+                </li>
+
+               <%-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage Schools">
                     <a class="nav-link" href="InstitutionRegistration.aspx">
                         <i class="fa fa-fw fa-file"></i>
                         <span class="nav-link-text">Institution Registration</span>
@@ -120,13 +137,13 @@
                         <i class="fa fa-fw fa-file"></i>
                         <span class="nav-link-text">Manage Insitutions</span>
                     </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage Admins">
+                </li>--%>
+                <%-- <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Manage Admins">
                     <a class="nav-link" href="ManageAdmins.aspx">
                         <i class="fa fa-fw fa-file"></i>
                         <span class="nav-link-text">Manage Admins</span>
                     </a>
-                </li>
+                </li>--%>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu">
                     <a class="nav-link nav-link-collapse" data-toggle="collapse" id="liMenu" href="#collapseExamplePages" data-parent="#exampleAccordion">
                         <i class="fa fa-fw fa-table"></i>

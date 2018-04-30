@@ -41,6 +41,7 @@
             display: block;
         }
     </style>
+    <%--<link href="../css/jquery-ui.css" rel="stylesheet" />--%>
     <link href="../css/jquery-ui.css" rel="stylesheet" />
     <link href="../css/bootstrap-timepicker.min.css" rel="stylesheet" />
     <script src="../Scripts/jquery-ui.js"></script>
@@ -225,12 +226,12 @@
                             </asp:DropDownList>
                         </div>
                         <div class="form-group">
-                            <asp:Label ID="Label12" runat="server" Text="No. of Students*"></asp:Label>
+                            <asp:Label ID="Label12" runat="server" Text="No. of Students* (1 License/Student)"></asp:Label>
                             <asp:TextBox ID="txtNoOfStudents" runat="server" CssClass="form-control" MaxLength="100"></asp:TextBox>
                         </div>
                         <div class="form-group" id="divCheckbox">
-                            <asp:Label ID="Label34" runat="server" Text="Test Type"></asp:Label>
-                            <asp:CheckBoxList ID="chkTestType" runat="server" CssClass="checkbox">
+                            <asp:Label ID="Label34" runat="server" Text="Assessment Type"></asp:Label>
+                            <asp:CheckBoxList ID="chkAssessmentType" runat="server" CssClass="checkbox">
                                 <asp:ListItem Value="Online">Online</asp:ListItem>
                                 <asp:ListItem Value="Offline">Offline</asp:ListItem>
                                 <asp:ListItem Value="ZeroNet">ZeroNet</asp:ListItem>
@@ -242,12 +243,8 @@
                         </div>
                         <div class="form-group">
                             <asp:Label ID="Label20" runat="server" Text="Subscription End Date*"></asp:Label>
-                            <asp:TextBox ID="txtSubscriptionEndDate" runat="server" CssClass="form-control" MaxLength="20"></asp:TextBox>
-                        </div>
-                        <div class="form-group">
-                            <asp:Label ID="Label25" runat="server" Text="Mode of Payment"></asp:Label>
-                            <asp:DropDownList ID="ddlPaymentMode" runat="server" CssClass="form-control"></asp:DropDownList>
-                            <div class="help-block" id="div4" runat="server" style="display: none">
+                            <asp:TextBox ID="txtSubscriptionEndDate" runat="server" CssClass="form-control Otherdatepicker" MaxLength="20"></asp:TextBox>
+                              <div class="help-block" id="div4" runat="server" style="display: none">
                                 <asp:Label ID="Label22" runat="server" Style="color: red" Text="Please Enter School"></asp:Label>
                             </div>
                         </div>
@@ -262,7 +259,13 @@
         </div>
     </div>
     <input type="hidden" id="hdnpage" />
-
+     <script>
+        $(document).ready(function () {
+            $('#collapseSubscriptionPages li').removeClass("current-menu-item");
+            $('#liRegistration').addClass('current-menu-item');
+            $("#collapseSubscriptionPages").addClass('sidenav-second-level collapse show');
+        });
+    </script>
     <script type="text/javascript">
         function runEffect1() {
             //alert("working");
@@ -464,21 +467,21 @@
 
         function loadCurriculumType(institutiontypeid, countryid, stateid, selectvalue) {
             var ddlCurriculumTypeDropDownListXML = $('#<%=ddlCurriculumType.ClientID%>');
-              ddlCurriculumTypeDropDownListXML.empty();
-              var paramobj = {};
-              paramobj.countryid = countryid;
-              paramobj.stateid = stateid;
-              paramobj.institutionTypeId = institutiontypeid;
-              $.ajax({
-                  type: "POST",
-                  url: "../WebService/SuperAdminWebService.asmx/LoadDropDownCurriculumType",
-                  data: JSON.stringify(paramobj),
-                  //  data: '{institutiontypeid: "' + institutiontypeid + '",countryid="' + countryid + '",stateid="' + stateid + '"}',
-                  contentType: "application/json; charset=utf-8",
-                  dataType: "json",
-                  success: function (response) {
-                      // console.log(response.d);
-                      $("#<%=divError.ClientID%>").css("display", "none");
+            ddlCurriculumTypeDropDownListXML.empty();
+            var paramobj = {};
+            paramobj.countryid = countryid;
+            paramobj.stateid = stateid;
+            paramobj.institutionTypeId = institutiontypeid;
+            $.ajax({
+                type: "POST",
+                url: "../WebService/SuperAdminWebService.asmx/LoadDropDownCurriculumType",
+                data: JSON.stringify(paramobj),
+                //  data: '{institutiontypeid: "' + institutiontypeid + '",countryid="' + countryid + '",stateid="' + stateid + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    // console.log(response.d);
+                    $("#<%=divError.ClientID%>").css("display", "none");
                     var xmlDoc = $.parseXML(response.d);
                     // console.log(xmlDoc);
                     // Now find the Table from response and loop through each item (row).
@@ -495,12 +498,12 @@
                 },
                 error: function (response) {
                     $("#<%=lblError.ClientID%>").html('No Curriculum Type Found');
-                     $("#<%=divError.ClientID%>").css("display", "block");
-                      return;
-                  }
-              });
-              var interval = setInterval(function () {
-                  if (document.querySelectorAll('#<%=ddlCurriculumType.ClientID%> option').length > 0) {
+                      $("#<%=divError.ClientID%>").css("display", "block");
+                    return;
+                }
+            });
+            var interval = setInterval(function () {
+                if (document.querySelectorAll('#<%=ddlCurriculumType.ClientID%> option').length > 0) {
                     //console.log('List is definitely populated!');
                     clearInterval(interval);
                     $("#<%=ddlCurriculumType.ClientID%>").val(selectvalue);
@@ -535,12 +538,11 @@
         });
 
         $("#<%=txtSubscriptionStartDate.ClientID%>").change(function () {
-            alert("working");
             var tt = $("#<%=txtSubscriptionStartDate.ClientID%>").val();
-                var date = new Date(tt);
-                var newdate = new Date(date);
+            var date = new Date(tt);
+            var newdate = new Date(date);
 
-            if ($("#<%=ddlSubscriptionType.ClientID%>").val() == 'Monthly') {
+          <%--  if ($("#<%=ddlSubscriptionType.ClientID%>").val() == 'Monthly') {
                 newdate.setDate(newdate.getDate() + 30);
                 var dd = newdate.getDate();
                 var mm = newdate.getMonth() + 1;
@@ -548,14 +550,19 @@
 
                 var someFormattedDate = mm + '/' + dd + '/' + y;
                 $("#<%=txtSubscriptionEndDate.ClientID%>").val(someFormattedDate);
-            }
-            else if ($("#<%=ddlSubscriptionType.ClientID%>").val() == 'Yearly') {
-                 newdate.setDate(newdate.getDate());
-                var dd = newdate.getDate();
-                var mm = newdate.getMonth();
-                var y = newdate.getFullYear()+1;
-                var someFormattedDate = mm + '/' + dd + '/' + y;
-                $("#<%=txtSubscriptionEndDate.ClientID%>").val(someFormattedDate);
+            }--%>
+            if ($("#<%=ddlInstitutionType.ClientID%> option:selected").text() == 'School') {
+                if ($("#<%=ddlSubscriptionType.ClientID%>").val() == 'Yearly') {
+                    newdate.setDate(newdate.getDate());
+                    //var dd = newdate.getDate();
+                    var mm = newdate.getMonth();
+                    var y = newdate.getFullYear();
+                    if (mm > 4 && mm <= 12) {
+                        y = newdate.getFullYear() + 1;
+                    }
+                    var someFormattedDate = '04' + '/' + '30' + '/' + y;
+                    $("#<%=txtSubscriptionEndDate.ClientID%>").val(someFormattedDate);
+                }
             }
         });
         $(function () {

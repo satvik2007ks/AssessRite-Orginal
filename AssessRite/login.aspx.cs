@@ -20,7 +20,7 @@ namespace AssessRite
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             divError.Attributes.Add("Style", "display:none");
-            string qur = "SELECT Login.UserName, Login.UserId, Login.UserTypeId, Login.SchoolId, SchoolInfo.SchoolName, Login.TeacherId, Login.StudentId, Login.AdminId, Login.DEId,Login.SMEId FROM Login INNER JOIN SchoolInfo ON Login.SchoolId = SchoolInfo.schoolId where Login.UserName='" + txtUserName.Text + "' and Login.Password='" + txtPassword.Text + "' and Login.IsDeleted='0'";
+            string qur = "SELECT Login.UserName, Login.UserId, Login.UserTypeId, Login.SchoolId, SchoolInfo.SchoolName, Login.TeacherId, Login.StudentId, Login.AdminId, Login.DEId, Login.SMEId, Admin.IsGCAdmin, Admin.CountryId, Admin.StateId FROM Login LEFT OUTER JOIN Admin ON Login.AdminId = Admin.AdminId LEFT OUTER JOIN SchoolInfo ON Login.SchoolId = SchoolInfo.schoolId where Login.UserName='" + txtUserName.Text + "' and Login.Password='" + txtPassword.Text + "' and Login.IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -52,7 +52,17 @@ namespace AssessRite
                 if (Session["UserType"].ToString() == "2")
                 {
                     Session["AdminId"] = ds.Tables[0].Rows[0]["AdminId"].ToString();
-                    Response.Redirect("AssessRite/Admin/Home.aspx");
+                    if (bool.Parse(ds.Tables[0].Rows[0]["IsGCAdmin"].ToString()))
+                    {
+                        Session["IsGCAdmin"] = ds.Tables[0].Rows[0]["IsGCAdmin"].ToString();
+                        Session["CountryId"] = ds.Tables[0].Rows[0]["CountryId"].ToString();
+                        Session["StateId"] = ds.Tables[0].Rows[0]["StateId"].ToString();
+                        Response.Redirect("Generic_Content/Admin/Home.aspx");
+                    }
+                    else
+                    {
+                        Response.Redirect("AssessRite/Admin/Home.aspx");
+                    }
                 }
                 if (Session["UserType"].ToString() == "1")
                 {

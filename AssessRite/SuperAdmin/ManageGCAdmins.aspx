@@ -9,7 +9,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="breadcrumb">
-        <h5 class="breadcrumbheading">Register School</h5>
+        <h5 class="breadcrumbheading">Manage Generic Content Admins</h5>
     </div>
     <div class="card mb-3">
         <div class="card-header">

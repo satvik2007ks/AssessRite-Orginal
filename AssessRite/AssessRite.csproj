@@ -57,6 +57,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -72,8 +75,26 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="System.Web.Http">
       <HintPath>..\..\AssessRite\AssessRite 1.3\bin\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -89,6 +110,7 @@
     <Content Include="AssessRite\SME\sme.Master" />
     <Content Include="AssessRite\Student\student.Master" />
     <Content Include="AssessRite\Teacher\teacher.Master" />
+    <Content Include="css\jquery-ui.css" />
     <Content Include="css\main.less" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
@@ -97,13 +119,22 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Generic Content\Admin\ManageSubLevel.aspx" />
+    <Content Include="Generic_Content\Admin\Home.aspx" />
+    <Content Include="Generic_Content\Admin\ManageSubLevel.aspx" />
+    <Content Include="Generic_Content\WebService\GCWebService.asmx" />
+    <Content Include="Images\jquery-ui icons\ui-icons_444444_256x240.png" />
+    <Content Include="Images\jquery-ui icons\ui-icons_555555_256x240.png" />
+    <Content Include="Images\jquery-ui icons\ui-icons_777620_256x240.png" />
+    <Content Include="Images\jquery-ui icons\ui-icons_777777_256x240.png" />
+    <Content Include="Images\jquery-ui icons\ui-icons_cc0000_256x240.png" />
+    <Content Include="Images\jquery-ui icons\ui-icons_ffffff_256x240.png" />
+    <Content Include="Scripts\jquery-ui %282%29.js" />
     <Content Include="SuperAdmin\Home.aspx" />
     <Content Include="SuperAdmin\InstitutionRegistration.aspx" />
     <Content Include="SuperAdmin\ManageGCAdmins.aspx" />
     <Content Include="SuperAdmin\ManageLevels.aspx" />
     <Content Include="WebService\SuperAdminWebService.asmx" />
-    <Content Include="Generic Content\Admin\GCAdmin.Master" />
+    <Content Include="Generic_Content\Admin\GCAdmin.Master" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -208,7 +239,6 @@
     <Content Include="css\custom.css" />
     <Content Include="css\font-awesome.css" />
     <Content Include="css\font-awesome.min.css" />
-    <Content Include="css\jquery-ui.css" />
     <Content Include="css\main.css" />
     <Content Include="css\owl.carousel.css" />
     <Content Include="css\owl.transitions.css" />
@@ -733,19 +763,30 @@
       <DependentUpon>GetData.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Generic Content\Admin\GCAdmin.Master.cs">
+    <Compile Include="Generic_Content\Admin\GCAdmin.Master.cs">
       <DependentUpon>GCAdmin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Generic Content\Admin\GCAdmin.Master.designer.cs">
+    <Compile Include="Generic_Content\Admin\GCAdmin.Master.designer.cs">
       <DependentUpon>GCAdmin.Master</DependentUpon>
     </Compile>
-    <Compile Include="Generic Content\Admin\ManageSubLevel.aspx.cs">
+    <Compile Include="Generic_Content\Admin\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\ManageSubLevel.aspx.cs">
       <DependentUpon>ManageSubLevel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Generic Content\Admin\ManageSubLevel.aspx.designer.cs">
+    <Compile Include="Generic_Content\Admin\ManageSubLevel.aspx.designer.cs">
       <DependentUpon>ManageSubLevel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Generic_Content\WebService\GCWebService.asmx.cs">
+      <DependentUpon>GCWebService.asmx</DependentUpon>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -843,8 +884,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Generic Content\DE\" />
-    <Folder Include="Generic Content\SME\" />
+    <Folder Include="Generic_Content\DE\" />
+    <Folder Include="Generic_Content\SME\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
