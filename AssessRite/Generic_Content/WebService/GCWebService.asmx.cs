@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -18,9 +20,63 @@ namespace AssessRite.Generic_Content.WebService
     {
 
         [WebMethod]
-        public string HelloWorld()
+        public string LoadDropDownSubLevels(int levelid)
         {
-            return "Hello World";
+            string qur = "SELECT  SubLevel, SubLevelId from SubLevel where LevelId='" + levelid + "' and  IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+        }
+
+        [WebMethod]
+        public string LoadDropdownSubjects(int sublevelid)
+        {
+            string qur = "SELECT  SubjectId, SubjectName from Subject where SubLevelId='" + sublevelid + "' and  IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+        }
+
+        [WebMethod]
+        public string LoadDropdownConcepts(int subjectid)
+        {
+            string qur = "SELECT  ConceptId, ConceptName from Concept where SubjectId='" + subjectid + "' and  IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
         }
     }
 }

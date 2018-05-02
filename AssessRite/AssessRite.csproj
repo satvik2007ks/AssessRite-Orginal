@@ -119,8 +119,13 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Generic_Content\Admin\Concepts.aspx" />
     <Content Include="Generic_Content\Admin\Home.aspx" />
+    <Content Include="Generic_Content\Admin\ManageDE.aspx" />
+    <Content Include="Generic_Content\Admin\ManageSME.aspx" />
     <Content Include="Generic_Content\Admin\ManageSubLevel.aspx" />
+    <Content Include="Generic_Content\Admin\Objectives.aspx" />
+    <Content Include="Generic_Content\Admin\Subject.aspx" />
     <Content Include="Generic_Content\WebService\GCWebService.asmx" />
     <Content Include="Images\jquery-ui icons\ui-icons_444444_256x240.png" />
     <Content Include="Images\jquery-ui icons\ui-icons_555555_256x240.png" />
@@ -132,6 +137,7 @@
     <Content Include="SuperAdmin\Home.aspx" />
     <Content Include="SuperAdmin\InstitutionRegistration.aspx" />
     <Content Include="SuperAdmin\ManageGCAdmins.aspx" />
+    <Content Include="SuperAdmin\ManageGCDB.aspx" />
     <Content Include="SuperAdmin\ManageLevels.aspx" />
     <Content Include="WebService\SuperAdminWebService.asmx" />
     <Content Include="Generic_Content\Admin\GCAdmin.Master" />
@@ -763,6 +769,13 @@
       <DependentUpon>GetData.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Generic_Content\Admin\Concepts.aspx.cs">
+      <DependentUpon>Concepts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\Concepts.aspx.designer.cs">
+      <DependentUpon>Concepts.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Generic_Content\Admin\GCAdmin.Master.cs">
       <DependentUpon>GCAdmin.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -777,12 +790,40 @@
     <Compile Include="Generic_Content\Admin\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Generic_Content\Admin\ManageDE.aspx.cs">
+      <DependentUpon>ManageDE.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\ManageDE.aspx.designer.cs">
+      <DependentUpon>ManageDE.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\ManageSME.aspx.cs">
+      <DependentUpon>ManageSME.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\ManageSME.aspx.designer.cs">
+      <DependentUpon>ManageSME.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Generic_Content\Admin\ManageSubLevel.aspx.cs">
       <DependentUpon>ManageSubLevel.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Generic_Content\Admin\ManageSubLevel.aspx.designer.cs">
       <DependentUpon>ManageSubLevel.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\Objectives.aspx.cs">
+      <DependentUpon>Objectives.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\Objectives.aspx.designer.cs">
+      <DependentUpon>Objectives.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\Subject.aspx.cs">
+      <DependentUpon>Subject.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\Admin\Subject.aspx.designer.cs">
+      <DependentUpon>Subject.aspx</DependentUpon>
     </Compile>
     <Compile Include="Generic_Content\WebService\GCWebService.asmx.cs">
       <DependentUpon>GCWebService.asmx</DependentUpon>
@@ -841,6 +882,13 @@
     </Compile>
     <Compile Include="SuperAdmin\ManageGCAdmins.aspx.designer.cs">
       <DependentUpon>ManageGCAdmins.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageGCDB.aspx.cs">
+      <DependentUpon>ManageGCDB.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="SuperAdmin\ManageGCDB.aspx.designer.cs">
+      <DependentUpon>ManageGCDB.aspx</DependentUpon>
     </Compile>
     <Compile Include="SuperAdmin\ManageInstitutionTypes.aspx.cs">
       <DependentUpon>ManageInstitutionTypes.aspx</DependentUpon>

@@ -165,6 +165,9 @@
                         <li id="liLevel">
                             <a href="ManageLevels.aspx">Add/View Level</a>
                         </li>
+                        <li id="liCreateGCDB">
+                            <a href="ManageGCDB.aspx">Manage GC Database</a>
+                        </li>
                         <li id="liGCAdmin">
                             <a href="ManageGCAdmins.aspx">Manage GC Admins</a>
                         </li>

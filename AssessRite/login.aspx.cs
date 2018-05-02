@@ -67,7 +67,7 @@ namespace AssessRite
                 if (Session["UserType"].ToString() == "1")
                 {
                     // Session["SuperAdminId"] = ds.Tables[0].Rows[0]["SuperAdminId"].ToString();
-                    Response.Redirect("SuperAdmin/SchoolInfo.aspx");
+                    Response.Redirect("SuperAdmin/Home.aspx");
                 }
                 Response.Redirect("Home.aspx");
             }

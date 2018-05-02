@@ -58,6 +58,10 @@
                         <asp:Label ID="lblAdminEmailId" runat="server" Text="Admin Email ID"></asp:Label>
                         <asp:TextBox ID="txtAdminEmailId" runat="server" CssClass="form-control" MaxLength="99"></asp:TextBox>
                     </div>
+                     <div class="form-group">
+                        <asp:Label ID="Label2" runat="server" Text="Default Database"></asp:Label>
+                        <asp:DropDownList ID="ddlDefaultDB" runat="server" CssClass="form-control"></asp:DropDownList>
+                    </div>
                     <div class="form-group">
                         <asp:Label ID="lblUsername" runat="server" Text="UserName*"></asp:Label>
                         <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control" MaxLength="20"></asp:TextBox>

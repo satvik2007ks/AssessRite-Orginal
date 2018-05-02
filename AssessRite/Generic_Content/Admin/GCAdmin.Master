@@ -130,11 +130,11 @@
                             <a href="Question.aspx">Add Question</a>
                         </li>--%>
                         <li id="liViewQuestions">
-                            <a href="ViewQuestion.aspx">View/Edit Questions</a>
+                            <a href="ViewQuestion.aspx">View Questions</a>
                         </li>
-                        <li id="liReviewQuestions">
+                       <%-- <li id="liReviewQuestions">
                             <a href="ReviewQuestion.aspx">Review Questions</a>
-                        </li>
+                        </li>--%>
                     </ul>
                 </li>
               <%--  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Settings">

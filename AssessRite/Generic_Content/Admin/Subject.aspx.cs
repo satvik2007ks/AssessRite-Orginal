@@ -7,7 +7,7 @@ using System.Web.UI.WebControls;
 
 namespace AssessRite.Generic_Content.Admin
 {
-    public partial class ManageSubLevel : System.Web.UI.Page
+    public partial class Subject : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
