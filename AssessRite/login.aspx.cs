@@ -20,15 +20,15 @@ namespace AssessRite
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             divError.Attributes.Add("Style", "display:none");
-            string qur = "SELECT Login.UserName, Login.UserId, Login.UserTypeId, Login.SchoolId, SchoolInfo.SchoolName, Login.TeacherId, Login.StudentId, Login.AdminId, Login.DEId, Login.SMEId, Admin.IsGCAdmin, Admin.CountryId, Admin.StateId FROM Login LEFT OUTER JOIN Admin ON Login.AdminId = Admin.AdminId LEFT OUTER JOIN SchoolInfo ON Login.SchoolId = SchoolInfo.schoolId where Login.UserName='" + txtUserName.Text + "' and Login.Password='" + txtPassword.Text + "' and Login.IsDeleted='0'";
+            string qur = "SELECT Login.UserName, Login.UserId, Login.UserTypeId,Login.InstitutionId,Login.DefaultDB, Login.TeacherId, Login.StudentId, Login.AdminId, Login.DEId, Login.SMEId, Admin.IsGCAdmin, Admin.CountryId, Admin.StateId, InstitutionInfo.InstitutionName FROM  Login LEFT OUTER JOIN InstitutionInfo ON Login.InstitutionId = InstitutionInfo.InstitutionId LEFT OUTER JOIN Admin ON Login.AdminId = Admin.AdminId where Login.UserName='" + txtUserName.Text + "' and Login.Password='" + txtPassword.Text + "' and Login.IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
                 Session["UserId"] = ds.Tables[0].Rows[0]["UserId"].ToString();
                 Session["UserType"] = ds.Tables[0].Rows[0]["UserTypeId"].ToString();
                 Session["UserName"] = ds.Tables[0].Rows[0]["UserName"].ToString();
-                Session["SchoolName"] = ds.Tables[0].Rows[0]["SchoolName"].ToString();
-                Session["SchoolId"] = ds.Tables[0].Rows[0]["SchoolId"].ToString();
+                Session["SchoolName"] = ds.Tables[0].Rows[0]["InstitutionName"].ToString();
+                Session["SchoolId"] = ds.Tables[0].Rows[0]["InstitutionId"].ToString();
                 if (Session["UserType"].ToString() == "6")
                 {
                     Session["SMEId"] = ds.Tables[0].Rows[0]["SMEId"].ToString();

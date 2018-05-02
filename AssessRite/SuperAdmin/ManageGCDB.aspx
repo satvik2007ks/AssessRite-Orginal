@@ -49,7 +49,7 @@
                             <asp:Label ID="lblError" runat="server" Style="color: red" Text="Please Enter Database Name"></asp:Label>
                         </div>
                     </div>
-                    <input type="hidden" id="hdnAdminId" />
+                    <input type="hidden" id="hdnGCDBId" />
                     <a href="#" id="btnSaveDB" class="btn btn-primary">Save</a>
                 </div>
                 <div class="col-lg-9">
@@ -57,12 +57,12 @@
                         <table class="table table-bordered" id="tblGCDB" style="width: 100%;">
                             <thead>
                                 <tr>
-                                    <th>Country</th>
-                                    <th>State</th>
-                                    <th>Database Name</th>
                                     <th style="display: none">CountryId</th>
                                     <th style="display: none">StateId</th>
                                     <th style="display: none">DBId</th>
+                                    <th>Country</th>
+                                    <th>State</th>
+                                    <th>Database Name</th>
                                 </tr>
                             </thead>
                         </table>
@@ -107,6 +107,7 @@
             $('#liCreateGCDB').addClass('current-menu-item');
             $("#collapseExamplePages").addClass('sidenav-second-level collapse show');
             loadCountry();
+            loadtable(0);
         });
         function loadCountry() {
             var ddlCountryDropDownListXML = $('#<%=ddlCountry.ClientID%>');
@@ -184,6 +185,183 @@
                     $("#<%=ddlState.ClientID%>").val(selectvalue);
                 }
             }, 200);
+        }
+              function loadtable(defaultpage) {
+            $.ajax({
+                type: "POST",
+                url: "../WebService/SuperAdminWebService.asmx/GetGCDB",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (data) {
+                    // console.log(data.d)
+                    var json = JSON.parse(data.d);
+                    table = $('#tblGCDB').DataTable({
+                        data: json,
+
+                        select: true,
+                        columns: [
+                            { className: "hide", data: 'CountryId' },
+                            { className: "hide", data: 'StateId' },
+                            { className: "hide", data: 'GCDBId' },
+                            { data: 'CountryName' },
+                            { data: 'StateName' },
+                            { data: 'GCDBName' }
+                        ]
+                    });
+                    table.page(defaultpage).draw(false);
+                }
+            });
+        }
+
+        $(document).on('click', '#tblGCDB tbody tr', function () {
+            $("#<%=divError.ClientID%>").css("display", "none");
+            if ($(this).hasClass('selected')) {
+                //     $(this).removeClass('selected');
+            }
+            else {
+                table.$('tr.selected').removeClass('selected');
+                $(this).addClass('selected');
+            }
+            if ($(this).find("td:eq(0)").text() == 'No data available in table') {
+                table.$('tr.selected').removeClass('selected');
+            }
+            else {
+                $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
+                $('#<%= ddlState.ClientID %>').prop('disabled', false);
+
+                $("#btnSaveDB").html('Update');
+                $("#btnDeleteDB").css("display", "block");
+                var CountryId = $(this).find('td:nth-child(1)').text();
+                var StateId = $(this).find('td:nth-child(2)').text();
+                $('#hdnGCDBId').val($(this).find('td:nth-child(3)').text());
+                $('#<%=txtDatabaseName.ClientID%>').val($(this).find('td:nth-child(6)').text());
+                $("#<%=ddlCountry.ClientID%>").val(CountryId);
+                loadState(CountryId, StateId);
+                $('#<%= ddlCountry.ClientID %>').prop('disabled', true);
+                $('#<%= ddlState.ClientID %>').prop('disabled', true);
+                var info = table.page.info();
+                $('#hdnpage').val(info.page + 1);
+            }
+        });
+
+        $(function () {
+            $("[id*=btnSaveDB]").click(function () {
+                //  alert('fd');
+                var english = /^[A-Za-z0-9 ]*$/;
+                var trimmedValue = jQuery.trim($('#<%=txtDatabaseName.ClientID%>').val());
+                if ($("#<%=ddlCountry.ClientID%>").val() == '-1') {
+                    $("#<%=lblError.ClientID%>").html('Please Select Country');
+                     $("#<%=divError.ClientID%>").css("display", "block");
+                     return false;
+                 }
+                 else if ($("#<%=ddlState.ClientID%>").val() == '-1') {
+                     $("#<%=lblError.ClientID%>").html('Please Select State');
+                     $("#<%=divError.ClientID%>").css("display", "block");
+                     return false;
+                 }
+                 else if (trimmedValue == '') {
+                     $("#<%=lblError.ClientID%>").html('Database Name Cannot Be Blank');
+                     $("#<%=divError.ClientID%>").css("display", "block");
+                     return false;
+                 }
+                 else {
+                     $("#<%=divError.ClientID%>").css("display", "none");
+                }
+                var obj = {};
+                obj.gcdbid = "0";
+                if ($('#hdnGCDBId').val() != '') {
+                    obj.gcdbid = $.trim($("[id*=hdnGCDBId]").val());
+                }
+                obj.countryid = $.trim($("[id*=<%=ddlCountry.ClientID%>]").val());
+                obj.stateid = $.trim($("[id*=<%=ddlState.ClientID%>]").val());
+                obj.dbname = $.trim($("[id*=<%=txtDatabaseName.ClientID%>]").val());
+                obj.buttontext = $("#btnSaveDB").html();
+                $.ajax({
+                    type: "POST",
+                    url: "ManageGCDB.aspx/SaveGCDB",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        //  alert(r.d);
+                        $('#tblGCDB').DataTable().destroy();
+                        $('#tblGCDB tbody').empty();
+                        var pagenum;
+                        if ($('#hdnpage').val() == '') {
+                            pagenum = 0;
+                        }
+                        else {
+                            pagenum = parseInt($('#hdnpage').val()) - 1;
+                        }
+                        loadtable(pagenum);
+                        if (r.d == 'Database Name Already Found') {
+                            $("#<%=lblError.ClientID%>").html('Database Name Already Found');
+                            $("#<%=divError.ClientID%>").css("display", "block");
+                            return false;
+                        }
+                        if (r.d == 'Database Name Updated Successfully') {
+                            $("#<%=lblMsg.ClientID%>").html('Database Name Updated Successfully');
+                        }
+                        if (r.d == 'Database Name Saved Successfully') {
+                            $("#<%=lblMsg.ClientID%>").html('Database Name Saved Successfully');
+                        }
+                        clear();
+                        runEffect1();
+                    }
+                });
+                return false;
+            });
+        });
+
+
+        $(function () {
+            $("[id*=btnDeleteYes]").click(function () {
+                //  alert('fd');
+                var objDelete = {};
+                objDelete.gcdbid = $.trim($("[id*=hdnGCDBId]").val());
+                $.ajax({
+                    type: "POST",
+                    url: "ManageGCDB.aspx/DeleteDatabase",
+                    data: JSON.stringify(objDelete),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        // alert(r.d);
+                        $('#tblGCDB').DataTable().destroy();
+                        $('#tblGCDB tbody').empty();
+                        var pagenum = parseInt($('#hdnpage').val()) - 1;
+                        loadtable(pagenum);
+                        if (r.d == 'Database Deleted Successfully') {
+                            $("#<%=lblMsg.ClientID%>").html('Database Deleted Successfully');
+                            runEffect1();
+                        }
+                    }
+                });
+                $('#myModal1').modal('hide');
+                clear();
+                return false;
+            });
+        });
+
+
+        $(function () {
+            $("[id*=btnNewDB]").click(function () {
+                clear();
+                return false;
+            });
+        });
+
+        function clear() {
+            $('#tblGCDB tbody tr').siblings('.selected').removeClass('selected');
+            $("#btnSaveDB").html('Save');
+            $("#btnDeleteDB").css("display", "none");
+            $("#<%=ddlCountry.ClientID%>").val('-1');
+            $('#<%=ddlState.ClientID%>').empty();
+            $('#<%=txtDatabaseName.ClientID%>').val('');
+            $("[id*=hdnGCDBId]").val('');
+            $("#<%=divError.ClientID%>").css("display", "none");
+            $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
+            $('#<%= ddlState.ClientID %>').prop('disabled', false);
         }
     </script>
     <script type="text/javascript">

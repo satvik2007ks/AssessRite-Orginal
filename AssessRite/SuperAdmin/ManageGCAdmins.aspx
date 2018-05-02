@@ -51,16 +51,21 @@
                         <asp:TextBox ID="txtAdminAddress" runat="server" CssClass="form-control" TextMode="MultiLine" MaxLength="99"></asp:TextBox>
                     </div>
                     <div class="form-group">
-                        <asp:Label ID="lblAdminContactNo" runat="server" Text="Admin Contact No#"></asp:Label>
+                        <asp:Label ID="lblAdminContactNo" runat="server" Text="Admin Contact No#*"></asp:Label>
                         <asp:TextBox ID="txtAdminContactNo" runat="server" CssClass="form-control" MaxLength="15"></asp:TextBox>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lblAdminEmailId" runat="server" Text="Admin Email ID"></asp:Label>
                         <asp:TextBox ID="txtAdminEmailId" runat="server" CssClass="form-control" MaxLength="99"></asp:TextBox>
                     </div>
-                     <div class="form-group">
+                    <div class="form-group">
                         <asp:Label ID="Label2" runat="server" Text="Default Database"></asp:Label>
                         <asp:DropDownList ID="ddlDefaultDB" runat="server" CssClass="form-control"></asp:DropDownList>
+                    </div>
+                    <div class="form-group hide" id="divCurriculum">
+                        <asp:Label ID="Label3" runat="server" Text="Assign Admin with Curriculum Type"></asp:Label>
+                        <div style="overflow-y: scroll; height: 120px; margin-bottom: 20px;" id="dvCheckBoxListControl">
+                        </div>
                     </div>
                     <div class="form-group">
                         <asp:Label ID="lblUsername" runat="server" Text="UserName*"></asp:Label>
@@ -92,6 +97,7 @@
                                     <th style="display: none">AdminId</th>
                                     <th style="display: none">CountryId</th>
                                     <th style="display: none">StateId</th>
+                                    <th style="display: none">DefaultDB</th>
                                 </tr>
                             </thead>
                         </table>
@@ -216,6 +222,108 @@
             }, 200);
         }
 
+        $('#<%=ddlState.ClientID%>').change(function () {
+            var cid = $('#<%=ddlCountry.ClientID%>').val();
+            var sid = $('#<%=ddlState.ClientID%>').val();
+            loadDropDownDefaultDB(cid, sid, "1");
+            PopulateCheckBoxList(cid, sid);
+        });
+
+        function loadDropDownDefaultDB(countryid, stateid, selectvalue) {
+            var ddlDropDownDefaultDBListXML = $('#<%=ddlDefaultDB.ClientID%>');
+            ddlDropDownDefaultDBListXML.empty();
+            var paramobj = {};
+            paramobj.countryid = countryid;
+            paramobj.stateid = stateid;
+            $.ajax({
+                type: "POST",
+                url: "../WebService/SuperAdminWebService.asmx/loadDropDownDefaultDB",
+                data: JSON.stringify(paramobj),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    // console.log(response.d);
+                    $("#<%=divError.ClientID%>").css("display", "none");
+                    var xmlDoc = $.parseXML(response.d);
+                    // console.log(xmlDoc);
+                    // Now find the Table from response and loop through each item (row).
+                    $(xmlDoc).find('Table').each(function () {
+                        // Get the OptionValue and OptionText Column values.
+                        var OptionValue = $(this).find('GCDBName').text();
+                        var OptionText = $(this).find('GCDBName').text();
+                        // Create an Option for DropDownList.
+                        var option = $("<option>" + OptionText + "</option>");
+                        option.attr("value", OptionValue);
+                        ddlDropDownDefaultDBListXML.append(option);
+                    });
+                },
+                error: function (response) {
+                    $("#<%=lblError.ClientID%>").html('No Default DB Found');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return;
+                }
+            });
+            var interval = setInterval(function () {
+                if (document.querySelectorAll('#<%=ddlDefaultDB.ClientID%> option').length > 0) {
+                    if (selectvalue == "1") {
+                        $("#<%=ddlDefaultDB.ClientID%>").prop("selectedIndex", 0);
+                        clearInterval(interval);
+                    }
+                    else {
+                        //console.log('List is definitely populated!');
+                        clearInterval(interval);
+                        $("#<%=ddlDefaultDB.ClientID%>").val(selectvalue);
+                    }
+                    $('#<%= ddlDefaultDB.ClientID %>').prop('disabled', true);
+                }
+            }, 200);
+        }
+
+        function PopulateCheckBoxList(countryid,stateid) {
+             var pobj = {};
+            pobj.countryid = countryid;
+            pobj.stateid = stateid;
+            $.ajax({
+                type: "POST",
+                url: "../WebService/SuperAdminWebService.asmx/LoadCurriculumCheckboxlist",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(pobj),
+                dataType: "json",
+                success: AjaxSucceeded,
+                error: AjaxFailed
+            });
+        }
+        function AjaxSucceeded(result) {
+            BindCheckBoxList(result);
+        }
+        function AjaxFailed(result) {
+            alert('Failed to load Curriculum list');
+        }
+        function BindCheckBoxList(result) {
+
+            var items = JSON.parse(result.d);
+            CreateCheckBoxList(items);
+        }
+        function CreateCheckBoxList(checkboxlistItems) {
+            var table = $('<table class="checkbox" id="chkCurriculum"></table>');
+            var counter = 0;
+            $(checkboxlistItems).each(function () {
+                counter++;
+                table.append($('<tr></tr>').append($('<td></td>').append($('<input>').attr({
+                    type: 'checkbox', name: 'chklistitem', value: this.CurriculumId, id: 'chklistitem' + this.CurriculumId
+                })).append(
+                    $('<label>').attr({
+                        for: 'chklistitem' + this.CurriculumId++
+                    }).text(this.Curriculum))));
+            });
+            if (counter > 0) {
+                $('#divCurriculum').show();
+                $('#dvCheckBoxListControl').append(table);
+            }
+            else {
+                alert("No Curriculum Found for " + $('#<%=ddlState.ClientID%> option:selected').text());
+            }
+        }
 
         function loadtable(defaultpage) {
             $.ajax({
@@ -240,7 +348,8 @@
                             { className: "hide", data: 'Password' },
                             { className: "hide", data: 'AdminId' },
                             { className: "hide", data: 'CountryId' },
-                            { className: "hide", data: 'StateId' }
+                            { className: "hide", data: 'StateId' },
+                            { className: "hide", data: 'DefaultDB' }
                         ]
                     });
                     table.page(defaultpage).draw(false);
@@ -266,11 +375,18 @@
                 $("#btnDeleteAdmin").css("display", "block");
                 $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
                 $('#<%= ddlState.ClientID %>').prop('disabled', false);
+                $('#<%= ddlDefaultDB.ClientID %>').prop('disabled', false);
+
                 $('#hdnAdminId').val($(this).find('td:nth-child(9)').text());
                 var CountryId = $(this).find('td:nth-child(10)').text();
                 var StateId = $(this).find('td:nth-child(11)').text();
                 $('#<%=ddlCountry.ClientID%>').val(CountryId);
                 loadState(CountryId, StateId);
+                var defaultdb = $(this).find('td:nth-child(12)').text();
+                loadDropDownDefaultDB(CountryId, StateId, defaultdb);
+
+                loadCurriculumCheckBoxes($(this).find('td:nth-child(9)').text());
+
                 $('#<%=txtAdminName.ClientID%>').val($(this).find('td:nth-child(3)').text());
                 $('#<%=txtAdminAddress.ClientID%>').val($(this).find('td:nth-child(4)').text());
                 $('#<%=txtAdminContactNo.ClientID%>').val($(this).find('td:nth-child(5)').text());
@@ -279,12 +395,59 @@
                 $('#<%=txtPassword.ClientID%>').val($(this).find('td:nth-child(8)').text());
                 $('#<%= ddlCountry.ClientID %>').prop('disabled', true);
                 $('#<%= ddlState.ClientID %>').prop('disabled', true);
-
+                $('#<%= ddlDefaultDB.ClientID %>').prop('disabled', true);
                 var info = table.page.info();
                 $('#hdnpage').val(info.page + 1);
             }
         });
 
+        function loadCurriculumCheckBoxes(adminid) {
+            var tableName = "Table";
+            $.ajax({
+                type: "POST",
+                url: "../WebService/SuperAdminWebService.asmx/getAllCurriculumForAdmin",
+                data: '{adminid: "' + adminid + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response.d);
+                    var xmlDoc = $.parseXML(response.d);
+                    //if (xmlDoc == null) {
+                    var checkboxes = $("[id*=chkCurriculum] input:checkbox");
+                    checkboxes.each(function () {
+                        $(this).attr('checked', false);
+                    });
+                    // }
+                    // console.log(xmlDoc);
+                    // Now find the Table from response and loop through each item (row).
+                    $(xmlDoc).find('Table').each(function () {
+                        var curriculumID = $(this).find('CurriculumId').text();
+                        //  var checkboxid = "chklistitem" + classID;
+                        // alert(classID + "," + checkboxid + "," + $(checkboxid).val());
+                        var checkboxes = $("[id*=chkCurriculum] input:checkbox");
+                        //if($(checkboxid).val()==classID)
+                        //{
+                        //    $(checkboxid).attr('checked', true);
+                        //}
+                        checkboxes.each(function () {
+                            var value = $(this).val();
+                            //  alert("ClassId:" + classID + " checkboxvalue:" + value);
+                            //   var text = $(this).closest("td").find("label").html();
+                            if (value == curriculumID) {
+                                $(this).attr('checked', true);
+                            }
+                            //else {
+                            //    $(this).attr('checked', false);
+                            //}
+                        });
+
+                    });
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+        }
 
         $(function () {
             $("[id*=btnSaveAdmin]").click(function () {
@@ -311,6 +474,11 @@
                 }
                 else if ($("#<%=txtAdminContactNo.ClientID%>").val() == '') {
                     $("#<%=lblError.ClientID%>").html('Please Select Admin Contact No#');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if ($("#<%=ddlDefaultDB.ClientID%>").val() == null) {
+                    $("#<%=lblError.ClientID%>").html('No Default Database Found');
                     $("#<%=divError.ClientID%>").css("display", "block");
                     return false;
                 }
@@ -351,6 +519,10 @@
                 obj.address = $.trim($("[id*=<%=txtAdminAddress.ClientID%>]").val());
                 obj.contactno = $.trim($("[id*=<%=txtAdminContactNo.ClientID%>]").val());
                 obj.emailid = $.trim($("[id*=<%=txtAdminEmailId.ClientID%>]").val());
+                obj.defaultdb = $.trim($("#<%=ddlDefaultDB.ClientID%> option:selected").text());
+                 obj.curriculumids = $("#chkCurriculum input:checkbox:checked").map(function () {
+                    return $(this).val();
+                }).get();
                 obj.username = $.trim($("[id*=<%=txtUserName.ClientID%>]").val());
                 obj.password = $.trim($("[id*=<%=txtPassword.ClientID%>]").val());
                 obj.buttontext = $("#btnSaveAdmin").html();
@@ -444,6 +616,7 @@
             $('#hdnAdminId').val('');
             $('#<%=ddlCountry.ClientID%>').val('-1');
             $('#<%=ddlState.ClientID%>').empty();
+            $('#<%=ddlDefaultDB.ClientID%>').empty();
             $('#<%=txtAdminName.ClientID%>').val('');
             $('#<%=txtAdminAddress.ClientID%>').val('');
             $('#<%=txtAdminContactNo.ClientID%>').val('');
@@ -455,6 +628,8 @@
             $("#btnSaveAdmin").html('Save');
             $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
             $('#<%= ddlState.ClientID %>').prop('disabled', false);
+            $('#<%= ddlDefaultDB.ClientID %>').prop('disabled', false);
+
         }
     </script>
     <script>

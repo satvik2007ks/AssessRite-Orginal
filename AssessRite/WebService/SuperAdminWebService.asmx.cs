@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 
 namespace AssessRite.WebMethods
@@ -278,12 +279,12 @@ namespace AssessRite.WebMethods
         [WebMethod]
         public string GetGCAdmins()
         {
-            string qur = "SELECT Admin.AdminId, Admin.AdminName, Admin.AdminAddress, Admin.AdminContactNo, Admin.AdminEmailId, Login.UserName, Login.Password, Admin.CountryId, "+
-                         " Admin.StateId, Country.CountryName, State.StateName "+
-                         " FROM  Admin INNER JOIN "+
-                         " Login ON Admin.AdminId = Login.AdminId INNER JOIN "+
-                         " Country ON Admin.CountryId = Country.CountryId INNER JOIN "+
-                         " State ON Admin.StateId = State.StateId "+
+            string qur = "SELECT Admin.AdminId, Admin.AdminName, Admin.AdminAddress, Admin.AdminContactNo, Admin.AdminEmailId, Login.UserName, Login.Password, Login.DefaultDB, Admin.CountryId, " +
+                         " Admin.StateId, Country.CountryName, State.StateName " +
+                         " FROM  Admin INNER JOIN " +
+                         " Login ON Admin.AdminId = Login.AdminId INNER JOIN " +
+                         " Country ON Admin.CountryId = Country.CountryId INNER JOIN " +
+                         " State ON Admin.StateId = State.StateId " +
                          " WHERE(Admin.IsDeleted = '0')";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
@@ -301,7 +302,7 @@ namespace AssessRite.WebMethods
         [WebMethod]
         public string LoadDropDownLevels(int curriculumtypeId)
         {
-            string qur = "SELECT  LevelName, LevelId from Level where CurriculumTypeId='"+ curriculumtypeId + "' and  IsDeleted='0'";
+            string qur = "SELECT  LevelName, LevelId from Level where CurriculumTypeId='" + curriculumtypeId + "' and  IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -318,5 +319,87 @@ namespace AssessRite.WebMethods
                 return null;
         }
 
+        [WebMethod]
+        public string GetGCDB()
+        {
+            string qur = "SELECT  Country.CountryName, State.StateName,GCDBDetails.CountryId, GCDBDetails.StateId, GCDBDetails.GCDBId, GCDBDetails.GCDBName FROM  State RIGHT OUTER JOIN GCDBDetails ON State.StateId = GCDBDetails.StateId LEFT OUTER JOIN Country ON GCDBDetails.CountryId = Country.CountryId and GCDBDetails.IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string JSONresult;
+                JSONresult = JsonConvert.SerializeObject(dt);
+                return JSONresult;
+            }
+            else
+                return null;
+        }
+
+        [WebMethod]
+        public string loadDropDownDefaultDB(int countryid,int stateid)
+        {
+            string qur = "SELECT  GCDBName, GCDBId from GCDBDetails where CountryId='" + countryid + "' and StateId='"+stateid+"' and  IsDeleted='0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+        }
+
+        [WebMethod]
+        public string LoadCurriculumCheckboxlist(int countryid, int stateid)
+        {
+            string qur = "Select CurriculumType, CurriculumTypeId from CurriculumType where CountryId='"+countryid+"' and StateId='"+stateid+"'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                List<CheckBoxItem> chkListClass = new List<CheckBoxItem>();
+                chkListClass = (from DataRow dr in ds.Tables[0].Rows
+                                select new CheckBoxItem()
+                                {
+                                    CurriculumId = Convert.ToInt32(dr["CurriculumTypeId"].ToString()),
+                                    Curriculum = dr["CurriculumType"].ToString(),
+                                }).ToList();
+                JavaScriptSerializer ser = new JavaScriptSerializer();
+                return ser.Serialize(chkListClass);
+            }
+            else
+                return null;
+        }
+        public class CheckBoxItem
+        {
+            public string Curriculum { get; set; }
+            public int CurriculumId { get; set; }
+        }
+
+        [WebMethod]
+        public string getAllCurriculumForAdmin(int adminid)
+        {
+            string qur = "Select CurriculumTypeId from GCAdminAssignedCurriculum where AdminId=" + adminid;
+            DataSet ds = dbLibrary.idGetCustomResult(qur);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+
+        }
     }
 }
