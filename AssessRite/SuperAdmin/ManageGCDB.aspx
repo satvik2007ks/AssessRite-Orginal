@@ -52,7 +52,7 @@
                     <input type="hidden" id="hdnGCDBId" />
                     <a href="#" id="btnSaveDB" class="btn btn-primary">Save</a>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-9 divider">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="tblGCDB" style="width: 100%;">
                             <thead>

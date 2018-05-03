@@ -67,7 +67,7 @@ namespace AssessRite.SuperAdmin
         [System.Web.Services.WebMethod]
         public static string DeleteDatabase(int gcdbid)
         {
-            string qur = "Update InstitutionType set IsDeleted='1' where GCDBId='" + gcdbid + "'";
+            string qur = "Update GCDBDetails set IsDeleted='1' where GCDBId='" + gcdbid + "'";
             dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
             return "Database Deleted Successfully";
         }

@@ -28,7 +28,8 @@ namespace AssessRite
                 Session["UserType"] = ds.Tables[0].Rows[0]["UserTypeId"].ToString();
                 Session["UserName"] = ds.Tables[0].Rows[0]["UserName"].ToString();
                 Session["SchoolName"] = ds.Tables[0].Rows[0]["InstitutionName"].ToString();
-                Session["SchoolId"] = ds.Tables[0].Rows[0]["InstitutionId"].ToString();
+                Session["InstitutionId"] = ds.Tables[0].Rows[0]["InstitutionId"].ToString();
+                Session["DefaultDB"]= ds.Tables[0].Rows[0]["DefaultDB"].ToString();
                 if (Session["UserType"].ToString() == "6")
                 {
                     Session["SMEId"] = ds.Tables[0].Rows[0]["SMEId"].ToString();

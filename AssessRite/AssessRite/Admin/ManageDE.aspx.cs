@@ -56,7 +56,7 @@ namespace AssessRite._3.Admin
 
             if (btnDESave.Text == "Save")
             {
-                string qur = "SELECT DEId FROM DE where DEFirstName='" + txtFirstName.Text.Trim() + "' and DELastName='" + txtLastName.Text.Trim() + "' and DEContactNo='" + txtContactNo.Text.Trim() + "' and DEEmailId='" + txtEmailID.Text.Trim() + "' and IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                string qur = "SELECT DEId FROM DE where DEFirstName='" + txtFirstName.Text.Trim() + "' and DELastName='" + txtLastName.Text.Trim() + "' and DEContactNo='" + txtContactNo.Text.Trim() + "' and DEEmailId='" + txtEmailID.Text.Trim() + "' and IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     divError.Attributes.Add("Style", "display:block");
@@ -64,7 +64,7 @@ namespace AssessRite._3.Admin
                     lblError.Focus();
                     return;
                 }
-                qur = "Select UserId from Login where UserName='" + txtUserName.Text + "' and UserTypeId='5' and IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                qur = "Select UserId from Login where UserName='" + txtUserName.Text + "' and UserTypeId='5' and IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     divError.Attributes.Add("Style", "display:block");
@@ -73,13 +73,13 @@ namespace AssessRite._3.Admin
                     txtUserName.Focus();
                     return;
                 }
-                qur = dbLibrary.idBuildQuery("[proc_AddDE]", "", txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Insert", Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_AddDE]", "", txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Insert", Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 lblMsg.Text = "DE Added Successfully";
             }
             else
             {
-                string qur = dbLibrary.idBuildQuery("[proc_AddDE]", Session["DEId"].ToString(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Update", Session["SchoolId"].ToString());
+                string qur = dbLibrary.idBuildQuery("[proc_AddDE]", Session["DEId"].ToString(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Update", Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 lblMsg.Text = "DE Details Updated Successfully";
             }
@@ -92,23 +92,23 @@ namespace AssessRite._3.Admin
         {
             if (buttontext == "Save")
             {
-                string qur = "SELECT DEId FROM DE where DEFirstName='" + firstname + "' and DELastName='" + lastname.Trim() + "' and DEContactNo='" + contactno.Trim() + "' and DEEmailId='" + emailid.Trim() + "' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                string qur = "SELECT DEId FROM DE where DEFirstName='" + firstname + "' and DELastName='" + lastname.Trim() + "' and DEContactNo='" + contactno.Trim() + "' and DEEmailId='" + emailid.Trim() + "' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     return "DE Data Already Exists";
                 }
-                qur = "Select UserId from Login where UserName='" + username + "' and UserTypeId='5' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                qur = "Select UserId from Login where UserName='" + username + "' and UserTypeId='5' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     return "UserName Already Exists";
                 }
-                qur = dbLibrary.idBuildQuery("[proc_AddDE]", "", firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Insert", HttpContext.Current.Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_AddDE]", "", firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Insert", HttpContext.Current.Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 return "DE Added Successfully";
             }
             else
             {
-                string qur = dbLibrary.idBuildQuery("[proc_AddDE]", deid.ToString(), firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Update", HttpContext.Current.Session["SchoolId"].ToString());
+                string qur = dbLibrary.idBuildQuery("[proc_AddDE]", deid.ToString(), firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Update", HttpContext.Current.Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 return "DE Details Updated Successfully";
             }

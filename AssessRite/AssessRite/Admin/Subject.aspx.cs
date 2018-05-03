@@ -39,7 +39,7 @@ namespace AssessRite
 
         private void loadDropDown()
         {
-            string qur = "Select * from Class where IsDeleted='0' and SchoolId='"+Session["SchoolId"].ToString()+"' ORDER BY MasterClassId";
+            string qur = "Select * from Class where IsDeleted='0' and SchoolId='"+Session["InstitutionId"].ToString()+"' ORDER BY MasterClassId";
             if (dbLibrary.idHasRows(qur))
             {
                 DataSet ds = dbLibrary.idGetCustomResult(qur);

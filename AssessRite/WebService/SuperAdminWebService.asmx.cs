@@ -322,7 +322,7 @@ namespace AssessRite.WebMethods
         [WebMethod]
         public string GetGCDB()
         {
-            string qur = "SELECT  Country.CountryName, State.StateName,GCDBDetails.CountryId, GCDBDetails.StateId, GCDBDetails.GCDBId, GCDBDetails.GCDBName FROM  State RIGHT OUTER JOIN GCDBDetails ON State.StateId = GCDBDetails.StateId LEFT OUTER JOIN Country ON GCDBDetails.CountryId = Country.CountryId and GCDBDetails.IsDeleted='0'";
+            string qur = "SELECT  Country.CountryName, State.StateName,GCDBDetails.CountryId, GCDBDetails.StateId, GCDBDetails.GCDBId, GCDBDetails.GCDBName FROM  State RIGHT OUTER JOIN GCDBDetails ON State.StateId = GCDBDetails.StateId LEFT OUTER JOIN Country ON GCDBDetails.CountryId = Country.CountryId Where GCDBDetails.IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -358,7 +358,7 @@ namespace AssessRite.WebMethods
         [WebMethod]
         public string LoadCurriculumCheckboxlist(int countryid, int stateid)
         {
-            string qur = "Select CurriculumType, CurriculumTypeId from CurriculumType where CountryId='"+countryid+"' and StateId='"+stateid+"'";
+            string qur = "SELECT CurriculumType.CurriculumType, CurriculumType.CurriculumTypeId, InstitutionType.InstitutionType FROM CurriculumType INNER JOIN InstitutionType ON CurriculumType.InstitutionTypeId = InstitutionType.InstitutionTypeId where CurriculumType.CountryId='" + countryid+ "' and CurriculumType.StateId='" + stateid+ "' and CurriculumType.IsDeleted='0' and InstitutionType.IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -367,7 +367,7 @@ namespace AssessRite.WebMethods
                                 select new CheckBoxItem()
                                 {
                                     CurriculumId = Convert.ToInt32(dr["CurriculumTypeId"].ToString()),
-                                    Curriculum = dr["CurriculumType"].ToString(),
+                                    Curriculum = dr["CurriculumType"].ToString()+"- ("+dr["InstitutionType"].ToString()+")",
                                 }).ToList();
                 JavaScriptSerializer ser = new JavaScriptSerializer();
                 return ser.Serialize(chkListClass);
@@ -385,7 +385,7 @@ namespace AssessRite.WebMethods
         public string getAllCurriculumForAdmin(int adminid)
         {
             string qur = "Select CurriculumTypeId from GCAdminAssignedCurriculum where AdminId=" + adminid;
-            DataSet ds = dbLibrary.idGetCustomResult(qur);
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
                 DataTable dt = ds.Tables[0];

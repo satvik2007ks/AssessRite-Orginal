@@ -21,7 +21,7 @@ namespace AssessRite._3.Admin
         [System.Web.Services.WebMethod]
         public static string DeleteQuestion(int questionid)
         {
-            string qur = dbLibrary.idBuildQuery("proc_ManageQuestion", HttpContext.Current.Session["UserId"].ToString(), questionid.ToString(), HttpContext.Current.Session["SchoolId"].ToString(), "", "", "", "Delete");
+            string qur = dbLibrary.idBuildQuery("proc_ManageQuestion", HttpContext.Current.Session["UserId"].ToString(), questionid.ToString(), HttpContext.Current.Session["InstitutionId"].ToString(), "", "", "", "Delete");
             dbLibrary.idExecute(qur);
             //dbLibrary.idUpdateTable("Questions",
             //    "QuestionId=" + questionid,
@@ -45,7 +45,7 @@ namespace AssessRite._3.Admin
             //    "QuestionId=" + questionid,
             //    "Comment", comment,
             //    "StatusId", "2");
-            string qur = dbLibrary.idBuildQuery("proc_ManageQuestion", HttpContext.Current.Session["UserId"].ToString(), questionid.ToString(), HttpContext.Current.Session["SchoolId"].ToString(), "2", comment, "", "Reject");
+            string qur = dbLibrary.idBuildQuery("proc_ManageQuestion", HttpContext.Current.Session["UserId"].ToString(), questionid.ToString(), HttpContext.Current.Session["InstitutionId"].ToString(), "2", comment, "", "Reject");
             dbLibrary.idExecute(qur);
             return "Question Sent Back to DE for Correction";
         }
@@ -58,7 +58,7 @@ namespace AssessRite._3.Admin
             //    "Comment", "",
             //    "AddedDateTime", DateTime.Now.ToString(),
             //    "StatusId", "3");
-            string qur = dbLibrary.idBuildQuery("proc_ManageQuestion", HttpContext.Current.Session["UserId"].ToString(), questionid.ToString(), HttpContext.Current.Session["SchoolId"].ToString(), "3", "", "", "Approve");
+            string qur = dbLibrary.idBuildQuery("proc_ManageQuestion", HttpContext.Current.Session["UserId"].ToString(), questionid.ToString(), HttpContext.Current.Session["InstitutionId"].ToString(), "3", "", "", "Approve");
             dbLibrary.idExecute(qur);
             return "Question Approved";
         }

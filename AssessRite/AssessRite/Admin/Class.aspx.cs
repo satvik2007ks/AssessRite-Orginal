@@ -212,7 +212,7 @@ namespace AssessRite
         [System.Web.Services.WebMethod]
         public static string SendParameters(int classid, string classname, string buttontext)
         {
-            string qur = "Select ClassId from Class where ClassName='" + classname + "' and IsDeleted='0' and schoolId='"+ HttpContext.Current.Session["SchoolId"].ToString()+ "'";
+            string qur = "Select ClassId from Class where ClassName='" + classname + "' and IsDeleted='0' and schoolId='"+ HttpContext.Current.Session["InstitutionId"].ToString()+ "'";
             if (dbLibrary.idHasRows(qur))
             {
                 int classId = int.Parse(dbLibrary.idGetAFieldByQuery(qur));
@@ -243,7 +243,7 @@ namespace AssessRite
                 {
                     dbLibrary.idInsertInto("Class",
                     "ClassName", classname,
-                    "SchoolId", HttpContext.Current.Session["SchoolId"].ToString(),
+                    "SchoolId", HttpContext.Current.Session["InstitutionId"].ToString(),
                     "MasterClassId",classid.ToString());
                     return "Class Saved Successfully";
                 }

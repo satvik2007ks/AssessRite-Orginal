@@ -151,7 +151,7 @@ namespace AssessRite
 
         private void LoadAcademicYear()
         {
-            string qur = "Select * from AcedemicYear where IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "' order by  LEFT(AcademicYear, CHARINDEX('-',AcademicYear)-1) asc";
+            string qur = "Select * from AcedemicYear where IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "' order by  LEFT(AcademicYear, CHARINDEX('-',AcademicYear)-1) asc";
             if (dbLibrary.idHasRows(qur))
             {
                 DataSet ds = dbLibrary.idGetCustomResult(qur);
@@ -173,7 +173,7 @@ namespace AssessRite
 
         private void LoadClass()
         {
-            string qur = "Select * from Class where IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "' ORDER BY MasterClassId";
+            string qur = "Select * from Class where IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "' ORDER BY MasterClassId";
             if (dbLibrary.idHasRows(qur))
             {
                 DataSet ds = dbLibrary.idGetCustomResult(qur);

@@ -314,6 +314,35 @@ namespace AssessRite
 
             }
         }
+
+        public static void idInsertDataTableWithConnectionString(string procedureName, string paramName, DataTable dt, string connection)
+        {
+            SqlConnection conn = new SqlConnection(connection);
+            SqlCommand cmd = new SqlCommand(procedureName, conn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlParameter dtparam = cmd.Parameters.AddWithValue(paramName, dt);
+            dtparam.SqlDbType = SqlDbType.Structured;
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static string getConnectionString(string dbname)
+        {
+            string retStr = "";
+            retStr = "Data Source=assessritedbdev.ceevfq9gvmib.us-west-2.rds.amazonaws.com;Initial Catalog="+dbname+";User ID=admin;Password=Assessriteitp2017#";
+            return retStr;
+        }
     }
 
 }

@@ -41,13 +41,13 @@
                     <div class="form-group">
                         <label for="exampleInputEmail1">Username</label>
                         <%--<input class="form-control" id="exampleInputEmail1" type="email" aria-describedby="emailHelp" placeholder="Enter email">--%>
-                        <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control" placeholder="Enter Username"></asp:TextBox>
+                        <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control" placeholder="Enter Username" MaxLength="20"></asp:TextBox>
 
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">Password</label>
                         <%--<input class="form-control" id="exampleInputPassword1" type="password" placeholder="Password">--%>
-                        <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" placeholder="Password"></asp:TextBox>
+                        <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" TextMode="Password" placeholder="Password" MaxLength="20"></asp:TextBox>
 
                     </div>
                     <!--<div class="form-group">

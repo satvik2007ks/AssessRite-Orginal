@@ -96,7 +96,7 @@
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="school" style="text-align: center; margin-top: 20px;">
                     <h5>
-                        <asp:Label ID="lblSchoolName" runat="server" CssClass="navbar-text" Text="Delhi Children School" Style="color: white !important"></asp:Label></h5>
+                        <asp:Label ID="lblSchoolName" runat="server" CssClass="navbar-text" Text="Generic Content" Style="color: white !important"></asp:Label></h5>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Admin Panel" style="text-align: center; margin-top: 20px;">
                     <h6>
@@ -137,32 +137,7 @@
                         </li>--%>
                     </ul>
                 </li>
-              <%--  <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Settings">
-                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
-                        <i class="fa fa-fw fa-wrench"></i>
-                        <span class="nav-link-text">Settings</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseComponents">
-                        <li id="liAcademicYear">
-                            <a href="AcademicYear.aspx">Manage Academic Year</a>
-                        </li>
-                        <li id="liMoveStudents">
-                            <a href="MoveStudents.aspx">Promote Students</a>
-                        </li>
-                    </ul>
-                </li>--%>
-             <%--   <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add/View Teacher">
-                    <a class="nav-link" href="ManageTeacher.aspx">
-                        <i class="fa fa-fw fa-file"></i>
-                        <span class="nav-link-text">Add/View Teacher</span>
-                    </a>
-                </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add/View Student">
-                    <a class="nav-link" href="ManageStudent.aspx">
-                        <i class="fa fa-fw fa-file"></i>
-                        <span class="nav-link-text">Add/View Student</span>
-                    </a>
-                </li>--%>
+            
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add/View Student">
                     <a class="nav-link" href="ManageDE.aspx">
                         <i class="fa fa-fw fa-file"></i>
@@ -184,9 +159,6 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link btn" style="text-align: left;" href="../Teacher/Home.aspx">Go To Teacher Panel</a>
-                </li>
                 <li class="nav-item">
                     <a class="navbar-text" style="color: white !important">
                         <i class="fa fa-fw fa-user-circle"></i>Hi

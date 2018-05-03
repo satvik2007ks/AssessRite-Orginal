@@ -21,7 +21,6 @@ namespace AssessRite.SuperAdmin
         [System.Web.Services.WebMethod(EnableSession = true)]
         public static string SaveGCAdmin(int adminid, int countryid, int stateid, string adminname, string address, string contactno, string emailid, string defaultdb, string[] curriculumids, string username, string password, string buttontext)
         {
-            string qurdel = "";
             string qur = "SELECT AdminId FROM Admin where Countryid='" + countryid + "' and StateId='" + stateid + "' and AdminName='" + adminname + "' and  AdminContactNo='" + contactno.Trim() + "' and AdminEmailId='" + emailid.Trim() + "' and IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
@@ -45,14 +44,9 @@ namespace AssessRite.SuperAdmin
                         {
                             qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), defaultdb, "1", username, password, "Update");
                             dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
-                            qurdel = "Delete from GCAdminAssignedCurriculum where AdminId=" + adminid;
-                            dbLibrary.idExecute(qurdel);
                             foreach (string item in curriculumids)
                             {
-                                //dbLibrary.idInsertInto("ConceptsRelatedClass",
-                                //    "ConceptId", conceptid.ToString(),
-                                //    "ClassId", item);
-                                SqlConnection sqlConnection = new SqlConnection(dbLibrary.conStr);
+                                SqlConnection sqlConnection = new SqlConnection(dbLibrary.MasterconStr);
                                 string query = "INSERT INTO GCAdminAssignedCurriculum (AdminId,CurriculumTypeId) VALUES(@AdminId,@CurriculumTypeId)";
                                 SqlCommand cmd = new SqlCommand(query, sqlConnection);
                                 cmd.Parameters.AddWithValue("@AdminId", adminid.ToString());
@@ -95,20 +89,15 @@ namespace AssessRite.SuperAdmin
                         qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", "", "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), defaultdb, "1", username, password, "Insert");
                         DataSet dsAdminId=dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
                         string id = "";
-                        if(ds.Tables[0].Rows.Count>0)
+                        if(dsAdminId.Tables[0].Rows.Count>0)
                         {
-                            id = ds.Tables[0].Rows[0]["id"].ToString();
-                            qurdel = "Delete from GCAdminAssignedCurriculum where AdminId=" + id;
-                            dbLibrary.idExecute(qurdel);
+                            id = dsAdminId.Tables[0].Rows[0]["id"].ToString();
                             foreach (string item in curriculumids)
                             {
-                                //dbLibrary.idInsertInto("ConceptsRelatedClass",
-                                //    "ConceptId", conceptid.ToString(),
-                                //    "ClassId", item);
-                                SqlConnection sqlConnection = new SqlConnection(dbLibrary.conStr);
+                                SqlConnection sqlConnection = new SqlConnection(dbLibrary.MasterconStr);
                                 string query = "INSERT INTO GCAdminAssignedCurriculum (AdminId,CurriculumTypeId) VALUES(@AdminId,@CurriculumTypeId)";
                                 SqlCommand cmd = new SqlCommand(query, sqlConnection);
-                                cmd.Parameters.AddWithValue("@AdminId", adminid.ToString());
+                                cmd.Parameters.AddWithValue("@AdminId", id.ToString());
                                 cmd.Parameters.AddWithValue("@CurriculumTypeId", item);
                                 try
                                 {
@@ -140,14 +129,12 @@ namespace AssessRite.SuperAdmin
                     {
                         qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), defaultdb, "1", username, password, "Update");
                         dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
-                        qurdel = "Delete from GCAdminAssignedCurriculum where AdminId=" + adminid;
-                        dbLibrary.idExecute(qurdel);
                         foreach (string item in curriculumids)
                         {
                             //dbLibrary.idInsertInto("ConceptsRelatedClass",
                             //    "ConceptId", conceptid.ToString(),
                             //    "ClassId", item);
-                            SqlConnection sqlConnection = new SqlConnection(dbLibrary.conStr);
+                            SqlConnection sqlConnection = new SqlConnection(dbLibrary.MasterconStr);
                             string query = "INSERT INTO GCAdminAssignedCurriculum (AdminId,CurriculumTypeId) VALUES(@AdminId,@CurriculumTypeId)";
                             SqlCommand cmd = new SqlCommand(query, sqlConnection);
                             cmd.Parameters.AddWithValue("@AdminId", adminid.ToString());
@@ -175,9 +162,8 @@ namespace AssessRite.SuperAdmin
         [System.Web.Services.WebMethod]
         public static string DeleteGCAdmin(int adminid)
         {
-            dbLibrary.idUpdateTable("Admin",
-                "AdminId='" + adminid + "'",
-                "IsDeleted", "1");
+            string qur = dbLibrary.idBuildQuery("[proc_DeleteGCAdmin]", adminid.ToString());
+            dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
             return "Admin Deleted Successfully";
         }
     }

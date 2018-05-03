@@ -54,7 +54,7 @@
                     <input type="hidden" id="hdnCurriculumTypeId" />
                     <a href="#" id="btnSaveCurriculumType" class="btn btn-primary">Save</a>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-7 divider">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="tblCurriculumType" style="width: 100%">
                             <thead>

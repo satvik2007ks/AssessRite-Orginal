@@ -27,7 +27,7 @@ namespace AssessRite._3.Admin
 
         private void LoadGrid()
         {
-            string qur = "SELECT SME.SMEId, SME.SMEFirstName, SME.SMELastName, SME.SMEContactNo, SME.SMEEmailId, Login.UserName, Login.Password FROM Login INNER JOIN SME ON Login.SMEId = SME.SMEId where SME.IsDeleted='0' and SME.SchoolId=" + Session["SchoolId"].ToString();
+            string qur = "SELECT SME.SMEId, SME.SMEFirstName, SME.SMELastName, SME.SMEContactNo, SME.SMEEmailId, Login.UserName, Login.Password FROM Login INNER JOIN SME ON Login.SMEId = SME.SMEId where SME.IsDeleted='0' and SME.SchoolId=" + Session["InstitutionId"].ToString();
             DataSet ds = dbLibrary.idGetCustomResult(qur);
             gridSME.DataSource = ds;
             gridSME.DataBind();
@@ -35,7 +35,7 @@ namespace AssessRite._3.Admin
 
         private void LoadRptClassDetails()
         {
-            string qur = dbLibrary.idBuildQuery("[proc_getSubjects]", Session["SchoolId"].ToString());
+            string qur = dbLibrary.idBuildQuery("[proc_getSubjects]", Session["InstitutionId"].ToString());
             DataSet ds = dbLibrary.idGetCustomResult(qur);
             ViewState["Results"] = ds.Tables[0];
             //if (ds.Tables[0].Rows.Count > 0)
@@ -126,7 +126,7 @@ namespace AssessRite._3.Admin
             }
             if (btnSMESave.Text == "Save")
             {
-                string qur = "SELECT SMEId FROM SME where SMEFirstName='" + txtFirstName.Text.Trim() + "' and SMELastName='" + txtLastName.Text.Trim() + "' and SMEContactNo='" + txtContactNo.Text.Trim() + "' and SMEEmailId='" + txtEmailID.Text.Trim() + "' and IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                string qur = "SELECT SMEId FROM SME where SMEFirstName='" + txtFirstName.Text.Trim() + "' and SMELastName='" + txtLastName.Text.Trim() + "' and SMEContactNo='" + txtContactNo.Text.Trim() + "' and SMEEmailId='" + txtEmailID.Text.Trim() + "' and IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     divError.Attributes.Add("Style", "display:block");
@@ -134,7 +134,7 @@ namespace AssessRite._3.Admin
                     lblError.Focus();
                     return;
                 }
-                qur = "Select UserId from Login where UserName='" + txtUserName.Text + "' and UserTypeId='6' and IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                qur = "Select UserId from Login where UserName='" + txtUserName.Text + "' and UserTypeId='6' and IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     divError.Attributes.Add("Style", "display:block");
@@ -143,14 +143,14 @@ namespace AssessRite._3.Admin
                     txtUserName.Focus();
                     return;
                 }
-                qur = dbLibrary.idBuildQuery("[proc_AddSME]", "", txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Insert", Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_AddSME]", "", txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Insert", Session["InstitutionId"].ToString());
                 string smeid = dbLibrary.idGetAFieldByQuery(qur);
                 SaveSMEDetails(smeid);
                 lblMsg.Text = "SME Added Successfully";
             }
             else
             {
-                string qur = dbLibrary.idBuildQuery("[proc_AddSME]", Session["SMEId"].ToString(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Update", Session["SchoolId"].ToString());
+                string qur = dbLibrary.idBuildQuery("[proc_AddSME]", Session["SMEId"].ToString(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Update", Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 SaveSMEDetails(Session["SMEId"].ToString());
                 lblMsg.Text = "SME Details Updated Successfully";

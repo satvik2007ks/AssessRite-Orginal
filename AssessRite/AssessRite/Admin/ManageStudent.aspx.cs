@@ -27,7 +27,7 @@ namespace AssessRite
 
         private void LoadAcademicYear()
         {
-            string qur = "Select * from AcedemicYear where IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "' order by  LEFT(AcademicYear, CHARINDEX('-',AcademicYear)-1) asc";
+            string qur = "Select * from AcedemicYear where IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "' order by  LEFT(AcademicYear, CHARINDEX('-',AcademicYear)-1) asc";
             if (dbLibrary.idHasRows(qur))
             {
                 DataSet ds = dbLibrary.idGetCustomResult(qur);
@@ -42,7 +42,7 @@ namespace AssessRite
 
         private void LoadGrid()
         {
-            string qur = "SELECT Student.StudentId, Student.FirstName, Student.LastName, Student.ParentName, Student.ParentContactNo, Student.ParentEmailId, Class.ClassName, AcedemicYear.AcademicYear, StudentClass.ClassId, StudentClass.AcademicYearId, Login.UserName,Login.Password FROM Login RIGHT OUTER JOIN Student ON Login.StudentId = Student.StudentId LEFT OUTER JOIN Class RIGHT OUTER JOIN StudentClass ON Class.ClassId = StudentClass.ClassId LEFT OUTER JOIN AcedemicYear ON StudentClass.AcademicYearId = AcedemicYear.AcademicYearId ON Student.StudentId = StudentClass.StudentId where StudentClass.IsCurrent='1' and Student.IsDeleted='0' and Student.SchoolId='" + Session["SchoolId"].ToString() + "' and Class.IsDeleted='0'";
+            string qur = "SELECT Student.StudentId, Student.FirstName, Student.LastName, Student.ParentName, Student.ParentContactNo, Student.ParentEmailId, Class.ClassName, AcedemicYear.AcademicYear, StudentClass.ClassId, StudentClass.AcademicYearId, Login.UserName,Login.Password FROM Login RIGHT OUTER JOIN Student ON Login.StudentId = Student.StudentId LEFT OUTER JOIN Class RIGHT OUTER JOIN StudentClass ON Class.ClassId = StudentClass.ClassId LEFT OUTER JOIN AcedemicYear ON StudentClass.AcademicYearId = AcedemicYear.AcademicYearId ON Student.StudentId = StudentClass.StudentId where StudentClass.IsCurrent='1' and Student.IsDeleted='0' and Student.SchoolId='" + Session["InstitutionId"].ToString() + "' and Class.IsDeleted='0'";
             DataSet ds = dbLibrary.idGetCustomResult(qur);
             gridStudent.DataSource = ds;
             gridStudent.DataBind();
@@ -50,7 +50,7 @@ namespace AssessRite
 
         private void LoadClass()
         {
-            string qur = "Select * from Class where IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'  ORDER BY MasterClassId";
+            string qur = "Select * from Class where IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'  ORDER BY MasterClassId";
             if (dbLibrary.idHasRows(qur))
             {
                 DataSet ds = dbLibrary.idGetCustomResult(qur);
@@ -172,23 +172,23 @@ namespace AssessRite
                 string qur = "";
                 if (txtParentName.Text != "")
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and Student.ParentName='" + txtParentName.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and Student.ParentName='" + txtParentName.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 }
                 else if (txtParentName.Text != "" && txtEmailID.Text != "")
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and Student.ParentName='" + txtParentName.Text + "' and Student.ParentEmailId='" + txtEmailID.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and Student.ParentName='" + txtParentName.Text + "' and Student.ParentEmailId='" + txtEmailID.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 }
                 else if (txtParentName.Text != "" && txtContactNo.Text != "")
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and Student.ParentName='" + txtParentName.Text + "' and Student.ParentContactNo='" + txtContactNo.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and Student.ParentName='" + txtParentName.Text + "' and Student.ParentContactNo='" + txtContactNo.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 }
                 else if (txtContactNo.Text != "" && txtEmailID.Text != "" && txtParentName.Text != "")
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and Student.ParentName='" + txtParentName.Text + "' and Student.ParentEmailId='" + txtEmailID.Text + "' and Student.ParentContactNo='" + txtContactNo.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and Student.ParentName='" + txtParentName.Text + "' and Student.ParentEmailId='" + txtEmailID.Text + "' and Student.ParentContactNo='" + txtContactNo.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 }
                 else
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + txtFirstName.Text + "' and Student.LastName='" + txtLastName.Text + "' and StudentClass.ClassId='" + ddlClassName.SelectedValue + "' and StudentClass.AcademicYearId='" + ddlAcademicYear.SelectedValue + "' and Student.IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 }
                 if (dbLibrary.idHasRows(qur))
                 {
@@ -196,7 +196,7 @@ namespace AssessRite
                     lblError.Text = "Student Data Already Exists";
                     return;
                 }
-                qur = "Select UserId from Login where UserName='" + txtUserName.Text + "' and UserTypeId='4' and IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                qur = "Select UserId from Login where UserName='" + txtUserName.Text + "' and UserTypeId='4' and IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     divError.Attributes.Add("Style", "display:block");
@@ -204,13 +204,13 @@ namespace AssessRite
                     txtUserName.Focus();
                     return;
                 }
-                qur = dbLibrary.idBuildQuery("[proc_AddStudent]", "", txtFirstName.Text.Trim(), txtLastName.Text.Trim(), ddlClassName.SelectedValue, ddlAcademicYear.SelectedValue, txtParentName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Insert", Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_AddStudent]", "", txtFirstName.Text.Trim(), txtLastName.Text.Trim(), ddlClassName.SelectedValue, ddlAcademicYear.SelectedValue, txtParentName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Insert", Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 lblMsg.Text = "Student Added Successfully";
             }
             else
             {
-                string qur = dbLibrary.idBuildQuery("[proc_AddStudent]", Session["StudentId"].ToString(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), ddlClassName.SelectedValue, ddlAcademicYear.SelectedValue, txtParentName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Update", Session["SchoolId"].ToString());
+                string qur = dbLibrary.idBuildQuery("[proc_AddStudent]", Session["StudentId"].ToString(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), ddlClassName.SelectedValue, ddlAcademicYear.SelectedValue, txtParentName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Update", Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 lblMsg.Text = "Student Details Updated Successfully";
             }
@@ -243,41 +243,41 @@ namespace AssessRite
                 string qur = "";
                 if (parentname != "")
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and Student.ParentName='" + parentname + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and Student.ParentName='" + parentname + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 }
                 else if (parentname != "" && emailid != "")
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and Student.ParentName='" + parentname + "' and Student.ParentEmailId='" + emailid + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and Student.ParentName='" + parentname + "' and Student.ParentEmailId='" + emailid + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 }
                 else if (parentname != "" && contactno != "")
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and Student.ParentName='" + parentname + "' and Student.ParentContactNo='" + contactno + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and Student.ParentName='" + parentname + "' and Student.ParentContactNo='" + contactno + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 }
                 else if (contactno != "" && emailid != "" && parentname != "")
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and Student.ParentName='" + parentname + "' and Student.ParentEmailId='" + emailid + "' and Student.ParentContactNo='" + contactno + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and Student.ParentName='" + parentname + "' and Student.ParentEmailId='" + emailid + "' and Student.ParentContactNo='" + contactno + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 }
                 else
                 {
-                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                    qur = "SELECT Student.StudentId FROM  Student LEFT OUTER JOIN StudentClass ON Student.StudentId = StudentClass.StudentId where Student.FirstName='" + firstname + "' and Student.LastName='" + lastname + "' and StudentClass.ClassId='" + classid + "' and StudentClass.AcademicYearId='" + academicyearid + "' and Student.IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 }
                 if (dbLibrary.idHasRows(qur))
                 {
 
                     return "Student Data Already Exists";
                 }
-                qur = "Select UserId from Login where UserName='" + username + "' and UserTypeId='4' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                qur = "Select UserId from Login where UserName='" + username + "' and UserTypeId='4' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     return "UserName Already Exists";
                 }
-                qur = dbLibrary.idBuildQuery("[proc_AddStudent]", "", firstname.Trim(), lastname.Trim(), classid.ToString(), academicyearid.ToString(), parentname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Insert", HttpContext.Current.Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_AddStudent]", "", firstname.Trim(), lastname.Trim(), classid.ToString(), academicyearid.ToString(), parentname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Insert", HttpContext.Current.Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 return "Student Added Successfully";
             }
             else
             {
-                string qur = dbLibrary.idBuildQuery("[proc_AddStudent]", studentid.ToString(), firstname.Trim(), lastname.Trim(), classid.ToString(), academicyearid.ToString(), parentname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Update", HttpContext.Current.Session["SchoolId"].ToString());
+                string qur = dbLibrary.idBuildQuery("[proc_AddStudent]", studentid.ToString(), firstname.Trim(), lastname.Trim(), classid.ToString(), academicyearid.ToString(), parentname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Update", HttpContext.Current.Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 return "Student Details Updated Successfully";
             }

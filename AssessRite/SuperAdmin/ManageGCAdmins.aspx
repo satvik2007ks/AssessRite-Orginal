@@ -81,7 +81,7 @@
                     <input type="hidden" id="hdnAdminId" />
                     <a href="#" id="btnSaveAdmin" class="btn btn-primary">Save</a>
                 </div>
-                <div class="col-lg-9">
+                <div class="col-lg-9 divider">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="tblGCAdmin" style="width: 100%;">
                             <thead>
@@ -279,7 +279,7 @@
             }, 200);
         }
 
-        function PopulateCheckBoxList(countryid,stateid) {
+        function PopulateCheckBoxList(countryid, stateid) {
              var pobj = {};
             pobj.countryid = countryid;
             pobj.stateid = stateid;
@@ -322,6 +322,8 @@
             }
             else {
                 alert("No Curriculum Found for " + $('#<%=ddlState.ClientID%> option:selected').text());
+                $("#chkCurriculum").empty();
+                 $('#divCurriculum').show();
             }
         }
 
@@ -383,14 +385,15 @@
                 $('#<%=ddlCountry.ClientID%>').val(CountryId);
                 loadState(CountryId, StateId);
                 var defaultdb = $(this).find('td:nth-child(12)').text();
+                $('#divCurriculum').show();
+                $("#chkCurriculum").remove();
+                PopulateCheckBoxList(CountryId, StateId);
                 loadDropDownDefaultDB(CountryId, StateId, defaultdb);
-
-                loadCurriculumCheckBoxes($(this).find('td:nth-child(9)').text());
-
                 $('#<%=txtAdminName.ClientID%>').val($(this).find('td:nth-child(3)').text());
                 $('#<%=txtAdminAddress.ClientID%>').val($(this).find('td:nth-child(4)').text());
                 $('#<%=txtAdminContactNo.ClientID%>').val($(this).find('td:nth-child(5)').text());
                 $('#<%=txtAdminEmailId.ClientID%>').val($(this).find('td:nth-child(6)').text());
+                loadCurriculumCheckBoxes($(this).find('td:nth-child(9)').text());
                 $('#<%=txtUserName.ClientID%>').val($(this).find('td:nth-child(7)').text());
                 $('#<%=txtPassword.ClientID%>').val($(this).find('td:nth-child(8)').text());
                 $('#<%= ddlCountry.ClientID %>').prop('disabled', true);
@@ -402,51 +405,53 @@
         });
 
         function loadCurriculumCheckBoxes(adminid) {
-            var tableName = "Table";
-            $.ajax({
-                type: "POST",
-                url: "../WebService/SuperAdminWebService.asmx/getAllCurriculumForAdmin",
-                data: '{adminid: "' + adminid + '"}',
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (response) {
-                    console.log(response.d);
-                    var xmlDoc = $.parseXML(response.d);
-                    //if (xmlDoc == null) {
-                    var checkboxes = $("[id*=chkCurriculum] input:checkbox");
-                    checkboxes.each(function () {
-                        $(this).attr('checked', false);
-                    });
-                    // }
-                    // console.log(xmlDoc);
-                    // Now find the Table from response and loop through each item (row).
-                    $(xmlDoc).find('Table').each(function () {
-                        var curriculumID = $(this).find('CurriculumId').text();
-                        //  var checkboxid = "chklistitem" + classID;
-                        // alert(classID + "," + checkboxid + "," + $(checkboxid).val());
+            var interval = setInterval(function () {
+                var tableName = "Table";
+                $.ajax({
+                    type: "POST",
+                    url: "../WebService/SuperAdminWebService.asmx/getAllCurriculumForAdmin",
+                    data: '{adminid: "' + adminid + '"}',
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        //  console.log(response.d);
+                        var xmlDoc = $.parseXML(response.d);
+                        //if (xmlDoc == null) {
                         var checkboxes = $("[id*=chkCurriculum] input:checkbox");
-                        //if($(checkboxid).val()==classID)
-                        //{
-                        //    $(checkboxid).attr('checked', true);
-                        //}
                         checkboxes.each(function () {
-                            var value = $(this).val();
-                            //  alert("ClassId:" + classID + " checkboxvalue:" + value);
-                            //   var text = $(this).closest("td").find("label").html();
-                            if (value == curriculumID) {
-                                $(this).attr('checked', true);
-                            }
-                            //else {
-                            //    $(this).attr('checked', false);
-                            //}
+                            $(this).attr('checked', false);
                         });
+                        // }
+                        // console.log(xmlDoc);
+                        // Now find the Table from response and loop through each item (row).
+                        $(xmlDoc).find('Table').each(function () {
+                            var curriculumID = $(this).find('CurriculumTypeId').text();
+                            //  var checkboxid = "chklistitem" + classID;
+                            // alert(classID + "," + checkboxid + "," + $(checkboxid).val());
+                            var checkboxes = $("[id*=chkCurriculum] input:checkbox");
+                            //if($(checkboxid).val()==classID)
+                            //{
+                            //    $(checkboxid).attr('checked', true);
+                            //}
+                            checkboxes.each(function () {
+                                var value = $(this).val();
+                                //  alert("ClassId:" + classID + " checkboxvalue:" + value);
+                                //   var text = $(this).closest("td").find("label").html();
+                                if (value == curriculumID) {
+                                    $(this).attr('checked', true);
+                                }
+                                //else {
+                                //    $(this).attr('checked', false);
+                                //}
+                            });
 
-                    });
-                },
-                failure: function (response) {
-                    alert(response.d);
-                }
-            });
+                        });
+                    },
+                    failure: function (response) {
+                        alert(response.d);
+                    }
+                });
+            }, 200);
         }
 
         $(function () {
@@ -479,6 +484,11 @@
                 }
                 else if ($("#<%=ddlDefaultDB.ClientID%>").val() == null) {
                     $("#<%=lblError.ClientID%>").html('No Default Database Found');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if ($('#chkCurriculum input:checkbox:checked').length == 0) {
+                     $("#<%=lblError.ClientID%>").html('Please Assign Curriculum');
                     $("#<%=divError.ClientID%>").css("display", "block");
                     return false;
                 }
@@ -629,7 +639,8 @@
             $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
             $('#<%= ddlState.ClientID %>').prop('disabled', false);
             $('#<%= ddlDefaultDB.ClientID %>').prop('disabled', false);
-
+            $("#chkCurriculum").remove();
+            $('#divCurriculum').hide();
         }
     </script>
     <script>

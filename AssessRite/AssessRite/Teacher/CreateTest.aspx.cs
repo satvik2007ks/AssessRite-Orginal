@@ -26,7 +26,7 @@ namespace AssessRite
 
         private void LoadDropDown()
         {
-            string qur="Select TestType from SchoolTestType where SchoolId='" + Session["SchoolId"].ToString() + "'";
+            string qur="Select TestType from SchoolTestType where SchoolId='" + Session["InstitutionId"].ToString() + "'";
             if(dbLibrary.idHasRows(qur))
             {
                 DataSet ds1 = dbLibrary.idGetCustomResult(qur);
@@ -37,7 +37,7 @@ namespace AssessRite
                 ddlTestType.Items.Insert(0, new ListItem("--Select--", "-1"));
                 ddlTestType.SelectedIndex = 0;
             }
-            qur = "Select * from Class where IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "' ORDER BY MasterClassId";
+            qur = "Select * from Class where IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "' ORDER BY MasterClassId";
             if (dbLibrary.idHasRows(qur))
             {
                 DataSet ds = dbLibrary.idGetCustomResult(qur);

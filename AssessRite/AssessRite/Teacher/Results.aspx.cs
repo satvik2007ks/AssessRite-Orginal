@@ -30,11 +30,11 @@ namespace AssessRite
             string qur = "";
             if ((Session["UserType"].ToString() == "2") && (Session["AdminId"] != null))
             {
-                qur = dbLibrary.idBuildQuery("[proc_getResultsForAdmin]", DateTime.Today.ToString("yyyy-MM-dd"), Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_getResultsForAdmin]", DateTime.Today.ToString("yyyy-MM-dd"), Session["InstitutionId"].ToString());
             }
             else
             {
-                qur = dbLibrary.idBuildQuery("[proc_getResults]", Session["UserId"].ToString(), DateTime.Today.ToString("yyyy-MM-dd"), Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_getResults]", Session["UserId"].ToString(), DateTime.Today.ToString("yyyy-MM-dd"), Session["InstitutionId"].ToString());
             }
             DataSet ds = dbLibrary.idGetCustomResult(qur);
             // ViewState["Tests"] = ds.Tables[0];

@@ -18,6 +18,52 @@ namespace AssessRite.Generic_Content.WebService
     [System.Web.Script.Services.ScriptService]
     public class GCWebService : System.Web.Services.WebService
     {
+        [WebMethod(EnableSession = true)]
+        public string GetInstitutionTypesForGCAdminDropDown()
+        {
+            string qur = "SELECT CurriculumType.InstitutionTypeId, InstitutionType.InstitutionType " +
+                         " FROM CurriculumType INNER JOIN " +
+                         " InstitutionType ON CurriculumType.InstitutionTypeId = InstitutionType.InstitutionTypeId RIGHT OUTER JOIN " +
+                         " GCAdminAssignedCurriculum ON CurriculumType.CurriculumTypeId = GCAdminAssignedCurriculum.CurriculumTypeId " +
+                         " Where CurriculumType.IsDeleted = '0' and InstitutionType.IsDeleted = '0' and AdminId = '" + HttpContext.Current.Session["AdminId"].ToString() + "'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string GetCurriculumTypesForGCAdminDropDown()
+        {
+            string qur = "SELECT GCAdminAssignedCurriculum.CurriculumTypeId, CurriculumType.CurriculumType "+
+                         " FROM CurriculumType RIGHT OUTER JOIN "+
+                         " GCAdminAssignedCurriculum ON CurriculumType.CurriculumTypeId = GCAdminAssignedCurriculum.CurriculumTypeId" +
+                         " Where CurriculumType.IsDeleted = '0' and AdminId = '" + HttpContext.Current.Session["AdminId"].ToString() + "'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+        }
 
         [WebMethod]
         public string LoadDropDownSubLevels(int levelid)

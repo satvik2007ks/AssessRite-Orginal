@@ -95,7 +95,7 @@ namespace AssessRite
 
         private void loadDropDown()
         {
-            //string qur1 = dbLibrary.idBuildQuery("[proc_getDataForQuestion]", Session["SchoolId"].ToString());
+            //string qur1 = dbLibrary.idBuildQuery("[proc_getDataForQuestion]", Session["InstitutionId"].ToString());
             //DataSet ds = dbLibrary.idGetCustomResult(qur1);
             //ViewState["Data"] = ds;
             //try
@@ -130,7 +130,7 @@ namespace AssessRite
             //{
             //    ddlAnswerType.Items.Clear();
             //}
-            string qur = "Select * from Class where IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "' ORDER BY MasterClassId";
+            string qur = "Select * from Class where IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "' ORDER BY MasterClassId";
             if (dbLibrary.idHasRows(qur))
             {
                 DataSet ds = dbLibrary.idGetCustomResult(qur);
@@ -526,7 +526,7 @@ namespace AssessRite
                     {
                         question = question.Replace("'", "`");
                     }
-                    qur = "Exec proc_AddQuestions '','" + ddlSubject.SelectedValue + "','" + ddlConcepts.SelectedValue + "','" + ddlObjectives.SelectedValue + "',N" + "'" + question + "','" + ddlAnswerType.SelectedValue + "',N" + "'" + answer + "','','3','" + Session["UserId"].ToString() + "','" + Session["SchoolId"].ToString() + "','Insert'";
+                    qur = "Exec proc_AddQuestions '','" + ddlSubject.SelectedValue + "','" + ddlConcepts.SelectedValue + "','" + ddlObjectives.SelectedValue + "',N" + "'" + question + "','" + ddlAnswerType.SelectedValue + "',N" + "'" + answer + "','','3','" + Session["UserId"].ToString() + "','" + Session["InstitutionId"].ToString() + "','Insert'";
                 }
                 else
                 {
@@ -540,7 +540,7 @@ namespace AssessRite
                     {
                         question = question.Replace("'", "`");
                     }
-                    qur = dbLibrary.idBuildQuery("[proc_AddQuestions]", "", ddlSubject.SelectedValue, ddlConcepts.SelectedValue, ddlObjectives.SelectedValue, question, ddlAnswerType.SelectedValue, answer, "", "3", Session["UserId"].ToString(), Session["SchoolId"].ToString(), "Insert");
+                    qur = dbLibrary.idBuildQuery("[proc_AddQuestions]", "", ddlSubject.SelectedValue, ddlConcepts.SelectedValue, ddlObjectives.SelectedValue, question, ddlAnswerType.SelectedValue, answer, "", "3", Session["UserId"].ToString(), Session["InstitutionId"].ToString(), "Insert");
                 }
                 string questionid = dbLibrary.idGetAFieldByQuery(qur);
                 HiddenField1.Value = questionid;
@@ -572,7 +572,7 @@ namespace AssessRite
                         {
                             question = question.Replace("'", "`");
                         }
-                        qur = "Exec proc_AddQuestions '" + Session["QuestionId"].ToString() + "','" + ddlSubject.SelectedValue + "','" + ddlConcepts.SelectedValue + "','" + ddlObjectives.SelectedValue + "',N" + "'" + question + "','" + ddlAnswerType.SelectedValue + "',N" + "'" + answer + "','','3','" + Session["UserId"].ToString() + "','" + Session["SchoolId"].ToString() + "','Update'";
+                        qur = "Exec proc_AddQuestions '" + Session["QuestionId"].ToString() + "','" + ddlSubject.SelectedValue + "','" + ddlConcepts.SelectedValue + "','" + ddlObjectives.SelectedValue + "',N" + "'" + question + "','" + ddlAnswerType.SelectedValue + "',N" + "'" + answer + "','','3','" + Session["UserId"].ToString() + "','" + Session["InstitutionId"].ToString() + "','Update'";
                     }
                     else
                     {
@@ -586,7 +586,7 @@ namespace AssessRite
                         {
                             question = question.Replace("'", "`");
                         }
-                        qur = dbLibrary.idBuildQuery("[proc_AddQuestions]", Session["QuestionId"].ToString(), ddlSubject.SelectedValue, ddlConcepts.SelectedValue, ddlObjectives.SelectedValue, question.Trim(), ddlAnswerType.SelectedValue, answer.Trim(), "", "3", Session["UserId"].ToString(), Session["SchoolId"].ToString(), "Update");
+                        qur = dbLibrary.idBuildQuery("[proc_AddQuestions]", Session["QuestionId"].ToString(), ddlSubject.SelectedValue, ddlConcepts.SelectedValue, ddlObjectives.SelectedValue, question.Trim(), ddlAnswerType.SelectedValue, answer.Trim(), "", "3", Session["UserId"].ToString(), Session["InstitutionId"].ToString(), "Update");
 
                     }
                     dbLibrary.idExecute(qur);
@@ -793,7 +793,7 @@ namespace AssessRite
                // cmd.Parameters.AddWithValue("@EnteredBy", "");
                 cmd.Parameters.AddWithValue("@StatusId", "3");
                 cmd.Parameters.AddWithValue("@UserId", Session["UserId"].ToString());
-                cmd.Parameters.AddWithValue("@SchoolId", Session["SchoolId"].ToString());
+                cmd.Parameters.AddWithValue("@SchoolId", Session["InstitutionId"].ToString());
                 cmd.Parameters.AddWithValue("@type", "Insert");
                 try
                 {
@@ -816,7 +816,7 @@ namespace AssessRite
                 //    "Answer", ddlAnswerType.SelectedValue == "3" ? "~/testImages/" + fileName : answer.Replace("''", "'"),
                 //    "IsRightAnswer", radbtnOptionSet.Checked == true ? "1" : "0");
 
-                string qry = dbLibrary.idBuildQuery("[proc_AddOptions]", "", ddlAnswerType.SelectedValue == "3" ? "~/testImages/" + fileName : answer.Replace("''", "'"), Session["QuestionId"].ToString(), radbtnOptionSet.Checked == true ? "1" : "0", "3", Session["UserId"].ToString(), Session["SchoolId"].ToString(), "Insert");
+                string qry = dbLibrary.idBuildQuery("[proc_AddOptions]", "", ddlAnswerType.SelectedValue == "3" ? "~/testImages/" + fileName : answer.Replace("''", "'"), Session["QuestionId"].ToString(), radbtnOptionSet.Checked == true ? "1" : "0", "3", Session["UserId"].ToString(), Session["InstitutionId"].ToString(), "Insert");
                 dbLibrary.idExecute(qry);
             }
             lblMsg.Text = "Option Added Successfully";
@@ -866,7 +866,7 @@ namespace AssessRite
             }
             if (ddlAnswerType.SelectedValue == "1" || ddlAnswerType.SelectedValue == "3")
             {
-                qur = dbLibrary.idBuildQuery("[proc_DeleteAnswer]", Session["UserId"].ToString(), Session["QuestionId"].ToString(), btnDelete.CommandArgument, Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_DeleteAnswer]", Session["UserId"].ToString(), Session["QuestionId"].ToString(), btnDelete.CommandArgument, Session["InstitutionId"].ToString());
                 //qur = "Delete from Answers where AnswerId=" + btnDelete.CommandArgument;
                 dbLibrary.idExecute(qur);
             }
@@ -933,7 +933,7 @@ namespace AssessRite
                 {
                     question = question.Replace("'", "`");
                 }
-                qur = "Exec proc_AddQuestions '" + Session["QuestionId"].ToString() + "','" + ddlSubject.SelectedValue + "','" + ddlConcepts.SelectedValue + "','" + ddlObjectives.SelectedValue + "',N" + "'" + question + "','" + ddlAnswerType.SelectedValue + "',N" + "'" + answer + "','','3','" + Session["UserId"].ToString() + "','" + Session["SchoolId"].ToString() + "','Update'";
+                qur = "Exec proc_AddQuestions '" + Session["QuestionId"].ToString() + "','" + ddlSubject.SelectedValue + "','" + ddlConcepts.SelectedValue + "','" + ddlObjectives.SelectedValue + "',N" + "'" + question + "','" + ddlAnswerType.SelectedValue + "',N" + "'" + answer + "','','3','" + Session["UserId"].ToString() + "','" + Session["InstitutionId"].ToString() + "','Update'";
             }
             else
             {
@@ -947,7 +947,7 @@ namespace AssessRite
                 {
                     question = question.Replace("'", "`");
                 }
-                qur = dbLibrary.idBuildQuery("[proc_AddQuestions]", Session["QuestionId"].ToString(), ddlSubject.SelectedValue, ddlConcepts.SelectedValue, ddlObjectives.SelectedValue, question, ddlAnswerType.SelectedValue, answer, "", "3", Session["UserId"].ToString(), Session["SchoolId"].ToString(), "Update");
+                qur = dbLibrary.idBuildQuery("[proc_AddQuestions]", Session["QuestionId"].ToString(), ddlSubject.SelectedValue, ddlConcepts.SelectedValue, ddlObjectives.SelectedValue, question, ddlAnswerType.SelectedValue, answer, "", "3", Session["UserId"].ToString(), Session["InstitutionId"].ToString(), "Update");
             }
             dbLibrary.idExecute(qur);
 
@@ -1160,7 +1160,7 @@ namespace AssessRite
                                     //cmd.Parameters.AddWithValue("@EnteredBy", "");
                                     //cmd.Parameters.AddWithValue("@StatusId", "3");
                                     //cmd.Parameters.AddWithValue("@UserId", Session["UserId"].ToString());
-                                    //cmd.Parameters.AddWithValue("@SchoolId", Session["SchoolId"].ToString());
+                                    //cmd.Parameters.AddWithValue("@SchoolId", Session["InstitutionId"].ToString());
                                     //cmd.Parameters.AddWithValue("@type", "Update");
                                     //try
                                     //{
@@ -1184,7 +1184,7 @@ namespace AssessRite
                                     //    "AnswerId=" + btnDelete.CommandArgument,
                                     //    "Answer", txtOption.Text.Replace("'", "`"),
                                     //    "isRightAnswer", radbtnOption.Checked == true ? "1" : "0");
-                                    //  string qry = dbLibrary.idBuildQuery("[proc_AddOptions]", btnDelete.CommandArgument, txtOption.Text.Replace("'", "`"), Session["QuestionId"].ToString(), radbtnOption.Checked == true ? "1" : "0", "", "3", Session["UserId"].ToString(), Session["SchoolId"].ToString(), "Update");
+                                    //  string qry = dbLibrary.idBuildQuery("[proc_AddOptions]", btnDelete.CommandArgument, txtOption.Text.Replace("'", "`"), Session["QuestionId"].ToString(), radbtnOption.Checked == true ? "1" : "0", "", "3", Session["UserId"].ToString(), Session["InstitutionId"].ToString(), "Update");
                                     //  dbLibrary.idExecute(qry);
                                 }
 
@@ -1222,7 +1222,7 @@ namespace AssessRite
                             //cmd.Parameters.AddWithValue("@EnteredBy", "");
                             //cmd.Parameters.AddWithValue("@StatusId", "3");
                             //cmd.Parameters.AddWithValue("@UserId", Session["UserId"].ToString());
-                            //cmd.Parameters.AddWithValue("@SchoolId", Session["SchoolId"].ToString());
+                            //cmd.Parameters.AddWithValue("@SchoolId", Session["InstitutionId"].ToString());
                             //cmd.Parameters.AddWithValue("@type", "Update");
                             //try
                             //{
@@ -1246,7 +1246,7 @@ namespace AssessRite
                             //    "AnswerId=" + btnDelete.CommandArgument,
                             //    "Answer", txtOption.Text.Replace("'", "`"),
                             //    "isRightAnswer", radbtnOption.Checked == true ? "1" : "0");
-                            //  string qry = dbLibrary.idBuildQuery("[proc_AddOptions]", btnDelete.CommandArgument, txtOption.Text.Replace("'", "`"), Session["QuestionId"].ToString(), radbtnOption.Checked == true ? "1" : "0", "", "3", Session["UserId"].ToString(), Session["SchoolId"].ToString(), "Update");
+                            //  string qry = dbLibrary.idBuildQuery("[proc_AddOptions]", btnDelete.CommandArgument, txtOption.Text.Replace("'", "`"), Session["QuestionId"].ToString(), radbtnOption.Checked == true ? "1" : "0", "", "3", Session["UserId"].ToString(), Session["InstitutionId"].ToString(), "Update");
                             //  dbLibrary.idExecute(qry);
                         }
 
@@ -1271,7 +1271,7 @@ namespace AssessRite
                 SqlParameter dtparam = cmd.Parameters.AddWithValue("@QuestionId", Session["QuestionId"].ToString());
                 dtparam = cmd.Parameters.AddWithValue("@StatusId", "3");
                 dtparam = cmd.Parameters.AddWithValue("@UserId", Session["UserId"].ToString());
-                dtparam = cmd.Parameters.AddWithValue("@SchoolId", Session["SchoolId"].ToString());
+                dtparam = cmd.Parameters.AddWithValue("@SchoolId", Session["InstitutionId"].ToString());
                 dtparam = cmd.Parameters.AddWithValue("@List", dtOptions);
                 dtparam.SqlDbType = SqlDbType.Structured;
                 try

@@ -58,7 +58,7 @@
                     <input type="hidden" id="hdnLevelId" />
                     <a href="#" id="btnSaveLevel" class="btn btn-primary">Save</a>
                 </div>
-                <div class="col-lg-8">
+                <div class="col-lg-8 divider">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="tblLevel" style="width: 100%">
                             <thead>

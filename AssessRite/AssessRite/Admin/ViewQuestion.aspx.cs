@@ -23,7 +23,7 @@ namespace AssessRite._3.Admin
             //dbLibrary.idUpdateTable("Questions",
             //    "QuestionId=" + questionid,
             //    "IsDeleted", "1");
-            string qur = dbLibrary.idBuildQuery("proc_ManageQuestion", HttpContext.Current.Session["UserId"].ToString(), questionid.ToString(), HttpContext.Current.Session["SchoolId"].ToString(), "", "", "", "Delete");
+            string qur = dbLibrary.idBuildQuery("proc_ManageQuestion", HttpContext.Current.Session["UserId"].ToString(), questionid.ToString(), HttpContext.Current.Session["InstitutionId"].ToString(), "", "", "", "Delete");
             dbLibrary.idExecute(qur);
             return "Question Deleted Successfully";
         }

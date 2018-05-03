@@ -23,7 +23,7 @@ namespace AssessRite
 
         private void loadGrid()
         {
-            string qur = "Select * from AcedemicYear where IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString()+ "' order by  LEFT(AcademicYear, CHARINDEX('-',AcademicYear)-1) asc";
+            string qur = "Select * from AcedemicYear where IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString()+ "' order by  LEFT(AcademicYear, CHARINDEX('-',AcademicYear)-1) asc";
             if (dbLibrary.idHasRows(qur))
             {
                 DataSet ds = dbLibrary.idGetCustomResult(qur);
@@ -66,7 +66,7 @@ namespace AssessRite
             {
                 divError.Attributes.Add("Style", "display:none");
 
-                string qur = "Select AcademicYearId from AcedemicYear where AcademicYear='" + txtAcademic.Text + "' and IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                string qur = "Select AcademicYearId from AcedemicYear where AcademicYear='" + txtAcademic.Text + "' and IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     int AcademicYearId = int.Parse(dbLibrary.idGetAFieldByQuery(qur));
@@ -100,7 +100,7 @@ namespace AssessRite
                     {
                         dbLibrary.idInsertInto("AcedemicYear",
                        "AcademicYear", txtAcademic.Text,
-                       "SchoolId", Session["SchoolId"].ToString());
+                       "SchoolId", Session["InstitutionId"].ToString());
                         lblMsg.Text = "Academic Year Saved Successfully";
 
                     }

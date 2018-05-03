@@ -46,7 +46,7 @@
                     <input type="hidden" id="hdnStateId" />
                     <a href="#" id="btnSaveState" class="btn btn-primary">Save</a>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-7 divider">
                     <div class="table-responsive">
                         <table class="table table-bordered" id="tblState" style="width: 100%">
                             <thead>

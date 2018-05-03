@@ -24,13 +24,14 @@
             height: 100px;
             margin-left: -50px;
         }
-        .custom-checkbox td{
-            padding:5px;
-        }
-        .custom-checkbox td label{
-            margin-left:2px;
+
+        .custom-checkbox td {
+            padding: 6px;
         }
 
+            .custom-checkbox td label {
+                margin-left: 2px;
+            }
     </style>
     <script type="text/javascript">
         function runEffect1() {
@@ -63,7 +64,7 @@
             </div>
             <asp:HiddenField ID="hdnvalue" runat="server" />
             <div class="row">
-                <div class="col-lg-6">
+                <div class="col-lg-5">
                     <div class="row" style="margin-top: 20px;">
                         <div class="col-md-4"></div>
                         <div class="col-md-4" style="text-align: center">
@@ -83,13 +84,21 @@
                         <asp:Label ID="Label1" runat="server" Text="Level"></asp:Label>
                         <asp:DropDownList ID="ddlLevel" runat="server" CssClass="form-control"></asp:DropDownList>
                     </div>
-                    <div class="form-group" id="divClass" style="display:none">
+                    <div class="form-group" id="divClass" style="display: none">
                         <asp:Label ID="Label3" runat="server" Text="Class"></asp:Label>
                         <asp:CheckBoxList ID="chkClass" runat="server" RepeatDirection="Horizontal" CssClass="custom-checkbox">
-                            <asp:ListItem>1</asp:ListItem>
-                            <asp:ListItem>2</asp:ListItem>
-                            <asp:ListItem>3</asp:ListItem>
-                            <asp:ListItem>4</asp:ListItem>
+                            <asp:ListItem Value="1">1</asp:ListItem>
+                            <asp:ListItem Value="2">2</asp:ListItem>
+                            <asp:ListItem Value="3">3</asp:ListItem>
+                            <asp:ListItem Value="4">4</asp:ListItem>
+                            <asp:ListItem Value="5">5</asp:ListItem>
+                            <asp:ListItem Value="6">6</asp:ListItem>
+                            <asp:ListItem Value="7">7</asp:ListItem>
+                            <asp:ListItem Value="8">8</asp:ListItem>
+                            <asp:ListItem Value="9">9</asp:ListItem>
+                            <asp:ListItem Value="10">10</asp:ListItem>
+                            <asp:ListItem Value="11">11</asp:ListItem>
+                            <asp:ListItem Value="12">12</asp:ListItem>
                         </asp:CheckBoxList>
                     </div>
                     <div class="form-group" id="divSubLevel">
@@ -102,14 +111,19 @@
                     <input type="hidden" id="hdnSubLevelId" />
                     <a href="#" id="btnSaveSubLevel" class="btn btn-primary">Save</a>
                 </div>
-                <div class="col-lg-6" style="border-left: lightgray; border-left-width: 1px; border-left-style: solid;">
+                <div class="col-lg-7" style="border-left: lightgray; border-left-width: 1px; border-left-style: solid;">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="myTable" style="width: 100%">
+                        <table class="table table-bordered" id="tblSubLevel" style="width: 100%">
                             <thead>
                                 <tr>
+                                    <th>Institution Type</th>
+                                    <th>Curriculum</th>
+                                    <th>Level</th>
                                     <th>Sub-Level</th>
                                     <th style="display: none">SubLevelId</th>
-                                    <th style="display: none">MasterClassId</th>
+                                    <th style="display: none">LevelId</th>
+                                    <th style="display: none">CurriculumTypeId</th>
+                                    <th style="display: none">InstitutionTypeId</th>
                                 </tr>
                             </thead>
                         </table>
@@ -195,21 +209,21 @@
             loadtable(0);
             $(document).ajaxStart(function () {
                 // $("#loading").show();
-               // $("#loading").data('timeout', window.setTimeout(function () { $("#loading").show() }, 100));
+                // $("#loading").data('timeout', window.setTimeout(function () { $("#loading").show() }, 100));
             }).ajaxStop(function () {
                 // $("#loading").hide();
-               // window.clearTimeout($("#loading").hide().data('timeout'));
-                $('#myTable_filter').prop('title', 'Please Enter Atleast 3 Characters For Better Search Results');
+                // window.clearTimeout($("#loading").hide().data('timeout'));
+                $('#tblSubLevel_filter').prop('title', 'Please Enter Atleast 3 Characters For Better Search Results');
             });
         });
 
-         function loadInstitutionType() {
+        function loadInstitutionType() {
             var ddlInstitutionTypeXML = $('#<%=ddlInstitutionType.ClientID%>');
             ddlInstitutionTypeXML.empty();
             var tableName = "Table";
             $.ajax({
                 type: "POST",
-                url: "../../WebService/SuperAdminWebService.asmx/GetInstitutionTypesForDropDown",
+                url: "../WebService/GCWebService.asmx/GetInstitutionTypesForGCAdminDropDown",
                 data: '{tableName: "' + tableName + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -243,7 +257,7 @@
             loadCurriculumType(InstitutionTypeId, CountryId, StateId, "-1");
         });
 
-         function loadCurriculumType(institutiontypeid, countryid, stateid, selectvalue) {
+        function loadCurriculumType(institutiontypeid, countryid, stateid, selectvalue) {
             var ddlCurriculumTypeDropDownListXML = $('#<%=ddlCurriculumType.ClientID%>');
             ddlCurriculumTypeDropDownListXML.empty();
             var paramobj = {};
@@ -252,7 +266,7 @@
             paramobj.institutionTypeId = institutiontypeid;
             $.ajax({
                 type: "POST",
-                url: "../../WebService/SuperAdminWebService.asmx/LoadDropDownCurriculumType",
+                url: "../WebService/GCWebService.asmx/GetCurriculumTypesForGCAdminDropDown",
                 data: JSON.stringify(paramobj),
                 //  data: '{institutiontypeid: "' + institutiontypeid + '",countryid="' + countryid + '",stateid="' + stateid + '"}',
                 contentType: "application/json; charset=utf-8",
@@ -289,12 +303,12 @@
             }, 200);
         }
 
-          $('#<%=ddlCurriculumType.ClientID%>').change(function () {
+        $('#<%=ddlCurriculumType.ClientID%>').change(function () {
             var curriculumtypeId = $('#<%=ddlCurriculumType.ClientID%>').val();
             loadLevels(curriculumtypeId, "1");
         });
 
-         function loadLevels(curriculumtypeId, selectvalue) {
+        function loadLevels(curriculumtypeId, selectvalue) {
             var ddlLevelDropDownXML = $('#<%=ddlLevel.ClientID%>');
             ddlLevelDropDownXML.empty();
             var paramobj = {};
@@ -345,30 +359,35 @@
         function loadtable(defaultpage) {
             $.ajax({
                 type: "POST",
-                url: "../WebMethods/GetData.asmx/GetClassData",
+                url: "../WebService/GCWebService.asmx/GetSubLevel",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
                     //  console.log(data.d)
                     var json = JSON.parse(data.d);
-                    table = $('#myTable').DataTable({
+                    table = $('#tblSubLevel').DataTable({
                         data: json,
                         select: true,
                         order: [[2, "asc"]],
                         columns: [
-                            { data: 'ClassName' },
-                            { className: "hide", data: 'ClassId' },
-                            { className: "hide", data: 'MasterClassId' }
+                            { data: 'InstitutionType' },
+                            { data: 'CurriculumType' },
+                            { data: 'LevelName' },
+                            { data: 'SubLevel' },
+                            { className: "hide", data: 'SubLevelId' },
+                            { className: "hide", data: 'LevelId' },
+                            { className: "hide", data: 'CurriculumTypeId' },
+                            { className: "hide", data: 'InstitutionTypeId' }
                         ]
 
                     });
                     table.page(defaultpage).draw(false);
-                    $('#myTable_length').parent().parent().remove();
+                    $('#tblSubLevel_length').parent().parent().remove();
                 }
             });
         }
 
-        $(document).on('click', '#myTable tbody tr', function () {
+        $(document).on('click', '#tblSubLevel tbody tr', function () {
             $("#<%=divError.ClientID%>").css("display", "none");
             if ($(this).hasClass('selected')) {
                 //  $(this).removeClass('selected');
@@ -388,49 +407,68 @@
         });
 
         $(function () {
-            $("[id*=btnSaveClass]").click(function () {
-                if ($("#<%=chkClass.ClientID%>").val() == '-1') {
-                    $("#<%=lblError.ClientID%>").html('Please Select Class');
+            $("[id*=btnSaveSubLevel]").click(function () {
+                if (jQuery.trim($("#<%=ddlInstitutionType.ClientID%>").val()) == '-1') {
+                    $("#<%=lblError.ClientID%>").html('Please Select Institution Type');
                     $("#<%=divError.ClientID%>").css("display", "block");
                     return false;
                 }
-                 <%-- else if ($("#<%=txtClass.ClientID%>").val() > 12) {
-                      $("#<%=lblError.ClientID%>").html('Class Cannot Be Greater Than 12');
+                else if (jQuery.trim($("#<%=ddlCurriculumType.ClientID%>").val()) == '-1') {
+                    $("#<%=lblError.ClientID%>").html('Please Select Curriculum Type');
                     $("#<%=divError.ClientID%>").css("display", "block");
-                    return;
+                    return false;
                 }
-                else if ($("#<%=txtClass.ClientID%>").val() == 0) {
-                    $("#<%=lblError.ClientID%>").html('Class Cannot Be 0');
-                         $("#<%=divError.ClientID%>").css("display", "block");
-                         return;
-                     }
-                     else if ($("#<%=txtClass.ClientID%>").val().indexOf("-") > -1) {
-                         $("#<%=lblError.ClientID%>").html('Invalid Characters in Class');
+                else if (jQuery.trim($("#<%=ddlLevel.ClientID%> option:selected").text()) == '') {
+                    $("#<%=lblError.ClientID%>").html('Please Select Level');
                     $("#<%=divError.ClientID%>").css("display", "block");
-                    return;
-                }--%>
+                    return false;
+                }
+                else if ($("#<%=ddlInstitutionType.ClientID%> option:selected").text() == "School") {
+                    if ($('#<%=chkClass.ClientID%> input:checkbox:checked').length == 0) {
+                        $("#<%=lblError.ClientID%>").html('Please Select Class');
+                        $("#<%=divError.ClientID%>").css("display", "block");
+                        return false;
+                    }
+                }
+                else if ($("#<%=ddlInstitutionType.ClientID%> option:selected").text() != "School") {
+                    if (jQuery.trim($("#<%=txtSubLevel.ClientID%>").val()) == '') {
+                        $("#<%=lblError.ClientID%>").html('Sub-Level Cannot Be Empty');
+                        $("#<%=divError.ClientID%>").css("display", "block");
+                        return;
+                    }
+                }
                 else {
                     $("#<%=divError.ClientID%>").css("display", "none");
                 }
+
                 var obj = {};
-                obj.classid = $.trim($("[id*=<%=chkClass.ClientID%>]").val());
-                if ($("#btnSaveClass").html() == 'Update') {
-                    if ($('#hdnClassId').val() != '') {
-                        obj.classid = $.trim($("[id*=hdnClassId]").val());
-                    }
+                obj.sublevelid = "0";
+                 if ($('#hdnSubLevelId').val() != '') {
+                    obj.sublevelid = $.trim($("[id*=hdnSubLevelId]").val());
                 }
-                obj.classname = $.trim($("[id*=<%=chkClass.ClientID%>] option:selected").text());
-                obj.buttontext = $("#btnSaveClass").html();
+                obj.levelid = $('#<%=ddlLevel.ClientID%>').val();
+                obj.institutiontype = $('#<%=ddlInstitutionType%> option:selected').text();
+                obj.sublevelnames = "0";
+                obj.sublevel = "0";
+                if ($("#<%=ddlInstitutionType.ClientID%> option:selected").text() == "School") {
+                    obj.sublevels = $("#<%=chkClass.ClientID%> input:checkbox:checked").map(function () {
+                        return $(this).val();
+                    }).get();
+                }
+                else {
+                    obj.sublevel = jQuery.trim($('#<%=txtSubLevel.ClientID%>').val());
+                }
+                obj.buttontext = $("#btnSaveSubLevel").html();
                 $.ajax({
                     type: "POST",
-                    url: "Class.aspx/SendParameters",
+                    url: "ManageSubLevel.aspx/SaveSubLevel",
                     data: JSON.stringify(obj),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
                         //  alert(r.d);
-                        $('#myTable').DataTable().destroy();
-                        $('#myTable tbody').empty();
+                        $('#tblSubLevel').DataTable().destroy();
+                        $('#tblSubLevel tbody').empty();
                         var pagenum;
                         if ($('#hdnpage').val() == '') {
                             pagenum = 0;
@@ -471,8 +509,8 @@
                     dataType: "json",
                     success: function (r) {
                         // alert(r.d);
-                        $('#myTable').DataTable().destroy();
-                        $('#myTable tbody').empty();
+                        $('#tblSubLevel').DataTable().destroy();
+                        $('#tblSubLevel tbody').empty();
                         var pagenum = parseInt($('#hdnpage').val()) - 1;
                         loadtable(pagenum);
                         if (r.d == 'Class Deleted Successfully') {
@@ -496,7 +534,7 @@
         });
 
         function clear() {
-            $('#myTable tbody tr').siblings('.selected').removeClass('selected');
+            $('#tblSubLevel tbody tr').siblings('.selected').removeClass('selected');
             $("#btnSaveClass").html('Add');
             $('#<%=chkClass.ClientID%>').val('-1');
             $("[id*=hdnClassId]").val('');

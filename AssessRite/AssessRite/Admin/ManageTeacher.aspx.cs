@@ -25,7 +25,7 @@ namespace AssessRite
 
         private void LoadGrid()
         {
-            string qur = "SELECT Teacher.TeacherId, Teacher.TeacherFirstName, Teacher.TeacherLastName, Teacher.ContactNo, Teacher.EmailId, Login.UserName,Login.Password FROM Teacher LEFT OUTER JOIN Login ON Teacher.TeacherId = Login.TeacherId where Teacher.IsDeleted='0' and Teacher.SchoolId='" + Session["SchoolId"].ToString() + "'";
+            string qur = "SELECT Teacher.TeacherId, Teacher.TeacherFirstName, Teacher.TeacherLastName, Teacher.ContactNo, Teacher.EmailId, Login.UserName,Login.Password FROM Teacher LEFT OUTER JOIN Login ON Teacher.TeacherId = Login.TeacherId where Teacher.IsDeleted='0' and Teacher.SchoolId='" + Session["InstitutionId"].ToString() + "'";
             DataSet ds = dbLibrary.idGetCustomResult(qur);
             gridTeacher.DataSource = ds;
             gridTeacher.DataBind();
@@ -86,7 +86,7 @@ namespace AssessRite
 
             if (btnTeacherSave.Text == "Save")
             {
-                string qur = "SELECT TeacherId FROM Teacher where TeacherFirstName='" + txtFirstName.Text.Trim() + "' and TeacherLastName='" + txtLastName.Text.Trim() + "' and ContactNo='" + txtContactNo.Text.Trim() + "' and EmailId='" + txtEmailID.Text.Trim() + "' and IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                string qur = "SELECT TeacherId FROM Teacher where TeacherFirstName='" + txtFirstName.Text.Trim() + "' and TeacherLastName='" + txtLastName.Text.Trim() + "' and ContactNo='" + txtContactNo.Text.Trim() + "' and EmailId='" + txtEmailID.Text.Trim() + "' and IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     divError.Attributes.Add("Style", "display:block");
@@ -94,7 +94,7 @@ namespace AssessRite
                     lblError.Focus();
                     return;
                 }
-                qur = "Select UserId from Login where UserName='" + txtUserName.Text + "' and UserTypeId='3' and IsDeleted='0' and SchoolId='" + Session["SchoolId"].ToString() + "'";
+                qur = "Select UserId from Login where UserName='" + txtUserName.Text + "' and UserTypeId='3' and IsDeleted='0' and SchoolId='" + Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     divError.Attributes.Add("Style", "display:block");
@@ -103,13 +103,13 @@ namespace AssessRite
                     txtUserName.Focus();
                     return;
                 }
-                qur = dbLibrary.idBuildQuery("[proc_AddTeacher]", "", txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Insert", Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_AddTeacher]", "", txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Insert", Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 lblMsg.Text = "Teacher Added Successfully";
             }
             else
             {
-                string qur = dbLibrary.idBuildQuery("[proc_AddTeacher]", Session["TeacherId"].ToString(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Update", Session["SchoolId"].ToString());
+                string qur = dbLibrary.idBuildQuery("[proc_AddTeacher]", Session["TeacherId"].ToString(), txtFirstName.Text.Trim(), txtLastName.Text.Trim(), txtContactNo.Text.Trim(), txtEmailID.Text.Trim(), txtUserName.Text.Trim(), txtPassword.Text.Trim(), "Update", Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 lblMsg.Text = "Teacher Details Updated Successfully";
             }
@@ -181,25 +181,25 @@ namespace AssessRite
         {
             if (buttontext == "Save")
             {
-                string qur = "SELECT TeacherId FROM Teacher where TeacherFirstName='" + firstname.Trim() + "' and TeacherLastName='" + lastname.Trim() + "' and ContactNo='" + contactno.Trim() + "' and EmailId='" + emailid.Trim() + "' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                string qur = "SELECT TeacherId FROM Teacher where TeacherFirstName='" + firstname.Trim() + "' and TeacherLastName='" + lastname.Trim() + "' and ContactNo='" + contactno.Trim() + "' and EmailId='" + emailid.Trim() + "' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     return "Teacher Data Already Exists";
                     
                 }
-                qur = "Select UserId from Login where UserName='" + username + "' and UserTypeId='3' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["SchoolId"].ToString() + "'";
+                qur = "Select UserId from Login where UserName='" + username + "' and UserTypeId='3' and IsDeleted='0' and SchoolId='" + HttpContext.Current.Session["InstitutionId"].ToString() + "'";
                 if (dbLibrary.idHasRows(qur))
                 {
                     
                     return "UserName Already Exists";
                 }
-                qur = dbLibrary.idBuildQuery("[proc_AddTeacher]", "", firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Insert", HttpContext.Current.Session["SchoolId"].ToString());
+                qur = dbLibrary.idBuildQuery("[proc_AddTeacher]", "", firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Insert", HttpContext.Current.Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 return "Teacher Added Successfully";
             }
             else
             {
-                string qur = dbLibrary.idBuildQuery("[proc_AddTeacher]", teacherid.ToString(), firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Update", HttpContext.Current.Session["SchoolId"].ToString());
+                string qur = dbLibrary.idBuildQuery("[proc_AddTeacher]", teacherid.ToString(), firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), "Update", HttpContext.Current.Session["InstitutionId"].ToString());
                 dbLibrary.idExecute(qur);
                 return "Teacher Details Updated Successfully";
             }
