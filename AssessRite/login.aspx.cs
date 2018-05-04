@@ -30,6 +30,8 @@ namespace AssessRite
                 Session["SchoolName"] = ds.Tables[0].Rows[0]["InstitutionName"].ToString();
                 Session["InstitutionId"] = ds.Tables[0].Rows[0]["InstitutionId"].ToString();
                 Session["DefaultDB"]= ds.Tables[0].Rows[0]["DefaultDB"].ToString();
+                string defaultdb = ds.Tables[0].Rows[0]["DefaultDB"].ToString();
+                Session["ConnStr"] = dbLibrary.getConnectionString(defaultdb);
                 if (Session["UserType"].ToString() == "6")
                 {
                     Session["SMEId"] = ds.Tables[0].Rows[0]["SMEId"].ToString();

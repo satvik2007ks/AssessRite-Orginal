@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SuperAdmin/superadmin.Master" AutoEventWireup="true" CodeBehind="ManageGCAdmins.aspx.cs" Inherits="AssessRite.SuperAdmin.ManageGCAdmins" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/SuperAdmin/superadmin.Master" AutoEventWireup="true" CodeBehind="ManageGCAdmins.aspx.cs" Inherits="AssessRite.SuperAdmin.ManageGCAdmins" EnableEventValidation="false" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -227,6 +227,7 @@
             var sid = $('#<%=ddlState.ClientID%>').val();
             loadDropDownDefaultDB(cid, sid, "1");
             PopulateCheckBoxList(cid, sid);
+           
         });
 
         function loadDropDownDefaultDB(countryid, stateid, selectvalue) {
@@ -280,7 +281,7 @@
         }
 
         function PopulateCheckBoxList(countryid, stateid) {
-             var pobj = {};
+            var pobj = {};
             pobj.countryid = countryid;
             pobj.stateid = stateid;
             $.ajax({
@@ -319,11 +320,12 @@
             if (counter > 0) {
                 $('#divCurriculum').show();
                 $('#dvCheckBoxListControl').append(table);
+               
             }
             else {
                 alert("No Curriculum Found for " + $('#<%=ddlState.ClientID%> option:selected').text());
                 $("#chkCurriculum").empty();
-                 $('#divCurriculum').show();
+                $('#divCurriculum').show();
             }
         }
 
@@ -385,8 +387,9 @@
                 $('#<%=ddlCountry.ClientID%>').val(CountryId);
                 loadState(CountryId, StateId);
                 var defaultdb = $(this).find('td:nth-child(12)').text();
-                $('#divCurriculum').show();
-                $("#chkCurriculum").remove();
+                 $("#dvCheckBoxListControl").empty();
+               // $('#divCurriculum').show();
+               // $("#chkCurriculum").remove();
                 PopulateCheckBoxList(CountryId, StateId);
                 loadDropDownDefaultDB(CountryId, StateId, defaultdb);
                 $('#<%=txtAdminName.ClientID%>').val($(this).find('td:nth-child(3)').text());
@@ -405,7 +408,7 @@
         });
 
         function loadCurriculumCheckBoxes(adminid) {
-            var interval = setInterval(function () {
+            //var interval = setInterval(function () {
                 var tableName = "Table";
                 $.ajax({
                     type: "POST",
@@ -414,7 +417,7 @@
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (response) {
-                        //  console.log(response.d);
+                          console.log(response.d);
                         var xmlDoc = $.parseXML(response.d);
                         //if (xmlDoc == null) {
                         var checkboxes = $("[id*=chkCurriculum] input:checkbox");
@@ -451,7 +454,7 @@
                         alert(response.d);
                     }
                 });
-            }, 200);
+            //}, 200);
         }
 
         $(function () {
@@ -488,7 +491,7 @@
                     return false;
                 }
                 else if ($('#chkCurriculum input:checkbox:checked').length == 0) {
-                     $("#<%=lblError.ClientID%>").html('Please Assign Curriculum');
+                    $("#<%=lblError.ClientID%>").html('Please Assign Curriculum');
                     $("#<%=divError.ClientID%>").css("display", "block");
                     return false;
                 }
@@ -530,7 +533,7 @@
                 obj.contactno = $.trim($("[id*=<%=txtAdminContactNo.ClientID%>]").val());
                 obj.emailid = $.trim($("[id*=<%=txtAdminEmailId.ClientID%>]").val());
                 obj.defaultdb = $.trim($("#<%=ddlDefaultDB.ClientID%> option:selected").text());
-                 obj.curriculumids = $("#chkCurriculum input:checkbox:checked").map(function () {
+                obj.curriculumids = $("#chkCurriculum input:checkbox:checked").map(function () {
                     return $(this).val();
                 }).get();
                 obj.username = $.trim($("[id*=<%=txtUserName.ClientID%>]").val());
@@ -639,8 +642,13 @@
             $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
             $('#<%= ddlState.ClientID %>').prop('disabled', false);
             $('#<%= ddlDefaultDB.ClientID %>').prop('disabled', false);
-            $("#chkCurriculum").remove();
+                $("#chkCurriculum input[type=checkbox]").each(function () {
+                    $(this).prop("checked", false)
+            })
+          //  $("#chkCurriculum").empty();
+            $("#dvCheckBoxListControl").empty();
             $('#divCurriculum').hide();
+
         }
     </script>
     <script>

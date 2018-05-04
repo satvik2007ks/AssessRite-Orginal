@@ -285,7 +285,7 @@ namespace AssessRite
                 return ds;
 
             }
-            catch
+            catch(Exception ex)
             {
                 ds = null;
                 return ds;

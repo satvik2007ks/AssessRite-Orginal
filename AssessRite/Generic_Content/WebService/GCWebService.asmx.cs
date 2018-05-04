@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -43,12 +44,12 @@ namespace AssessRite.Generic_Content.WebService
         }
 
         [WebMethod(EnableSession = true)]
-        public string GetCurriculumTypesForGCAdminDropDown()
+        public string GetCurriculumTypesForGCAdminDropDown(int institutiontypeid)
         {
-            string qur = "SELECT GCAdminAssignedCurriculum.CurriculumTypeId, CurriculumType.CurriculumType "+
-                         " FROM CurriculumType RIGHT OUTER JOIN "+
+            string qur = "SELECT GCAdminAssignedCurriculum.CurriculumTypeId, CurriculumType.CurriculumType " +
+                         " FROM CurriculumType RIGHT OUTER JOIN " +
                          " GCAdminAssignedCurriculum ON CurriculumType.CurriculumTypeId = GCAdminAssignedCurriculum.CurriculumTypeId" +
-                         " Where CurriculumType.IsDeleted = '0' and AdminId = '" + HttpContext.Current.Session["AdminId"].ToString() + "'";
+                         " Where CurriculumType.IsDeleted = '0' and AdminId = '" + HttpContext.Current.Session["AdminId"].ToString() + "' and CurriculumType.InstitutionTypeId='" + institutiontypeid + "'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -120,6 +121,27 @@ namespace AssessRite.Generic_Content.WebService
                     result = sw.ToString();
                 }
                 return result;
+            }
+            else
+                return null;
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string GetSubLevel()
+        {
+            string qur = "SELECT  A.SubLevelId, A.LevelId, A.SubLevel, B.LevelName, B.CurriculumTypeId, C.CurriculumType, C.InstitutionTypeId, D.InstitutionType "+
+                " FROM SubLevel A Inner JOIN AssessRiteMaster_Dev.dbo.Level B ON A.LevelId = B.LevelId "+
+                " Inner Join AssessRiteMaster_Dev.dbo.CurriculumType C ON C.CurriculumTypeId = B.CurriculumTypeId "+
+                " Inner Join AssessRiteMaster_Dev.dbo.GCAdminAssignedCurriculum AC ON AC.CurriculumTypeId = B.CurriculumTypeId "+
+                " Inner join  AssessRiteMaster_Dev.dbo.InstitutionType D ON C.InstitutionTypeId = D.InstitutionTypeId "+
+                " Where AC.AdminId = '"+HttpContext.Current.Session["AdminId"].ToString()+"' and A.IsDeleted = '0'";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, HttpContext.Current.Session["ConnStr"].ToString());
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string JSONresult;
+                JSONresult = JsonConvert.SerializeObject(dt);
+                return JSONresult;
             }
             else
                 return null;
