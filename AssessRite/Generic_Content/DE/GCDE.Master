@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="GCAdmin.master.cs" Inherits="AssessRite.Generic_Content.Admin.GCAdmin" %>
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="GCDE.master.cs" Inherits="AssessRite.Generic_Content.DE.GCDE" %>
 
 <!DOCTYPE html>
 
@@ -19,7 +19,9 @@
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin.css" rel="stylesheet" />
     <script src="../../Scripts/jquery-1.10.2.min.js"></script>
-      <style>
+    <%--<script src="../Scripts/bootstrap.min.js"></script>--%>
+    <%--<script src="../Scripts/jquery-1.11.1.min.js"></script>--%>
+    <style>
         .sidenav-toggled #lblSchoolName {
             visibility: hidden;
         }
@@ -41,7 +43,7 @@
 
             .checkbox label, .radio label {
                 min-height: 20px;
-                padding-left: 5px;
+                padding-left: 10px;
                 margin-bottom: 0;
                 font-weight: 400;
                 cursor: pointer;
@@ -62,26 +64,22 @@
         .odd, .even {
             cursor: pointer !important;
         }
-
-        .current-menu-item {
-            background-color: black;
-        }
     </style>
-    <script type="text/javascript">
-        function SessionExpireAlert(timeout) {
-            var seconds = timeout / 1000;
-            setInterval(function () {
-                seconds--;
-            }, 1000);
-            //setTimeout(function () {
-            //    alert("Your session will expire in approx. 2 Minute. Please save your unsaved data.")
-            //    window.focus();
-            //}, timeout - 120 * 1000);
-            setTimeout(function () {
-                window.location = "../SessionExpired.html";
-            }, timeout);
-        };
-    </script>
+     <script type="text/javascript">
+            function SessionExpireAlert(timeout) {
+                var seconds = timeout / 1000;
+                setInterval(function () {
+                    seconds--;
+                }, 1000);
+                //setTimeout(function () {
+                //    alert("Your session will expire in approx. 2 Minute. Please save your unsaved data.")
+                //    window.focus();
+                //}, timeout - 120 * 1000);
+                setTimeout(function () {
+                    window.location = "../SessionExpired.html";
+                }, timeout);
+            };
+        </script>
     <asp:ContentPlaceHolder ID="head" runat="server">
     </asp:ContentPlaceHolder>
 </head>
@@ -95,12 +93,13 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="school" style="text-align: center; margin-top: 20px;">
+                   
                     <h5>
                         <asp:Label ID="lblSchoolName" runat="server" CssClass="navbar-text" Text="Generic Content" Style="color: white !important"></asp:Label></h5>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Admin Panel" style="text-align: center; margin-top: 20px;">
+                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="DE Panel" style="text-align: center; margin-top: 20px;">
                     <h6>
-                        <asp:Label ID="Label1" runat="server" CssClass="navbar-text" Text="Admin Panel" Style="color: darkorange !important"></asp:Label></h6>
+                        <asp:Label ID="Label1" runat="server" CssClass="navbar-text" Text="DE Panel" Style="color: darkorange !important"></asp:Label></h6>
                 </li>
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Dashboard">
                     <a class="nav-link" href="Home.aspx">
@@ -108,46 +107,34 @@
                         <span class="nav-link-text">Dashboard</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Menu">
-                    <a class="nav-link nav-link-collapse" data-toggle="collapse" id="liMenu" href="#collapseExamplePages" data-parent="#exampleAccordion">
-                        <i class="fa fa-fw fa-table"></i>
-                        <span class="nav-link-text">Menu</span>
-                    </a>
-                    <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-                        <li id="liClass">
-                            <a href="ManageSubLevel.aspx">Add/View Sub-Level</a>
-                        </li>
-                        <li id="liSubject">
-                            <a href="Subject.aspx">Add/View Subject</a>
-                        </li>
-                     <%--   <li id="liConcept">
-                            <a href="Concepts.aspx">Add/View Concept</a>
-                        </li>
-                        <li id="liObjective">
-                            <a href="Objectives.aspx">Add/View Objective</a>
-                        </li>--%>
-                        <%-- <li>
-                            <a href="Question.aspx">Add Question</a>
-                        </li>--%>
-                        <li id="liViewQuestions">
-                            <a href="ViewQuestion.aspx">View Questions</a>
-                        </li>
-                       <%-- <li id="liReviewQuestions">
-                            <a href="ReviewQuestion.aspx">Review Questions</a>
-                        </li>--%>
-                    </ul>
-                </li>
-            
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add/View Student">
-                    <a class="nav-link" href="ManageDE.aspx">
+                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add/View Concept">
+                    <a class="nav-link" href="Concept.aspx">
                         <i class="fa fa-fw fa-file"></i>
-                        <span class="nav-link-text">Add/View Data Entry Operator</span>
+                        <span class="nav-link-text">Add/View Concept</span>
                     </a>
                 </li>
-                <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add/View Student">
-                    <a class="nav-link" href="ManageSME.aspx">
+                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add/View Objective">
+                    <a class="nav-link" href="Objectives.aspx">
                         <i class="fa fa-fw fa-file"></i>
-                        <span class="nav-link-text">Add/View Subject Matter Expert</span>
+                        <span class="nav-link-text">Add/View Objective</span>
+                    </a>
+                </li>
+                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add Question">
+                    <a class="nav-link" href="Question.aspx">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">Add Question</span>
+                    </a>
+                </li>
+                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="View/Edit Questions">
+                    <a class="nav-link" href="ViewQuestion.aspx">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">View/Edit Questions</span>
+                    </a>
+                </li>
+                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Questions Approval Status">
+                    <a class="nav-link" href="ApprovalStatus.aspx">
+                        <i class="fa fa-fw fa-file"></i>
+                        <span class="nav-link-text">Questions Approval Status</span>
                     </a>
                 </li>
             </ul>
@@ -162,7 +149,7 @@
                 <li class="nav-item">
                     <a class="navbar-text" style="color: white !important">
                         <i class="fa fa-fw fa-user-circle"></i>Hi
-                        <asp:Label ID="lblName" runat="server" Text="Sample Name"></asp:Label></a>
+                        <asp:Label ID="lblName" runat="server" Text=""></asp:Label></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
@@ -171,13 +158,13 @@
             </ul>
         </div>
     </nav>
-     <div class="content-wrapper">
+    <div class="content-wrapper">
         <div class="container-fluid" style="margin-top: 11px !important">
-    <form id="form1" runat="server">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
-            <!-- Logout Modal-->
+            <form id="form1" runat="server">
+                <div>
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                    <!-- Logout Modal-->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -195,9 +182,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </form>
         </div>
-    </form>
-             </div>
         <!-- /.container-fluid-->
         <!-- /.content-wrapper-->
         <footer class="sticky-footer">
@@ -227,6 +214,7 @@
         <!-- Custom scripts for this page-->
         <script src="../../js/sb-admin-datatables.min.js"></script>
         <%--<script src="../js/sb-admin-charts.min.js"></script>--%>
+       
     </div>
 </body>
 </html>

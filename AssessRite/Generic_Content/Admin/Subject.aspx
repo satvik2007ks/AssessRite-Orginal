@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Generic_Content/Admin/GCAdmin.Master" AutoEventWireup="true" CodeBehind="Subject.aspx.cs" EnableEventValidation="false" Inherits="AssessRite.Generic_Content.Admin.Subject" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-     <style>
+    <style>
         .table1 tr, td, th {
             text-align: center !important;
         }
@@ -33,8 +34,8 @@
     <div class="card mb-3">
         <div class="card-header">
             <div class="row">
-                <div class="col-lg-5" style="text-align: center">Add / Update Subject</div>
-                <div class="col-lg-7" style="text-align: center">View / Delete Subject</div>
+                <div class="col-lg-4" style="text-align: center">Add / Update Subject</div>
+                <div class="col-lg-8" style="text-align: center">View / Delete Subject</div>
             </div>
         </div>
         <div class="card-body">
@@ -43,11 +44,11 @@
                 <asp:Label ID="lblMsg" runat="server" Text="Subject Saved Successfully"></asp:Label>
             </div>
             <div class="row">
-                <div class="col-lg-5">
+                <div class="col-lg-4">
                     <div class="row" style="margin-top: 20px;">
                         <div class="col-md-4"></div>
                         <div class="col-md-4" style="text-align: center">
-                            <button id="btnNewSubject" class="btn btn-primary">New</button>
+                            <button id="btnNewSubject" class="btn btn-primary">Clear</button>
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -80,15 +81,21 @@
                     <input type="hidden" id="hdnSubId" />
                     <a href="#" id="btnSaveSubject" class="btn btn-primary">Save</a>
                 </div>
-                <div class="col-lg-7">
+                <div class="col-lg-8">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="myTable" style="width: 100%">
+                        <table class="table table-bordered" id="tblSubject" style="width: 100%">
                             <thead>
                                 <tr>
-                                    <th style="display: none">SubjectId</th>
-                                    <th style="display: none">SubLevelId</th>
+                                    <th>Institution Type</th>
+                                    <th>Curriculum Type</th>
+                                    <th>Level</th>
                                     <th>Sub-Level</th>
                                     <th>Subject</th>
+                                    <th style="display: none">SubjectId</th>
+                                    <th style="display: none">SubLevelId</th>
+                                    <th style="display: none">LevelId</th>
+                                    <th style="display: none">CurriculumTypeId</th>
+                                    <th style="display: none">InsitutionTypeId</th>
                                     <th style="display: none">IsOtherLanguage</th>
                                 </tr>
                             </thead>
@@ -99,7 +106,6 @@
                         <div class="col-md-4"></div>
                         <div class="col-md-4" style="text-align: center; margin-bottom: 10px;">
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal1" id="btnDeleteSubject" style="display: none;">Delete</button>
-
                         </div>
                         <div class="col-md-4"></div>
                     </div>
@@ -127,7 +133,7 @@
         </div>
     </div>
     <input type="hidden" id="hdnpage" />
-     <asp:HiddenField ID="hdnCountry" runat="server" />
+    <asp:HiddenField ID="hdnCountry" runat="server" />
     <asp:HiddenField ID="hdnState" runat="server" />
     <div id="loading" style="display: none">
         <div id="loader">
@@ -156,13 +162,13 @@
             });
         });
 
-          function loadInstitutionType() {
+        function loadInstitutionType() {
             var ddlInstitutionTypeXML = $('#<%=ddlInstitutionType.ClientID%>');
             ddlInstitutionTypeXML.empty();
             var tableName = "Table";
             $.ajax({
                 type: "POST",
-                url: "../../WebService/SuperAdminWebService.asmx/GetInstitutionTypesForDropDown",
+                url: "../WebService/GCWebService.asmx/GetInstitutionTypesForGCAdminDropDown",
                 data: '{tableName: "' + tableName + '"}',
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
@@ -189,23 +195,30 @@
         }
 
         $('#<%=ddlInstitutionType.ClientID%>').change(function () {
+            $('#<%=ddlCurriculumType.ClientID%>').empty();
+           <%-- if ($("#<%=ddlInstitutionType.ClientID%> option:selected").text() == "School") {
+                $('#divClass').show();
+                $('#divSubLevel').hide();
+            }
+            else {
+                $('#divClass').hide();
+                $('#divSubLevel').show();
+            }--%>
             $("#<%=ddlLevel.ClientID%>").empty();
-            var CountryId = $('#<%=hdnCountry.ClientID%>').val();
-            var StateId = $('#<%=hdnState.ClientID%>').val();
+           <%-- var CountryId = $('#<%=hdnCountry.ClientID%>').val();
+            var StateId = $('#<%=hdnState.ClientID%>').val();--%>
             var InstitutionTypeId = $('#<%=ddlInstitutionType.ClientID%>').val();
-            loadCurriculumType(InstitutionTypeId, CountryId, StateId, "-1");
+            loadCurriculumType(InstitutionTypeId, "-1");
         });
 
-         function loadCurriculumType(institutiontypeid, countryid, stateid, selectvalue) {
+        function loadCurriculumType(institutiontypeid, selectvalue) {
             var ddlCurriculumTypeDropDownListXML = $('#<%=ddlCurriculumType.ClientID%>');
             ddlCurriculumTypeDropDownListXML.empty();
             var paramobj = {};
-            paramobj.countryid = countryid;
-            paramobj.stateid = stateid;
-            paramobj.institutionTypeId = institutiontypeid;
+            paramobj.institutiontypeid = institutiontypeid;
             $.ajax({
                 type: "POST",
-                url: "../../WebService/SuperAdminWebService.asmx/LoadDropDownCurriculumType",
+                url: "../WebService/GCWebService.asmx/GetCurriculumTypesForGCAdminDropDown",
                 data: JSON.stringify(paramobj),
                 //  data: '{institutiontypeid: "' + institutiontypeid + '",countryid="' + countryid + '",stateid="' + stateid + '"}',
                 contentType: "application/json; charset=utf-8",
@@ -242,12 +255,12 @@
             }, 200);
         }
 
-          $('#<%=ddlCurriculumType.ClientID%>').change(function () {
+        $('#<%=ddlCurriculumType.ClientID%>').change(function () {
             var curriculumtypeId = $('#<%=ddlCurriculumType.ClientID%>').val();
-            loadLevels(curriculumtypeId, "1");
+            loadLevels(curriculumtypeId, "-1");
         });
 
-         function loadLevels(curriculumtypeId, selectvalue) {
+        function loadLevels(curriculumtypeId, selectvalue) {
             var ddlLevelDropDownXML = $('#<%=ddlLevel.ClientID%>');
             ddlLevelDropDownXML.empty();
             var paramobj = {};
@@ -268,6 +281,7 @@
                         option.attr("value", OptionValue);
                         ddlLevelDropDownXML.append(option);
                     });
+                    $('#<%=ddlLevel.ClientID%>').prepend('<option value="-1" selected="selected">--Select Level--</option>');
                 },
                 error: function (response) {
                     $("#<%=lblError.ClientID%>").html('No Level Found');
@@ -280,15 +294,15 @@
                     clearInterval(interval);
                     $("#<%=ddlLevel.ClientID%>").val(selectvalue);
                 }
-            }, 200);
+            }, 300);
         }
 
-          $('#<%=ddlLevel.ClientID%>').change(function () {
+        $('#<%=ddlLevel.ClientID%>').change(function () {
             var levelid = $('#<%=ddlLevel.ClientID%>').val();
-            loadSubLevels(levelid, "1");
+            loadSubLevels(levelid);
         });
 
-        function loadSubLevels(levelid, selectvalue) {
+        function loadSubLevels(levelid) {
             var ddlSubLevelDropDownXML = $('#<%=ddlSubLevel.ClientID%>');
             ddlSubLevelDropDownXML.empty();
             var paramobj = {};
@@ -303,12 +317,13 @@
                     $("#<%=divError.ClientID%>").css("display", "none");
                     var xmlDoc = $.parseXML(response.d);
                     $(xmlDoc).find('Table').each(function () {
-                        var OptionValue = $(this).find('LevelId').text();
-                        var OptionText = $(this).find('LevelName').text();
+                        var OptionValue = $(this).find('SubLevelId').text();
+                        var OptionText = $(this).find('SubLevel').text();
                         var option = $("<option>" + OptionText + "</option>");
                         option.attr("value", OptionValue);
                         ddlSubLevelDropDownXML.append(option);
                     });
+                    $('#<%=ddlSubLevel.ClientID%>').prepend('<option value="-1" selected="selected">--Select Sub-Level--</option>');
                 },
                 error: function (response) {
                     $("#<%=lblError.ClientID%>").html('No Level Found');
@@ -316,34 +331,35 @@
                     return;
                 }
             });
-            var interval = setInterval(function () {
-                if (document.querySelectorAll('#<%=ddlCurriculumType.ClientID%> option').length > 0) {
-                    clearInterval(interval);
-                    $("#<%=ddlLevel.ClientID%>").val(selectvalue);
-                }
-            }, 200);
+           
         }
 
 
         function loadtable(defaultpage) {
             $.ajax({
                 type: "POST",
-                url: "../WebMethods/GetData.asmx/GetSubjectData",
+                url: "../WebService/GCWebService.asmx/GetSubject",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
                     // console.log(data.d)
                     var json = JSON.parse(data.d);
-                    table = $('#myTable').DataTable({
+                    table = $('#tblSubject').DataTable({
                         data: json,
 
                         select: true,
                         columns: [
-        { className: "hide", data: 'SubjectId' },
-        { className: "hide", data: 'ClassId' },
-        { data: 'ClassName' },
-        { data: 'SubjectName' },
-        { className: "hide", data: 'IsOtherLanguage' }
+                            { data: 'InstitutionType' },
+                            { data: 'CurriculumType' },
+                            { data: 'LevelName' },
+                            { data: 'SubLevel' },
+                            { data: 'SubjectName' },
+                            { className: "hide", data: 'SubjectId' },
+                            { className: "hide", data: 'SubLevelId' },
+                            { className: "hide", data: 'LevelId' },
+                            { className: "hide", data: 'CurriculumTypeId' },
+                            { className: "hide", data: 'InstitutionTypeId' },
+                            { className: "hide", data: 'IsOtherLanguage' }
                         ]
 
                     });
@@ -353,7 +369,7 @@
             });
         }
 
-        $(document).on('click', '#myTable tbody tr', function () {
+        $(document).on('click', '#tblSubject tbody tr', function () {
             $("#<%=divError.ClientID%>").css("display", "none");
             if ($(this).hasClass('selected')) {
                 //     $(this).removeClass('selected');
@@ -365,11 +381,26 @@
             $("#btnSaveSubject").html('Update');
             // $("#id").css("display", "none");
             $("#btnDeleteSubject").css("display", "block");
-            var classId = $(this).find('td:nth-child(2)').text();
-            $('#hdnSubId').val($(this).find('td:first').text());
-            $('#<%=txtSubject.ClientID%>').val($(this).find('td:nth-child(4)').text());
-            $("#<%=ddlSubLevel.ClientID%>").val(classId);
-            var ischecked = $(this).find('td:nth-child(5)').text();
+            var InstitutionTypeId =$(this).find('td:nth-child(10)').text();
+            var CurriculumTypeId =$(this).find('td:nth-child(9)').text();
+            var LevelId =$(this).find('td:nth-child(8)').text();
+            var SubLevelId=$(this).find('td:nth-child(7)').text();
+            var subjectid = $(this).find('td:nth-child(6)').text();
+            $('#<%=ddlInstitutionType.ClientID%>').val(InstitutionTypeId);
+            loadCurriculumType(InstitutionTypeId, CurriculumTypeId);
+            loadLevels(CurriculumTypeId, LevelId);
+            loadSubLevels(LevelId);
+
+             var interval = setInterval(function () {
+                if (document.querySelectorAll('#<%=ddlSubLevel.ClientID%> option').length > 0) {
+                    clearInterval(interval);
+                    $("#<%=ddlSubLevel.ClientID%>").val(SubLevelId);
+                }
+            }, 200);
+
+            $('#hdnSubId').val(subjectid);
+            $('#<%=txtSubject.ClientID%>').val($(this).find('td:nth-child(5)').text());
+            var ischecked = $(this).find('td:nth-child(11)').text();
             if (ischecked == "true") {
                 $('#<%=chkLanguage.ClientID%>').prop('checked', true); // Checks it
             }
@@ -387,8 +418,23 @@
                 //  alert('fd');
                 var english = /^[A-Za-z0-9 ]*$/;
                 var trimmedValue = jQuery.trim($('#<%=txtSubject.ClientID%>').val());
-                if ($("#<%=ddlSubLevel.ClientID%>").val() == '-1') {
-                    $("#<%=lblError.ClientID%>").html('Please Select Class');
+                if ($("#<%=ddlInstitutionType.ClientID%>").val() == '-1') {
+                    $("#<%=lblError.ClientID%>").html('Please Select Institution Type');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if ($("#<%=ddlCurriculumType.ClientID%>").val() == '-1') {
+                    $("#<%=lblError.ClientID%>").html('Please Select Curriculum Type');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if ($("#<%=ddlLevel.ClientID%>").val() == '-1') {
+                    $("#<%=lblError.ClientID%>").html('Please Select Level');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if ($("#<%=ddlSubLevel.ClientID%>").val() == '-1') {
+                    $("#<%=lblError.ClientID%>").html('Please Select Sub-Level');
                     $("#<%=divError.ClientID%>").css("display", "block");
                     return false;
                 }
@@ -407,7 +453,7 @@
                     }
                     else {
                         $("#<%=lblError.ClientID%>").html('If Subject Is Other Than English, Please Select The checkbox');
-                        $("#<%=divError.ClientID%>").css("display", "block");
+                         $("#<%=divError.ClientID%>").css("display", "block");
                         return false;
                     }
                 }
@@ -419,24 +465,28 @@
                 if ($('#hdnSubId').val() != '') {
                     obj.subjectid = $.trim($("[id*=hdnSubId]").val());
                 }
+               <%-- obj.institutiontypeid = $.trim($("[id*=<%=ddlInstitutionType.ClientID%>]").val());
+                obj.curriculumtypeid = $.trim($("[id*=<%=ddlCurriculumType.ClientID%>]").val());
+                obj.levelid = $.trim($("[id*=<%=ddlLevel.ClientID%>]").val());--%>
+                obj.sublevelid = $.trim($("[id*=<%=ddlSubLevel.ClientID%>]").val());
                 obj.subject = $.trim($("[id*=<%=txtSubject.ClientID%>]").val());
-                obj.classid = $.trim($("[id*=<%=ddlSubLevel.ClientID%>]").val());
-                obj.buttontext = $("#btnSaveSubject").html();
                 obj.isotherlanguage = "0";
                 if ($('#<%=chkLanguage.ClientID%>').is(":checked")) {
                     // it is checked
                     obj.isotherlanguage = "1";
                 }
+                obj.buttontext = $("#btnSaveSubject").html();
+
                 $.ajax({
                     type: "POST",
-                    url: "Subject.aspx/SendParameters",
+                    url: "Subject.aspx/SaveSubject",
                     data: JSON.stringify(obj),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
                     success: function (r) {
                         //  alert(r.d);
-                        $('#myTable').DataTable().destroy();
-                        $('#myTable tbody').empty();
+                        $('#tblSubject').DataTable().destroy();
+                        $('#tblSubject tbody').empty();
                         var pagenum;
                         if ($('#hdnpage').val() == '') {
                             pagenum = 0;
@@ -452,13 +502,25 @@
                         }
                         if (r.d == 'Subject Updated Successfully') {
                             $("#<%=lblMsg.ClientID%>").html('Subject Updated Successfully');
+                            //  clear();
+                            $("[id*=hdnSubId]").val('');
+                            $('#<%=txtSubject.ClientID%>').val('');
+
+                            runEffect1();
                         }
                         if (r.d == 'Subject Saved Successfully') {
                             $("#<%=lblMsg.ClientID%>").html('Subject Saved Successfully');
-                        }
-                        clear();
-                        runEffect1();
+                            // clear();
+                            $("[id*=hdnSubId]").val('');
+                            $('#<%=txtSubject.ClientID%>').val('');
 
+                            runEffect1();
+                        }
+                        if (r.d == "Connection Lost") {
+                            $("#<%=lblError.ClientID%>").html('Connection Lost! Please logout and login again');
+                            $("#<%=divError.ClientID%>").css("display", "block");
+                            return false;
+                        }
                     }
                 });
                 return false;
@@ -479,8 +541,8 @@
                     dataType: "json",
                     success: function (r) {
                         // alert(r.d);
-                        $('#myTable').DataTable().destroy();
-                        $('#myTable tbody').empty();
+                        $('#tblSubject').DataTable().destroy();
+                        $('#tblSubject tbody').empty();
                         var pagenum = parseInt($('#hdnpage').val()) - 1;
                         loadtable(pagenum);
                         if (r.d == 'Subject Deleted Successfully') {
@@ -504,14 +566,17 @@
         });
 
         function clear() {
-            $('#myTable tbody tr').siblings('.selected').removeClass('selected');
+            $('#tblSubject tbody tr').siblings('.selected').removeClass('selected');
             $("#btnSaveSubject").html('Save');
             $("#btnDeleteSubject").css("display", "none");
-            $("#<%=ddlSubLevel.ClientID%>").val('-1');
+            $("#<%=ddlInstitutionType.ClientID%>").val('-1');
+            $("#<%=ddlCurriculumType.ClientID%>").empty();
+            $("#<%=ddlLevel.ClientID%>").empty();
+            $("#<%=ddlSubLevel.ClientID%>").empty();
             $('#<%=txtSubject.ClientID%>').val('');
             $('#<%=chkLanguage.ClientID%>').prop('checked', false);
             $("[id*=hdnSubId]").val('');
             $("#<%=divError.ClientID%>").css("display", "none");
-       }
+        }
     </script>
 </asp:Content>

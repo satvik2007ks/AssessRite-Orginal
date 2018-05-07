@@ -57,7 +57,7 @@ namespace AssessRite.Generic_Content.Admin
                     }
                     if (dtSubLevel.Rows.Count > 0)
                     {
-                        dbLibrary.idInsertDataTableWithConnectionString("[proc_SaveSchoolSublevel]", "@List", dtSubLevel, HttpContext.Current.Session["ConnStr"].ToString());
+                        dbLibrary.idInsertDataTableWithConnectionString("[proc_SaveSublevel]", "@List", dtSubLevel, HttpContext.Current.Session["ConnStr"].ToString());
                     }
                     return "Sub-Level Added Successfully";
                 }

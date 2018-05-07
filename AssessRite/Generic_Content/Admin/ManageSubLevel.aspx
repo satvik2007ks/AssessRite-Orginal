@@ -522,17 +522,19 @@
                         }
                         if (r.d == 'Sub-Level Updated Successfully') {
                             $("#<%=lblMsg.ClientID%>").html('Sub-Level Updated Successfully');
+                            runEffect1();
+                            clear();
                         }
                         if (r.d == 'Sub-Level Saved Successfully') {
                             $("#<%=lblMsg.ClientID%>").html('Sub-Level Saved Successfully');
+                            runEffect1();
+                            clear();
                         }
                         if (r.d == "Connection Lost") {
                             $("#<%=lblError.ClientID%>").html('Connection Lost! Please logout and login again');
                             $("#<%=divError.ClientID%>").css("display", "block");
                             return false;
                         }
-                        runEffect1();
-                        clear();
                     }
                 });
                 return false;

@@ -119,13 +119,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Generic_Content\Admin\Concepts.aspx" />
+    <Content Include="Generic_Content\DE\Concepts.aspx" />
     <Content Include="Generic_Content\Admin\Home.aspx" />
     <Content Include="Generic_Content\Admin\ManageDE.aspx" />
     <Content Include="Generic_Content\Admin\ManageSME.aspx" />
     <Content Include="Generic_Content\Admin\ManageSubLevel.aspx" />
     <Content Include="Generic_Content\Admin\Objectives.aspx" />
     <Content Include="Generic_Content\Admin\Subject.aspx" />
+    <Content Include="Generic_Content\DE\Objectives.aspx" />
     <Content Include="Generic_Content\WebService\GCWebService.asmx" />
     <Content Include="Images\jquery-ui icons\ui-icons_444444_256x240.png" />
     <Content Include="Images\jquery-ui icons\ui-icons_555555_256x240.png" />
@@ -141,6 +142,7 @@
     <Content Include="SuperAdmin\ManageLevels.aspx" />
     <Content Include="WebService\SuperAdminWebService.asmx" />
     <Content Include="Generic_Content\Admin\GCAdmin.Master" />
+    <Content Include="Generic_Content\DE\GCDE.Master" />
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Scripts\vendor\font-awesome\fonts\fontawesome-webfont.eot" />
@@ -769,11 +771,11 @@
       <DependentUpon>GetData.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Generic_Content\Admin\Concepts.aspx.cs">
+    <Compile Include="Generic_Content\DE\Concepts.aspx.cs">
       <DependentUpon>Concepts.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Generic_Content\Admin\Concepts.aspx.designer.cs">
+    <Compile Include="Generic_Content\DE\Concepts.aspx.designer.cs">
       <DependentUpon>Concepts.aspx</DependentUpon>
     </Compile>
     <Compile Include="Generic_Content\Admin\GCAdmin.Master.cs">
@@ -824,6 +826,20 @@
     </Compile>
     <Compile Include="Generic_Content\Admin\Subject.aspx.designer.cs">
       <DependentUpon>Subject.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Generic_Content\DE\GCDE.Master.cs">
+      <DependentUpon>GCDE.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\DE\GCDE.Master.designer.cs">
+      <DependentUpon>GCDE.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Generic_Content\DE\Objectives.aspx.cs">
+      <DependentUpon>Objectives.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\DE\Objectives.aspx.designer.cs">
+      <DependentUpon>Objectives.aspx</DependentUpon>
     </Compile>
     <Compile Include="Generic_Content\WebService\GCWebService.asmx.cs">
       <DependentUpon>GCWebService.asmx</DependentUpon>
@@ -932,7 +948,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Generic_Content\DE\" />
     <Folder Include="Generic_Content\SME\" />
   </ItemGroup>
   <PropertyGroup>

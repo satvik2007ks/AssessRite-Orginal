@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace AssessRite.Generic_Content.Admin
+namespace AssessRite.Generic_Content.DE
 {
     public partial class Concepts : System.Web.UI.Page
     {

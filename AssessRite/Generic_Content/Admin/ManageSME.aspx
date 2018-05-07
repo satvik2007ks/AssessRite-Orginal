@@ -74,6 +74,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
      <div class="breadcrumb">
         <h5 class="breadcrumbheading">Add/View/Update/Delete Subject Matter Expert</h5>
     </div>
@@ -216,12 +217,6 @@
                                 <asp:BoundField DataField="SMEContactNo" HeaderText="Contact No" HeaderStyle-HorizontalAlign="Center" NullDisplayText=" " />
                                 <asp:BoundField DataField="SMEEmailId" HeaderText="Email" HeaderStyle-HorizontalAlign="Center" NullDisplayText=" " />
                                 <asp:BoundField DataField="UserName" HeaderText="UserName" HeaderStyle-HorizontalAlign="Center" />
-                                <%-- <asp:TemplateField ShowHeader="true" HeaderText="Details">
-                                        <ItemTemplate>
-                                           <asp:Button ID="btnViewDetails" runat="server" CausesValidation="false" CssClass="btn-link" Style="border: none; cursor: pointer;" OnClick="btnViewDetails_Click"
-                                                    Text="Details" CommandArgument='<%# Eval("SMEId") %>' />
-                                        </ItemTemplate>
-                                    </asp:TemplateField>--%>
                                 <asp:BoundField DataField="Password" HeaderText="Password" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" />
                                 <asp:BoundField DataField="SMEId" HeaderText="SMEId" HeaderStyle-HorizontalAlign="Center" HeaderStyle-CssClass="hideGridColumn" ItemStyle-CssClass="hideGridColumn" />
                             </Columns>
@@ -253,37 +248,6 @@
                         </div>
                         <!-- /.modal-dialog -->
                     </div>
-
-
-                    <%--<div class="modal fade" id="myModal" role="dialog" data-backdrop="static" data-keyboard="false">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Subject Matter Expert Details<b>
-                                            <asp:Literal ID="ltlConcept" runat="server"></asp:Literal></b></h5>
-                                        <button type="button" class="close" data-dismiss="modal">x</button>
-                                    </div>
-                                    <div class="modal-body" style="text-align: center">
-                                        <asp:Repeater ID="rptSMEDetails" runat="server" OnItemDataBound="rptSMEDetails_ItemDataBound">
-                                        <ItemTemplate>
-                                            <div class="row">
-                                                <div class="col-1">
-                                                    <asp:CheckBox ID="chkClass" runat="server" CssClass="checkbox" Text='<%# Eval("ClassName") %>' OnCheckedChanged="chkClass_CheckedChanged" AutoPostBack="true" />
-                                                    <asp:HiddenField ID="hdnClassId" runat="server" Value='<%# Eval("ClassId") %>' />
-                                                </div>
-                                                <div class="col-11">
-                                                    <asp:CheckBoxList ID="chkSubjects" runat="server" CssClass="checkbox chkboxlist" RepeatDirection="Horizontal" Enabled="false"></asp:CheckBoxList>
-                                                </div>
-                                            </div>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>--%>
                 </div>
                 <div class="col-lg-3"></div>
             </div>

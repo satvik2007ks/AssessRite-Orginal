@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Generic_Content/Admin/GCAdmin.Master" AutoEventWireup="true" CodeBehind="ManageDE.aspx.cs" EnableEventValidation="false" Inherits="AssessRite.Generic_Content.Admin.ManageDE" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-     <style>
+    <style>
         .table1 tr, td, th {
             text-align: center !important;
         }
@@ -27,8 +28,9 @@
             height: 100px;
             margin-left: -50px;
         }
-         .dataTables_wrapper{
-            margin-bottom:20px !important;
+
+        .dataTables_wrapper {
+            margin-bottom: 20px !important;
         }
     </style>
     <script type="text/javascript">
@@ -45,7 +47,7 @@
     </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <div class="breadcrumb">
+    <div class="breadcrumb">
         <h5 class="breadcrumbheading">Add/View/Update/Delete Data Entry Operator</h5>
     </div>
     <div class="card mb-3">
@@ -99,7 +101,7 @@
                     <div class="form-group">
                         <asp:Label ID="Label2" runat="server" Text="Password*"></asp:Label>
                         <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" MaxLength="20"></asp:TextBox>
-                      <%--  <div class="help-block">
+                        <%--  <div class="help-block">
                             <asp:RegularExpressionValidator ControlToValidate="txtPassword" ID="RegularExpressionValidator3" ValidationExpression="^[\s\S]{8,20}$" runat="server" ErrorMessage="Min 8 Characters Required" Style="color: red" ValidationGroup="vd"></asp:RegularExpressionValidator>
                         </div>--%>
                         <div class="help-block" id="divError" runat="server" style="display: none">
@@ -111,7 +113,7 @@
                 </div>
                 <div class="col-lg-7">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="myTable">
+                        <table class="table table-bordered" id="tblDE">
                             <thead>
                                 <tr>
                                     <th>FirstName</th>
@@ -158,7 +160,7 @@
         <div class="card-footer small text-muted"></div>
     </div>
     <input type="hidden" id="hdnpage" />
-     <asp:HiddenField ID="hdnCountry" runat="server" />
+    <asp:HiddenField ID="hdnCountry" runat="server" />
     <asp:HiddenField ID="hdnState" runat="server" />
     <div id="loading" style="display: none">
         <div id="loader">
@@ -168,37 +170,37 @@
     <script>
         $(document).ready(function () {
             $('#<%=txtFirstName.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#btnSaveDE').click();
-                return false;
+                    return false;
                 }
             });
             $('#<%=txtLastName.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#btnSaveDE').click();
                     return false;
                 }
             });
             $('#<%=txtContactNo.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#btnSaveDE').click();
                     return false;
                 }
             });
             $('#<%=txtEmailID.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#btnSaveDE').click();
                     return false;
                 }
             });
             $('#<%=txtUserName.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#btnSaveDE').click();
                     return false;
                 }
             });
             $('#<%=txtPassword.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#btnSaveDE').click();
                     return false;
                 }
@@ -212,36 +214,33 @@
         }
     </script>
     <script>
-        function pageLoad(sender, args) {
-            $('.onlynumber').keydown(function (e) {
-                // Allow: backspace, delete, tab, escape, enter and .
-                if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
-                    // Allow: Ctrl+A
-                    (e.keyCode == 65 && e.ctrlKey === true) ||
-                    // Allow: home, end, left, right
-                    (e.keyCode >= 35 && e.keyCode <= 39) ||
-                    (e.keyCode == 189 || e.keyCode == 107)) {
-                    // let it happen, don't do anything
-                    return;
-                }
-                // Ensure that it is a number and stop the keypress
-                if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
-                    e.preventDefault();
-                }
-            });
+        //function pageLoad(sender, args) {
+        $('.onlynumber').keydown(function (e) {
+            // Allow: backspace, delete, tab, escape, enter and .
+            if ($.inArray(e.keyCode, [46, 8, 9, 27, 13]) !== -1 ||
+                // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39) ||
+                (e.keyCode == 189 || e.keyCode == 107)) {
+                // let it happen, don't do anything
+                return;
+            }
+            // Ensure that it is a number and stop the keypress
+            if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+                e.preventDefault();
+            }
+        });
             //$(".dataTable tbody").before("<thead><tr></tr></thead>");
             //$(".dataTable thead tr").append($(".dataTable th"));
             //$(".dataTable tbody tr:first").remove();
 
             //$(".dataTable").DataTable();
-        }
+        //}
     </script>
     <script>
         $(document).ready(function () {
-            $("#navbar li").removeClass("current-menu-item");//this will remove the active class from  
-            //$("#navbar1 li").removeClass("current-menu-item");//this will remove the active class from  
-            $('#liMenu').addClass('active');
-            //$('#liStudent1').addClass('current-menu-item');
+          
         });
     </script>
 
@@ -250,12 +249,12 @@
         $(document).ready(function () {
             loadtable(0);
             $(document).ajaxStart(function () {
-               
-              //  $("#loading").data('timeout', window.setTimeout(function () { $("#loading").show() }, 100));
-            }).ajaxStop(function () {
-                $('#myTable_filter').prop('title', 'Please Enter Atleast 3 Characters For Better Search Results');
 
-               // window.clearTimeout($("#loading").hide().data('timeout'));
+                //  $("#loading").data('timeout', window.setTimeout(function () { $("#loading").show() }, 100));
+            }).ajaxStop(function () {
+                $('#tblDE_filter').prop('title', 'Please Enter Atleast 3 Characters For Better Search Results');
+
+                // window.clearTimeout($("#loading").hide().data('timeout'));
             });
         });
 
@@ -264,23 +263,23 @@
         function loadtable(defaultpage) {
             $.ajax({
                 type: "POST",
-                url: "../WebMethods/GetData.asmx/getDEData",
+                url: "../WebService/GCWebService.asmx/getDEData",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function (data) {
                     // console.log(data.d)
                     var json = JSON.parse(data.d);
-                    table = $('#myTable').DataTable({
+                    table = $('#tblDE').DataTable({
                         data: json,
                         select: true,
                         columns: [
-        { data: 'DEFirstName' },
-        { data: 'DELastName' },
-        { data: 'DEContactNo' },
-        { data: 'DEEmailId' },
-        { data: 'UserName' },
-        { className: "hide", data: 'Password' },
-        { className: "hide", data: 'DEId' },
+                            { data: 'DEFirstName' },
+                            { data: 'DELastName' },
+                            { data: 'DEContactNo' },
+                            { data: 'DEEmailId' },
+                            { data: 'UserName' },
+                            { className: "hide", data: 'Password' },
+                            { className: "hide", data: 'DEId' },
                         ]
                     });
                     table.page(defaultpage).draw(false);
@@ -288,10 +287,10 @@
             });
         }
 
-        $(document).on('click', '#myTable tbody tr', function () {
+        $(document).on('click', '#tblDE tbody tr', function () {
             $("#<%=divError.ClientID%>").css("display", "none");
             if ($(this).hasClass('selected')) {
-            //    $(this).removeClass('selected');
+                //    $(this).removeClass('selected');
             }
             else {
                 table.$('tr.selected').removeClass('selected');
@@ -312,78 +311,77 @@
             $('#hdnpage').val(info.page + 1);
         });
 
-          $(function () {
-              $("[id*=btnSaveDE]").click(function () {
-                 
-                  if (jQuery.trim($("#<%=txtFirstName.ClientID%>").val()) == '') {
-                    $("#<%=lblError.ClientID%>").html('Please Enter First Name');
-                    $("#<%=divError.ClientID%>").css("display", "block");
+        $(function () {
+            $("[id*=btnSaveDE]").click(function () {
+
+                if (jQuery.trim($("#<%=txtFirstName.ClientID%>").val()) == '') {
+                      $("#<%=lblError.ClientID%>").html('Please Enter First Name');
+                      $("#<%=divError.ClientID%>").css("display", "block");
                       return false;
-                }
+                  }
                   else if (jQuery.trim($("#<%=txtLastName.ClientID%>").val()) == '') {
-                    $("#<%=lblError.ClientID%>").html('Please Enter Last Name');
-                    $("#<%=divError.ClientID%>").css("display", "block");
+                      $("#<%=lblError.ClientID%>").html('Please Enter Last Name');
+                      $("#<%=divError.ClientID%>").css("display", "block");
                       return false;
                   }
-                    
+
                   else if (jQuery.trim($("#<%=txtUserName.ClientID%>").val()) == '') {
-                    $("#<%=lblError.ClientID%>").html('Please Enter UserName');
-                         $("#<%=divError.ClientID%>").css("display", "block");
-                      return false;
-                     }
-                  else if (jQuery.trim($("#<%=txtPassword.ClientID%>").val()) == '') {
-                         $("#<%=lblError.ClientID%>").html('Please Enter Password');
-                              $("#<%=divError.ClientID%>").css("display", "block");
+                      $("#<%=lblError.ClientID%>").html('Please Enter UserName');
+                      $("#<%=divError.ClientID%>").css("display", "block");
                       return false;
                   }
-                      else if ($("#<%=txtPassword.ClientID%>").val().length < 8) {
-                     $("#<%=lblError.ClientID%>").html('Min 8 Characters Required');
+                  else if (jQuery.trim($("#<%=txtPassword.ClientID%>").val()) == '') {
+                      $("#<%=lblError.ClientID%>").html('Please Enter Password');
+                      $("#<%=divError.ClientID%>").css("display", "block");
+                      return false;
+                  }
+                  else if ($("#<%=txtPassword.ClientID%>").val().length < 8) {
+                      $("#<%=lblError.ClientID%>").html('Min 8 Characters Required');
+                      $("#<%=divError.ClientID%>").css("display", "block");
+                      return false;
+                  }
+                  else {
+                      $("#<%=divError.ClientID%>").css("display", "none");
+                  }
+                  if (jQuery.trim($("#<%=txtEmailID.ClientID%>").val()) != '') {
+                      if (!validateEmail($("#<%=txtEmailID.ClientID%>").val())) {
+                           $("#<%=lblError.ClientID%>").html('Invalid E-Mail-ID');
                               $("#<%=divError.ClientID%>").css("display", "block");
                           return false;
-                  }
-                          else {
-                              $("#<%=divError.ClientID%>").css("display", "none");
                       }
-                   if (jQuery.trim($("#<%=txtEmailID.ClientID%>").val()) != '') {
-                          if(!validateEmail($("#<%=txtEmailID.ClientID%>").val()))
-                          {
-                                $("#<%=lblError.ClientID%>").html('Invalid E-Mail-ID');
-                    $("#<%=divError.ClientID%>").css("display", "block");
-                              return false;
+                  }
+                  var obj = {};
+                  obj.deid = "0";
+                  if ($('#hdnDEId').val() != '') {
+                      obj.deid = $.trim($("[id*=hdnDEId]").val());
+                  }
+                  obj.firstname = $.trim($("[id*=<%=txtFirstName.ClientID%>]").val());
+                  obj.lastname = $.trim($("[id*=<%=txtLastName.ClientID%>]").val());
+                  obj.contactno = $.trim($("[id*=<%=txtContactNo.ClientID%>]").val());
+                  obj.emailid = $.trim($("[id*=<%=txtEmailID.ClientID%>]").val());
+                  obj.username = $.trim($("[id*=<%=txtUserName.ClientID%>]").val());
+                  obj.password = $.trim($("[id*=<%=txtPassword.ClientID%>]").val());
+                  obj.buttontext = $("#btnSaveDE").html();
+                  $.ajax({
+                      type: "POST",
+                      url: "ManageDE.aspx/SaveDE",
+                      data: JSON.stringify(obj),
+                      contentType: "application/json; charset=utf-8",
+                      dataType: "json",
+                      success: function (r) {
+                          //  alert(r.d);
+                          $('#tblDE').DataTable().destroy();
+                          $('#tblDE tbody').empty();
+                          var pagenum;
+                          if ($('#hdnpage').val() == '') {
+                              pagenum = 0;
                           }
-                     }
-                var obj = {};
-                obj.deid = "0";
-                if ($('#hdnDEId').val() != '') {
-                    obj.deid = $.trim($("[id*=hdnDEId]").val());
-                }
-                obj.firstname = $.trim($("[id*=<%=txtFirstName.ClientID%>]").val());
-                obj.lastname = $.trim($("[id*=<%=txtLastName.ClientID%>]").val());
-                obj.contactno = $.trim($("[id*=<%=txtContactNo.ClientID%>]").val());
-                obj.emailid = $.trim($("[id*=<%=txtEmailID.ClientID%>]").val());
-                obj.username = $.trim($("[id*=<%=txtUserName.ClientID%>]").val());
-                obj.password = $.trim($("[id*=<%=txtPassword.ClientID%>]").val());
-                obj.buttontext = $("#btnSaveDE").html();
-                $.ajax({
-                    type: "POST",
-                    url: "ManageDE.aspx/SendParameters",
-                    data: JSON.stringify(obj),
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (r) {
-                        //  alert(r.d);
-                        $('#myTable').DataTable().destroy();
-                        $('#myTable tbody').empty();
-                        var pagenum;
-                        if ($('#hdnpage').val() == '') {
-                            pagenum = 0;
-                        }
-                        else {
-                            pagenum = parseInt($('#hdnpage').val()) - 1;
-                        }
-                        loadtable(pagenum);
-                        if (r.d == 'DE Data Already Exists') {
-                            $("#<%=lblError.ClientID%>").html('DE Data Already Exists');
+                          else {
+                              pagenum = parseInt($('#hdnpage').val()) - 1;
+                          }
+                          loadtable(pagenum);
+                          if (r.d == 'DE Data Already Exists') {
+                              $("#<%=lblError.ClientID%>").html('DE Data Already Exists');
                             $("#<%=divError.ClientID%>").css("display", "block");
                             return false;
                         }
@@ -392,23 +390,29 @@
                             $("#<%=divError.ClientID%>").css("display", "block");
                             return false;
                         }
+                        if (r.d == "Connection Lost") {
+                            $("#<%=lblError.ClientID%>").html('Connection Lost! Please logout and login again');
+                              $("#<%=divError.ClientID%>").css("display", "block");
+                            return false;
+                        }
                         if (r.d == 'DE Details Updated Successfully') {
                             $("#<%=lblMsg.ClientID%>").html('DE Details Updated Successfully');
                         }
                         if (r.d == 'DE Added Successfully') {
                             $("#<%=lblMsg.ClientID%>").html('DE Added Successfully');
                         }
+
                         runEffect1();
                         clear();
                     }
                 });
                 return false;
             });
-         });
+        });
 
         function validateEmail($email) {
             var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-            return emailReg.test( $email );
+            return emailReg.test($email);
         }
 
         $(function () {
@@ -424,8 +428,8 @@
                     dataType: "json",
                     success: function (r) {
                         // alert(r.d);
-                        $('#myTable').DataTable().destroy();
-                        $('#myTable tbody').empty();
+                        $('#tblDE').DataTable().destroy();
+                        $('#tblDE tbody').empty();
                         var pagenum = parseInt($('#hdnpage').val()) - 1;
                         loadtable(pagenum);
                         if (r.d == 'DE Deleted Successfully') {
@@ -449,17 +453,17 @@
         });
 
         function clear() {
-            $('#myTable tbody tr').siblings('.selected').removeClass('selected');
+            $('#tblDE tbody tr').siblings('.selected').removeClass('selected');
             $('#hdnDEId').val($(this).find('td:nth-child(7)').text());
             $('#<%=txtFirstName.ClientID%>').val('');
             $('#<%=txtLastName.ClientID%>').val('');
-               $('#<%=txtContactNo.ClientID%>').val('');
-               $('#<%=txtEmailID.ClientID%>').val('');
-               $('#<%=txtUserName.ClientID%>').val('');
-               $('#<%=txtPassword.ClientID%>').val('');
-               $("#<%=divError.ClientID%>").css("display", "none");
+            $('#<%=txtContactNo.ClientID%>').val('');
+            $('#<%=txtEmailID.ClientID%>').val('');
+            $('#<%=txtUserName.ClientID%>').val('');
+            $('#<%=txtPassword.ClientID%>').val('');
+            $("#<%=divError.ClientID%>").css("display", "none");
             $("#btnDeleteDE").css("display", "none");
             $("#btnSaveDE").html('Save');
-           }
+        }
     </script>
 </asp:Content>
