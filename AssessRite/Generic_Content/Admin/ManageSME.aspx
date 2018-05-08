@@ -1,6 +1,7 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Generic_Content/Admin/GCAdmin.Master" AutoEventWireup="true" CodeBehind="ManageSME.aspx.cs" Inherits="AssessRite.Generic_Content.Admin.ManageSME" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-      <style>
+    <style>
         .table1 tr, td, th {
             text-align: center !important;
         }
@@ -50,8 +51,9 @@
             opacity: 0.5;
         }
     </style>
-    <script src="../Scripts/jquery-1.11.1.min.js"></script>
-    <script src="../Scripts/bootstrap.min.js"></script>
+    <script src="../../Scripts/jquery-1.11.1.min.js"></script>
+    <%--<script src="../../Scripts/bootstrap.min.js"></script>--%>
+    <script src="../../Scripts/vendor/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript">
         function runEffect1() {
             //alert("working");
@@ -75,7 +77,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-     <div class="breadcrumb">
+    <div class="breadcrumb">
         <h5 class="breadcrumbheading">Add/View/Update/Delete Subject Matter Expert</h5>
     </div>
     <div class="card mb-3">
@@ -131,41 +133,6 @@
                                         <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Invalid E-Mail ID" ControlToValidate="txtEmailID" Style="color: red; margin-left: 15px;" ValidationGroup="vd" ValidationExpression="^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"></asp:RegularExpressionValidator>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-4"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4"></div>
-                            <div class="col-lg-8">
-                                <div class="form-group">
-                                    <h6>Select Subject Expertise</h6>
-                                    <div class="row" style="margin-top: 5px; margin-bottom: 5px;">
-                                        <div class="col-2">
-                                            <label>Select Class</label>
-                                        </div>
-                                        <div class="col-10">
-                                            <label>Select Subject</label>
-                                        </div>
-                                    </div>
-                                    <asp:Repeater ID="rptSME" runat="server" OnItemDataBound="rptSME_ItemDataBound">
-                                        <ItemTemplate>
-                                            <div class="row">
-                                                <div class="col-1">
-                                                    <asp:CheckBox ID="chkClass" runat="server" CssClass="checkbox" Text='<%# Eval("ClassName") %>' OnCheckedChanged="chkClass_CheckedChanged" AutoPostBack="true" />
-                                                    <asp:HiddenField ID="hdnClassId" runat="server" Value='<%# Eval("ClassId") %>' />
-                                                </div>
-                                                <div class="col-11">
-                                                    <asp:CheckBoxList ID="chkSubjects" runat="server" CssClass="checkbox chkboxlist" RepeatDirection="Horizontal" Enabled="false"></asp:CheckBoxList>
-                                                </div>
-                                            </div>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-4"></div>
-                            <div class="col-lg-4">
                                 <div class="form-group">
                                     <asp:Label ID="Label1" runat="server" Text="UserName*"></asp:Label>
                                     <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control" MaxLength="20"></asp:TextBox>
@@ -180,16 +147,113 @@
                                         <asp:Label ID="lblError" runat="server" Style="color: red" Text="Please Enter Class"></asp:Label>
                                     </div>
                                 </div>
-                                <div class="row" style="margin-bottom: 10px; margin-top: 20px;">
+                                <div class="row" style="margin-bottom: 5px; margin-top: 20px;">
                                     <div class="col-md-4"></div>
-                                    <div class="col-md-4" style="margin-top: 5px; text-align: center;">
+                                    <div class="col-md-4" style="text-align: center;">
                                         <asp:Button ID="btnSMESave" runat="server" Text="Save" CssClass="btn btn-primary" ValidationGroup="vd" OnClick="btnSMESave_Click" />
                                     </div>
-                                    <div class="col-md-4"></div>
+                                    <div class="col-md-4">
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-4"></div>
                         </div>
+                        <div class="row" style="margin-bottom: 5px; margin-top: 20px;">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4" style="text-align: center;">
+                                <h6>Assign Subject Expertise</h6>
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px">
+                            <div class="col-lg-4"></div>
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <asp:Repeater ID="rptAssignSME" runat="server" OnItemDataBound="rptAssignSME_ItemDataBound">
+                                        <ItemTemplate>
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <asp:Label ID="lblCurriculumType" runat="server" Text='<%# Eval("CurriculumTypeId") %>'></asp:Label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <asp:Label ID="lblLevel" runat="server" Text='<%# Eval("LevelName") %>'></asp:Label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-2">
+                                                    <label>Select Sub-Level</label>
+                                                </div>
+                                                <div class="col-10">
+                                                    <label>Select Subject</label>
+                                                </div>
+                                            </div>
+                                            <%--<asp:Repeater ID="rptSME" runat="server" OnItemDataBound="rptSME_ItemDataBound">
+                                                <ItemTemplate>
+                                                    <div class="row">
+                                                        <div class="col-1">
+                                                            <asp:CheckBox ID="chkSubLevel" runat="server" CssClass="checkbox" Text='<%# Eval("SubLevel") %>' OnCheckedChanged="chkSubLevel_CheckedChanged" AutoPostBack="true" />
+                                                            <asp:HiddenField ID="hdnSubLevelId" runat="server" Value='<%# Eval("SubLevelId") %>' />
+                                                        </div>
+                                                        <div class="col-11">
+                                                            <asp:CheckBoxList ID="chkSubjects" runat="server" CssClass="checkbox chkboxlist" RepeatDirection="Horizontal" Enabled="false"></asp:CheckBoxList>
+                                                        </div>
+                                                    </div>
+                                                </ItemTemplate>
+                                            </asp:Repeater>--%>
+                                        </ItemTemplate>
+                                        <FooterTemplate>
+                                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading" role="tab" id="headingOne">
+                                                        <h6 class="panel-title">
+                                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Add Subject Expertise
+                                                            </a>
+                                                        </h6>
+                                                    </div>
+                                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div class="col-lg-6">
+                                                                    <div class="form-group">
+                                                                        <asp:Label ID="Label2" runat="server" Text="Curriculum Type"></asp:Label>
+                                                                        <asp:DropDownList ID="ddlCurriculumType" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlCurriculumType_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <asp:Label ID="Label1" runat="server" Text="Level"></asp:Label>
+                                                                        <asp:DropDownList ID="ddlLevel" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlLevel_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <asp:Repeater ID="rptFooter" runat="server" OnItemDataBound="rptFooter_ItemDataBound">
+                                                                <ItemTemplate>
+                                                                    <div class="row" style="margin-left: 2px">
+                                                                        <div class="col-1">
+                                                                            <asp:CheckBox ID="chkSubLevel" runat="server" CssClass="checkbox" Text='<%# Eval("SubLevel") %>' OnCheckedChanged="chkSubLevel_CheckedChanged" AutoPostBack="true" />
+                                                                            <asp:HiddenField ID="hdnSublevelId" runat="server" Value='<%# Eval("SubLevelId") %>' />
+                                                                        </div>
+                                                                        <div class="col-11">
+                                                                            <asp:CheckBoxList ID="chkSubjects" runat="server" CssClass="checkbox chkboxlist" RepeatDirection="Horizontal" Enabled="false"></asp:CheckBoxList>
+                                                                        </div>
+                                                                    </div>
+                                                                </ItemTemplate>
+                                                            </asp:Repeater>
+                                                            <div class="row" style="margin-top: 10px">
+                                                                <div class="col-md-6" style="text-align: center;">
+                                                                    <asp:Button ID="btnAssign" CssClass="btn btn-primary" runat="server" Text="Assign" Visible="false" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </FooterTemplate>
+                                    </asp:Repeater>
+                                </div>
+                            </div>
+                        </div>
+
                     </asp:Panel>
                 </ContentTemplate>
             </asp:UpdatePanel>
@@ -263,31 +327,31 @@
                 }
             });
             $('#<%=txtLastName.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#<%=btnSMESave.ClientID%>').click();
                     return false;
                 }
             });
             $('#<%=txtContactNo.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#<%=btnSMESave.ClientID%>').click();
                     return false;
                 }
             });
             $('#<%=txtEmailID.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#<%=btnSMESave.ClientID%>').click();
                     return false;
                 }
             });
             $('#<%=txtUserName.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#<%=btnSMESave.ClientID%>').click();
                     return false;
                 }
             });
             $('#<%=txtPassword.ClientID%>').keypress(function (e) {
-                if (e.keyCode == 13){
+                if (e.keyCode == 13) {
                     $('#<%=btnSMESave.ClientID%>').click();
                     return false;
                 }

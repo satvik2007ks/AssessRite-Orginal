@@ -5,6 +5,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.Services;
 
 namespace AssessRite.Generic_Content.WebService
@@ -154,7 +155,7 @@ namespace AssessRite.Generic_Content.WebService
 " FROM Subject A INNER JOIN SubLevel B ON A.SubLevelId = B.SubLevelId " +
 " INNER JOIN AssessRiteMaster_Dev.dbo.Level C ON B.LevelId = C.LevelId " +
 " INNER JOIN AssessRiteMaster_Dev.dbo.CurriculumType D ON C.CurriculumTypeId = D.CurriculumTypeId " +
-" Inner Join AssessRiteMaster_Dev.dbo.GCAdminAssignedCurriculum AC ON AC.CurriculumTypeId = C.CurriculumTypeId "+
+" Inner Join AssessRiteMaster_Dev.dbo.GCAdminAssignedCurriculum AC ON AC.CurriculumTypeId = C.CurriculumTypeId " +
 " INNER JOIN AssessRiteMaster_Dev.dbo.InstitutionType E ON D.InstitutionTypeId = E.InstitutionTypeId " +
 " Where AC.AdminId = '" + HttpContext.Current.Session["AdminId"].ToString() + "' and A.IsDeleted = '0' and B.IsDeleted = '0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, HttpContext.Current.Session["ConnStr"].ToString());
@@ -172,7 +173,7 @@ namespace AssessRite.Generic_Content.WebService
         [WebMethod(EnableSession = true)]
         public string getDEData()
         {
-            string qur = "SELECT DE.DEId, DE.DEFirstName, DE.DELastName, DE.DEContactNo, DE.DEEmailId, L.UserName,L.Password FROM DE LEFT OUTER JOIN AssessRiteMaster_Dev.dbo.Login L ON DE.DEId = L.DEId where DE.IsDeleted='0' and AddedByAdminId='" + HttpContext.Current.Session["AdminId"].ToString()+"'";
+            string qur = "SELECT DE.DEId, DE.DEFirstName, DE.DELastName, DE.DEContactNo, DE.DEEmailId, L.UserName,L.Password FROM DE LEFT OUTER JOIN AssessRiteMaster_Dev.dbo.Login L ON DE.DEId = L.DEId where DE.IsDeleted='0' and AddedByAdminId='" + HttpContext.Current.Session["AdminId"].ToString() + "'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, HttpContext.Current.Session["ConnStr"].ToString());
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -185,5 +186,51 @@ namespace AssessRite.Generic_Content.WebService
                 return null;
         }
 
+        [WebMethod(EnableSession = true)]
+        public string LoadCurriculumCheckboxlistForDE()
+        {
+            string qur = "SELECT A.CurriculumType, A.CurriculumTypeId, B.InstitutionType FROM AssessRiteMaster_Dev.dbo.CurriculumType A INNER JOIN AssessRiteMaster_Dev.dbo.InstitutionType B ON A.InstitutionTypeId = B.InstitutionTypeId RIGHT OUTER JOIN AssessRiteMaster_Dev.dbo.GCAdminAssignedCurriculum C ON A.CurriculumTypeId = C.CurriculumTypeId WHERE (A.IsDeleted = '0') AND (B.IsDeleted = '0') AND (C.AdminId='" + HttpContext.Current.Session["AdminId"].ToString() + "')";
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                List<CheckBoxItem> chkListClass = new List<CheckBoxItem>();
+                chkListClass = (from DataRow dr in ds.Tables[0].Rows
+                                select new CheckBoxItem()
+                                {
+                                    CurriculumId = Convert.ToInt32(dr["CurriculumTypeId"].ToString()),
+                                    Curriculum = dr["CurriculumType"].ToString() + "- (" + dr["InstitutionType"].ToString() + ")",
+                                }).ToList();
+                JavaScriptSerializer ser = new JavaScriptSerializer();
+                return ser.Serialize(chkListClass);
+            }
+            else
+                return null;
+        }
+        public class CheckBoxItem
+        {
+            public string Curriculum { get; set; }
+            public int CurriculumId { get; set; }
+        }
+
+        [WebMethod(EnableSession = true)]
+        public string getAllCurriculumForDE(int deid)
+        {
+            string qur = "Select CurriculumTypeId from DEAssignedCurriculum where DEId=" + deid;
+            DataSet ds = dbLibrary.idGetDataAsDataset(qur, HttpContext.Current.Session["ConnStr"].ToString());
+            if (ds.Tables[0].Rows.Count > 0)
+            {
+                DataTable dt = ds.Tables[0];
+                string result;
+                using (StringWriter sw = new StringWriter())
+                {
+                    dt.WriteXml(sw);
+                    result = sw.ToString();
+                }
+                return result;
+            }
+            else
+                return null;
+
+        }
     }
 }

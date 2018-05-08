@@ -18,7 +18,7 @@ namespace AssessRite.Generic_Content.Admin
             }
         }
         [System.Web.Services.WebMethod(EnableSession = true)]
-        public static string SaveDE(int deid, string firstname, string lastname, string contactno, string emailid, string username, string password, string buttontext)
+        public static string SaveDE(int deid, string firstname, string lastname, string contactno, string emailid, string[] curriculumids, string username, string password, string buttontext)
         {
             if (HttpContext.Current.Session["ConnStr"] != null)
             {
@@ -45,6 +45,17 @@ namespace AssessRite.Generic_Content.Admin
                             {
                                 qur = dbLibrary.idBuildQuery("[proc_AddDE]", deid.ToString(), firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), HttpContext.Current.Session["AdminId"].ToString(), HttpContext.Current.Session["DefaultDB"].ToString(), "Update");
                                 dbLibrary.idExecuteWithConnectionString(qur, HttpContext.Current.Session["ConnStr"].ToString());
+                                DataTable dtDECurriculum = new DataTable();
+                                dtDECurriculum.Columns.Add("DEId");
+                                dtDECurriculum.Columns.Add("CurriculumTypeId");
+                                foreach (string i in curriculumids)
+                                {
+                                    dtDECurriculum.Rows.Add(deid, i);
+                                }
+                                if (dtDECurriculum.Rows.Count > 0)
+                                {
+                                    dbLibrary.idInsertDataTableWithConnectionString("[proc_AssignDECurriculum]", "@List", dtDECurriculum, HttpContext.Current.Session["ConnStr"].ToString());
+                                }
                                 return "DE Details Updated Successfully";
                             }
                         }
@@ -65,10 +76,25 @@ namespace AssessRite.Generic_Content.Admin
                             return "UserName Already Exists";
                         }
                         else
-                        { 
-                        string qurde = dbLibrary.idBuildQuery("[proc_AddDE]", "", firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), HttpContext.Current.Session["AdminId"].ToString(), HttpContext.Current.Session["DefaultDB"].ToString(), "Insert");
-                        dbLibrary.idExecuteWithConnectionString(qurde, HttpContext.Current.Session["ConnStr"].ToString());
-                        return "DE Added Successfully";
+                        {
+                            string qurde = dbLibrary.idBuildQuery("[proc_AddDE]", "", firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), HttpContext.Current.Session["AdminId"].ToString(), HttpContext.Current.Session["DefaultDB"].ToString(), "Insert");
+                            DataSet dsDEId = dbLibrary.idGetDataAsDataset(qurde, HttpContext.Current.Session["ConnStr"].ToString());
+                            if (dsDEId.Tables[0].Rows.Count > 0)
+                            {
+                                string newid = dsDEId.Tables[0].Rows[0]["id"].ToString();
+                                DataTable dtDECurriculum = new DataTable();
+                                dtDECurriculum.Columns.Add("DEId");
+                                dtDECurriculum.Columns.Add("CurriculumTypeId");
+                                foreach (string i in curriculumids)
+                                {
+                                    dtDECurriculum.Rows.Add(newid, i);
+                                }
+                                if (dtDECurriculum.Rows.Count > 0)
+                                {
+                                    dbLibrary.idInsertDataTableWithConnectionString("[proc_AssignDECurriculum]", "@List", dtDECurriculum, HttpContext.Current.Session["ConnStr"].ToString());
+                                }
+                            }
+                            return "DE Added Successfully";
                         }
                     }
                     else
@@ -83,6 +109,17 @@ namespace AssessRite.Generic_Content.Admin
                         {
                             qur = dbLibrary.idBuildQuery("[proc_AddDE]", deid.ToString(), firstname.Trim(), lastname.Trim(), contactno.Trim(), emailid.Trim(), username.Trim(), password.Trim(), HttpContext.Current.Session["AdminId"].ToString(), HttpContext.Current.Session["DefaultDB"].ToString(), "Update");
                             dbLibrary.idExecuteWithConnectionString(qur, HttpContext.Current.Session["ConnStr"].ToString());
+                            DataTable dtDECurriculum = new DataTable();
+                            dtDECurriculum.Columns.Add("DEId");
+                            dtDECurriculum.Columns.Add("CurriculumTypeId");
+                            foreach (string i in curriculumids)
+                            {
+                                dtDECurriculum.Rows.Add(deid, i);
+                            }
+                            if (dtDECurriculum.Rows.Count > 0)
+                            {
+                                dbLibrary.idInsertDataTableWithConnectionString("[proc_AssignDECurriculum]", "@List", dtDECurriculum, HttpContext.Current.Session["ConnStr"].ToString());
+                            }
                             return "DE Details Updated Successfully";
                         }
                     }

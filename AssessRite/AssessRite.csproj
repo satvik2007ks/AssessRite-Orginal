@@ -119,6 +119,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Generic_Content\DE\ApprovalStatus.aspx" />
     <Content Include="Generic_Content\DE\Concepts.aspx" />
     <Content Include="Generic_Content\Admin\Home.aspx" />
     <Content Include="Generic_Content\Admin\ManageDE.aspx" />
@@ -127,6 +128,7 @@
     <Content Include="Generic_Content\Admin\Objectives.aspx" />
     <Content Include="Generic_Content\Admin\Subject.aspx" />
     <Content Include="Generic_Content\DE\Objectives.aspx" />
+    <Content Include="Generic_Content\DE\Question.aspx" />
     <Content Include="Generic_Content\WebService\GCWebService.asmx" />
     <Content Include="Images\jquery-ui icons\ui-icons_444444_256x240.png" />
     <Content Include="Images\jquery-ui icons\ui-icons_555555_256x240.png" />
@@ -178,6 +180,7 @@
     <Content Include="Scripts\vendor\font-awesome\scss\_screen-reader.scss" />
     <Content Include="Scripts\vendor\font-awesome\scss\_stacked.scss" />
     <Content Include="Scripts\vendor\font-awesome\scss\_variables.scss" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -771,6 +774,13 @@
       <DependentUpon>GetData.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Generic_Content\DE\ApprovalStatus.aspx.cs">
+      <DependentUpon>ApprovalStatus.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\DE\ApprovalStatus.aspx.designer.cs">
+      <DependentUpon>ApprovalStatus.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Generic_Content\DE\Concepts.aspx.cs">
       <DependentUpon>Concepts.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -840,6 +850,13 @@
     </Compile>
     <Compile Include="Generic_Content\DE\Objectives.aspx.designer.cs">
       <DependentUpon>Objectives.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Generic_Content\DE\Question.aspx.cs">
+      <DependentUpon>Question.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Generic_Content\DE\Question.aspx.designer.cs">
+      <DependentUpon>Question.aspx</DependentUpon>
     </Compile>
     <Compile Include="Generic_Content\WebService\GCWebService.asmx.cs">
       <DependentUpon>GCWebService.asmx</DependentUpon>

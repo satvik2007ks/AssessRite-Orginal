@@ -94,6 +94,11 @@
                             <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Invalid E-Mail ID" ControlToValidate="txtEmailID" Style="color: red; margin-left: 15px;" ValidationGroup="vd" ValidationExpression="^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"></asp:RegularExpressionValidator>
                         </div>--%>
                     </div>
+                    <div class="form-group" id="divCurriculum">
+                        <asp:Label ID="Label5" runat="server" Text="Assign DE with Curriculum Type"></asp:Label>
+                        <div style="overflow-y: scroll; height: 120px; margin-bottom: 20px;" id="dvCheckBoxListControl">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <asp:Label ID="Label1" runat="server" Text="UserName*"></asp:Label>
                         <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control" MaxLength="20"></asp:TextBox>
@@ -240,13 +245,14 @@
     </script>
     <script>
         $(document).ready(function () {
-          
+
         });
     </script>
 
     <script>
         var table;
         $(document).ready(function () {
+            PopulateCheckBoxList();
             loadtable(0);
             $(document).ajaxStart(function () {
 
@@ -258,6 +264,52 @@
             });
         });
 
+
+        function PopulateCheckBoxList() {
+            $.ajax({
+                type: "POST",
+                url: "../WebService/GCWebService.asmx/LoadCurriculumCheckboxlistForDE",
+                contentType: "application/json; charset=utf-8",
+                data: "{}",
+                dataType: "json",
+                success: AjaxSucceeded,
+                error: AjaxFailed
+            });
+        }
+        function AjaxSucceeded(result) {
+            BindCheckBoxList(result);
+        }
+        function AjaxFailed(result) {
+            alert('Failed to load Curriculum list');
+        }
+        function BindCheckBoxList(result) {
+
+            var items = JSON.parse(result.d);
+            CreateCheckBoxList(items);
+        }
+        function CreateCheckBoxList(checkboxlistItems) {
+            var table = $('<table class="checkbox" id="chkCurriculum"></table>');
+            var counter = 0;
+            $(checkboxlistItems).each(function () {
+                counter++;
+                table.append($('<tr></tr>').append($('<td></td>').append($('<input>').attr({
+                    type: 'checkbox', name: 'chklistitem', value: this.CurriculumId, id: 'chklistitem' + this.CurriculumId
+                })).append(
+                    $('<label>').attr({
+                        for: 'chklistitem' + this.CurriculumId++
+                    }).text(this.Curriculum))));
+            });
+            if (counter > 0) {
+                $('#divCurriculum').show();
+                $('#dvCheckBoxListControl').append(table);
+
+            }
+            else {
+                alert("No Curriculum Found");
+                $("#chkCurriculum").empty();
+                $('#divCurriculum').show();
+            }
+        }
 
 
         function loadtable(defaultpage) {
@@ -307,87 +359,133 @@
             $('#<%=txtEmailID.ClientID%>').val($(this).find('td:nth-child(4)').text());
             $('#<%=txtUserName.ClientID%>').val($(this).find('td:nth-child(5)').text());
             $('#<%=txtPassword.ClientID%>').val($(this).find('td:nth-child(6)').text());
+            loadCurriculumCheckBoxes($(this).find('td:nth-child(7)').text());
             var info = table.page.info();
             $('#hdnpage').val(info.page + 1);
         });
+
+        function loadCurriculumCheckBoxes(deid) {
+            //var interval = setInterval(function () {
+            var tableName = "Table";
+            $.ajax({
+                type: "POST",
+                url: "../WebService/GCWebService.asmx/getAllCurriculumForDE",
+                data: '{deid: "' + deid + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response.d);
+                    var xmlDoc = $.parseXML(response.d);
+                    var checkboxes = $("[id*=chkCurriculum] input:checkbox");
+                    checkboxes.each(function () {
+                        $(this).attr('checked', false);
+                    });
+                    // console.log(xmlDoc);
+                    // Now find the Table from response and loop through each item (row).
+                    $(xmlDoc).find('Table').each(function () {
+                        var curriculumID = $(this).find('CurriculumTypeId').text();
+                        var checkboxes = $("[id*=chkCurriculum] input:checkbox");
+                        checkboxes.each(function () {
+                            var value = $(this).val();
+                            if (value == curriculumID) {
+                                $(this).attr('checked', true);
+                            }
+                        });
+
+                    });
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
+            //}, 200);
+        }
+
 
         $(function () {
             $("[id*=btnSaveDE]").click(function () {
 
                 if (jQuery.trim($("#<%=txtFirstName.ClientID%>").val()) == '') {
-                      $("#<%=lblError.ClientID%>").html('Please Enter First Name');
-                      $("#<%=divError.ClientID%>").css("display", "block");
-                      return false;
-                  }
-                  else if (jQuery.trim($("#<%=txtLastName.ClientID%>").val()) == '') {
-                      $("#<%=lblError.ClientID%>").html('Please Enter Last Name');
-                      $("#<%=divError.ClientID%>").css("display", "block");
-                      return false;
-                  }
-
-                  else if (jQuery.trim($("#<%=txtUserName.ClientID%>").val()) == '') {
-                      $("#<%=lblError.ClientID%>").html('Please Enter UserName');
-                      $("#<%=divError.ClientID%>").css("display", "block");
-                      return false;
-                  }
-                  else if (jQuery.trim($("#<%=txtPassword.ClientID%>").val()) == '') {
-                      $("#<%=lblError.ClientID%>").html('Please Enter Password');
-                      $("#<%=divError.ClientID%>").css("display", "block");
-                      return false;
-                  }
-                  else if ($("#<%=txtPassword.ClientID%>").val().length < 8) {
-                      $("#<%=lblError.ClientID%>").html('Min 8 Characters Required');
-                      $("#<%=divError.ClientID%>").css("display", "block");
-                      return false;
-                  }
-                  else {
-                      $("#<%=divError.ClientID%>").css("display", "none");
-                  }
-                  if (jQuery.trim($("#<%=txtEmailID.ClientID%>").val()) != '') {
-                      if (!validateEmail($("#<%=txtEmailID.ClientID%>").val())) {
-                           $("#<%=lblError.ClientID%>").html('Invalid E-Mail-ID');
-                              $("#<%=divError.ClientID%>").css("display", "block");
-                          return false;
-                      }
-                  }
-                  var obj = {};
-                  obj.deid = "0";
-                  if ($('#hdnDEId').val() != '') {
-                      obj.deid = $.trim($("[id*=hdnDEId]").val());
-                  }
-                  obj.firstname = $.trim($("[id*=<%=txtFirstName.ClientID%>]").val());
-                  obj.lastname = $.trim($("[id*=<%=txtLastName.ClientID%>]").val());
-                  obj.contactno = $.trim($("[id*=<%=txtContactNo.ClientID%>]").val());
-                  obj.emailid = $.trim($("[id*=<%=txtEmailID.ClientID%>]").val());
-                  obj.username = $.trim($("[id*=<%=txtUserName.ClientID%>]").val());
-                  obj.password = $.trim($("[id*=<%=txtPassword.ClientID%>]").val());
-                  obj.buttontext = $("#btnSaveDE").html();
-                  $.ajax({
-                      type: "POST",
-                      url: "ManageDE.aspx/SaveDE",
-                      data: JSON.stringify(obj),
-                      contentType: "application/json; charset=utf-8",
-                      dataType: "json",
-                      success: function (r) {
-                          //  alert(r.d);
-                          $('#tblDE').DataTable().destroy();
-                          $('#tblDE tbody').empty();
-                          var pagenum;
-                          if ($('#hdnpage').val() == '') {
-                              pagenum = 0;
-                          }
-                          else {
-                              pagenum = parseInt($('#hdnpage').val()) - 1;
-                          }
-                          loadtable(pagenum);
-                          if (r.d == 'DE Data Already Exists') {
-                              $("#<%=lblError.ClientID%>").html('DE Data Already Exists');
+                    $("#<%=lblError.ClientID%>").html('Please Enter First Name');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if (jQuery.trim($("#<%=txtLastName.ClientID%>").val()) == '') {
+                    $("#<%=lblError.ClientID%>").html('Please Enter Last Name');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if ($('#chkCurriculum input:checkbox:checked').length == 0) {
+                    $("#<%=lblError.ClientID%>").html('Please Assign Curriculum');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if (jQuery.trim($("#<%=txtUserName.ClientID%>").val()) == '') {
+                    $("#<%=lblError.ClientID%>").html('Please Enter UserName');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if (jQuery.trim($("#<%=txtPassword.ClientID%>").val()) == '') {
+                    $("#<%=lblError.ClientID%>").html('Please Enter Password');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else if ($("#<%=txtPassword.ClientID%>").val().length < 8) {
+                    $("#<%=lblError.ClientID%>").html('Min 8 Characters Required');
+                    $("#<%=divError.ClientID%>").css("display", "block");
+                    return false;
+                }
+                else {
+                    $("#<%=divError.ClientID%>").css("display", "none");
+                }
+                if (jQuery.trim($("#<%=txtEmailID.ClientID%>").val()) != '') {
+                    if (!validateEmail($("#<%=txtEmailID.ClientID%>").val())) {
+                        $("#<%=lblError.ClientID%>").html('Invalid E-Mail-ID');
+                        $("#<%=divError.ClientID%>").css("display", "block");
+                        return false;
+                    }
+                }
+                var obj = {};
+                obj.deid = "0";
+                if ($('#hdnDEId').val() != '') {
+                    obj.deid = $.trim($("[id*=hdnDEId]").val());
+                }
+                obj.firstname = $.trim($("[id*=<%=txtFirstName.ClientID%>]").val());
+                obj.lastname = $.trim($("[id*=<%=txtLastName.ClientID%>]").val());
+                obj.contactno = $.trim($("[id*=<%=txtContactNo.ClientID%>]").val());
+                obj.emailid = $.trim($("[id*=<%=txtEmailID.ClientID%>]").val());
+                obj.curriculumids = $("#chkCurriculum input:checkbox:checked").map(function () {
+                    return $(this).val();
+                }).get();
+                obj.username = $.trim($("[id*=<%=txtUserName.ClientID%>]").val());
+                obj.password = $.trim($("[id*=<%=txtPassword.ClientID%>]").val());
+                obj.buttontext = $("#btnSaveDE").html();
+                $.ajax({
+                    type: "POST",
+                    url: "ManageDE.aspx/SaveDE",
+                    data: JSON.stringify(obj),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (r) {
+                        //  alert(r.d);
+                        $('#tblDE').DataTable().destroy();
+                        $('#tblDE tbody').empty();
+                        var pagenum;
+                        if ($('#hdnpage').val() == '') {
+                            pagenum = 0;
+                        }
+                        else {
+                            pagenum = parseInt($('#hdnpage').val()) - 1;
+                        }
+                        loadtable(pagenum);
+                        if (r.d == 'DE Data Already Exists') {
+                            $("#<%=lblError.ClientID%>").html('DE Data Already Exists');
                             $("#<%=divError.ClientID%>").css("display", "block");
                             return false;
                         }
                         if (r.d == 'UserName Already Exists') {
                             $("#<%=lblError.ClientID%>").html('UserName Already Exists');
-                            $("#<%=divError.ClientID%>").css("display", "block");
+                              $("#<%=divError.ClientID%>").css("display", "block");
                             return false;
                         }
                         if (r.d == "Connection Lost") {
@@ -464,6 +562,8 @@
             $("#<%=divError.ClientID%>").css("display", "none");
             $("#btnDeleteDE").css("display", "none");
             $("#btnSaveDE").html('Save');
+            $("#dvCheckBoxListControl").empty();
+            PopulateCheckBoxList();
         }
     </script>
 </asp:Content>
