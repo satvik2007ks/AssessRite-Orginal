@@ -227,7 +227,7 @@
             var sid = $('#<%=ddlState.ClientID%>').val();
             loadDropDownDefaultDB(cid, sid, "1");
             PopulateCheckBoxList(cid, sid);
-           
+
         });
 
         function loadDropDownDefaultDB(countryid, stateid, selectvalue) {
@@ -320,7 +320,7 @@
             if (counter > 0) {
                 $('#divCurriculum').show();
                 $('#dvCheckBoxListControl').append(table);
-               
+
             }
             else {
                 alert("No Curriculum Found for " + $('#<%=ddlState.ClientID%> option:selected').text());
@@ -387,15 +387,19 @@
                 $('#<%=ddlCountry.ClientID%>').val(CountryId);
                 loadState(CountryId, StateId);
                 var defaultdb = $(this).find('td:nth-child(12)').text();
-                 $("#dvCheckBoxListControl").empty();
-               // $('#divCurriculum').show();
-               // $("#chkCurriculum").remove();
+                $("#dvCheckBoxListControl").empty();
+                // $('#divCurriculum').show();
+                // $("#chkCurriculum").remove();
+                 setTimeout(function () {
+                }, 300);
                 PopulateCheckBoxList(CountryId, StateId);
                 loadDropDownDefaultDB(CountryId, StateId, defaultdb);
                 $('#<%=txtAdminName.ClientID%>').val($(this).find('td:nth-child(3)').text());
                 $('#<%=txtAdminAddress.ClientID%>').val($(this).find('td:nth-child(4)').text());
                 $('#<%=txtAdminContactNo.ClientID%>').val($(this).find('td:nth-child(5)').text());
                 $('#<%=txtAdminEmailId.ClientID%>').val($(this).find('td:nth-child(6)').text());
+                setTimeout(function () {
+                }, 500);
                 loadCurriculumCheckBoxes($(this).find('td:nth-child(9)').text());
                 $('#<%=txtUserName.ClientID%>').val($(this).find('td:nth-child(7)').text());
                 $('#<%=txtPassword.ClientID%>').val($(this).find('td:nth-child(8)').text());
@@ -408,52 +412,52 @@
         });
 
         function loadCurriculumCheckBoxes(adminid) {
-            //var interval = setInterval(function () {
-                var tableName = "Table";
-                $.ajax({
-                    type: "POST",
-                    url: "../WebService/SuperAdminWebService.asmx/getAllCurriculumForAdmin",
-                    data: '{adminid: "' + adminid + '"}',
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                          console.log(response.d);
-                        var xmlDoc = $.parseXML(response.d);
-                        //if (xmlDoc == null) {
+            //  var interval = setInterval(function () {
+            var tableName = "Table";
+            $.ajax({
+                type: "POST",
+                url: "../WebService/SuperAdminWebService.asmx/getAllCurriculumForAdmin",
+                data: '{adminid: "' + adminid + '"}',
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    console.log(response.d);
+                    var xmlDoc = $.parseXML(response.d);
+                    //if (xmlDoc == null) {
+                    var checkboxes = $("[id*=chkCurriculum] input:checkbox");
+                    checkboxes.each(function () {
+                        $(this).attr('checked', false);
+                    });
+                    // }
+                    // console.log(xmlDoc);
+                    // Now find the Table from response and loop through each item (row).
+                    $(xmlDoc).find('Table').each(function () {
+                        var curriculumID = $(this).find('CurriculumTypeId').text();
+                        //  var checkboxid = "chklistitem" + classID;
+                        // alert(classID + "," + checkboxid + "," + $(checkboxid).val());
                         var checkboxes = $("[id*=chkCurriculum] input:checkbox");
+                        //if($(checkboxid).val()==classID)
+                        //{
+                        //    $(checkboxid).attr('checked', true);
+                        //}
                         checkboxes.each(function () {
-                            $(this).attr('checked', false);
-                        });
-                        // }
-                        // console.log(xmlDoc);
-                        // Now find the Table from response and loop through each item (row).
-                        $(xmlDoc).find('Table').each(function () {
-                            var curriculumID = $(this).find('CurriculumTypeId').text();
-                            //  var checkboxid = "chklistitem" + classID;
-                            // alert(classID + "," + checkboxid + "," + $(checkboxid).val());
-                            var checkboxes = $("[id*=chkCurriculum] input:checkbox");
-                            //if($(checkboxid).val()==classID)
-                            //{
-                            //    $(checkboxid).attr('checked', true);
+                            var value = $(this).val();
+                            //  alert("ClassId:" + classID + " checkboxvalue:" + value);
+                            //   var text = $(this).closest("td").find("label").html();
+                            if (value == curriculumID) {
+                                $(this).attr('checked', true);
+                            }
+                            //else {
+                            //    $(this).attr('checked', false);
                             //}
-                            checkboxes.each(function () {
-                                var value = $(this).val();
-                                //  alert("ClassId:" + classID + " checkboxvalue:" + value);
-                                //   var text = $(this).closest("td").find("label").html();
-                                if (value == curriculumID) {
-                                    $(this).attr('checked', true);
-                                }
-                                //else {
-                                //    $(this).attr('checked', false);
-                                //}
-                            });
-
                         });
-                    },
-                    failure: function (response) {
-                        alert(response.d);
-                    }
-                });
+
+                    });
+                },
+                failure: function (response) {
+                    alert(response.d);
+                }
+            });
             //}, 200);
         }
 
@@ -642,10 +646,10 @@
             $('#<%= ddlCountry.ClientID %>').prop('disabled', false);
             $('#<%= ddlState.ClientID %>').prop('disabled', false);
             $('#<%= ddlDefaultDB.ClientID %>').prop('disabled', false);
-                $("#chkCurriculum input[type=checkbox]").each(function () {
-                    $(this).prop("checked", false)
+            $("#chkCurriculum input[type=checkbox]").each(function () {
+                $(this).prop("checked", false)
             })
-          //  $("#chkCurriculum").empty();
+            //  $("#chkCurriculum").empty();
             $("#dvCheckBoxListControl").empty();
             $('#divCurriculum').hide();
 

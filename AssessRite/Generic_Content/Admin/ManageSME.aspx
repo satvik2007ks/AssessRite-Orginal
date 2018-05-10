@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Generic_Content/Admin/GCAdmin.Master" AutoEventWireup="true" CodeBehind="ManageSME.aspx.cs" Inherits="AssessRite.Generic_Content.Admin.ManageSME" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Generic_Content/Admin/GCAdmin.Master" AutoEventWireup="true" CodeBehind="ManageSME.aspx.cs" Inherits="AssessRite.Generic_Content.Admin.ManageSME" EnableEventValidation="false" MaintainScrollPositionOnPostback="true" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <style>
@@ -89,174 +89,219 @@
             </div>
         </div>
         <div class="card-body">
-            <div style="display: none; text-align: center" id="myMessage1" runat="server" class="alert alert-success col-sm-12">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <asp:Label ID="lblMsg" runat="server" Text="Subject Matter Expert Saved Successfully"></asp:Label>
-            </div>
-            <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
+
+            <%--  <asp:UpdatePanel ID="UpdatePanel1" runat="server" UpdateMode="Conditional">
                 <Triggers>
                     <asp:PostBackTrigger ControlID="btnSMESave" />
                     <asp:PostBackTrigger ControlID="btnDeleteYes" />
                 </Triggers>
-                <ContentTemplate>
-                    <asp:Panel ID="pnl" runat="server" DefaultButton="btnSMESave">
-                        <div class="row">
-                            <div class="col-lg-4"></div>
-                            <div class="col-lg-4">
-                                <div class="row" style="margin-bottom: 10px; margin-top: 20px;">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4" style="margin-top: 5px; text-align: center;">
-                                        <asp:Button ID="btnNew" runat="server" Text="New" CssClass="btn btn-primary" OnClick="btnNew_Click" />
-                                    </div>
-                                    <div class="col-md-4">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <asp:Label ID="lblFirstName" runat="server" Text="FirstName*"></asp:Label>
-                                    <asp:TextBox ID="txtFirstName" runat="server" CssClass="form-control" MaxLength="100" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"></asp:TextBox>
-
-                                </div>
-                                <div class="form-group">
-                                    <asp:Label ID="lblLastName" runat="server" Text="LastName*"></asp:Label>
-                                    <asp:TextBox ID="txtLastName" runat="server" CssClass="form-control" MaxLength="100" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"></asp:TextBox>
-
-                                </div>
-                                <div class="form-group">
-                                    <asp:Label ID="Label3" runat="server" Text="Contact No#"></asp:Label>
-                                    <asp:TextBox ID="txtContactNo" runat="server" CssClass="form-control onlynumber" MaxLength="12"></asp:TextBox>
-
-                                </div>
-                                <div class="form-group">
-                                    <asp:Label ID="Label4" runat="server" Text="Email ID"></asp:Label>
-                                    <asp:TextBox ID="txtEmailID" runat="server" CssClass="form-control" MaxLength="99" ValidationGroup="vd"></asp:TextBox>
-                                    <div class="help-block">
-                                        <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Invalid E-Mail ID" ControlToValidate="txtEmailID" Style="color: red; margin-left: 15px;" ValidationGroup="vd" ValidationExpression="^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"></asp:RegularExpressionValidator>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <asp:Label ID="Label1" runat="server" Text="UserName*"></asp:Label>
-                                    <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control" MaxLength="20"></asp:TextBox>
-                                </div>
-                                <div class="form-group">
-                                    <asp:Label ID="Label2" runat="server" Text="Password*"></asp:Label>
-                                    <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" MaxLength="20"></asp:TextBox>
-                                    <div class="help-block">
-                                        <asp:RegularExpressionValidator ControlToValidate="txtPassword" ID="RegularExpressionValidator3" ValidationExpression="^[\s\S]{8,20}$" runat="server" ErrorMessage="Min 8 Characters Required" Style="color: red" ValidationGroup="vd"></asp:RegularExpressionValidator>
-                                    </div>
-                                    <div class="help-block center" id="divError" runat="server" style="display: none">
-                                        <asp:Label ID="lblError" runat="server" Style="color: red" Text="Please Enter Class"></asp:Label>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin-bottom: 5px; margin-top: 20px;">
-                                    <div class="col-md-4"></div>
-                                    <div class="col-md-4" style="text-align: center;">
-                                        <asp:Button ID="btnSMESave" runat="server" Text="Save" CssClass="btn btn-primary" ValidationGroup="vd" OnClick="btnSMESave_Click" />
-                                    </div>
-                                    <div class="col-md-4">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4"></div>
-                        </div>
-                        <div class="row" style="margin-bottom: 5px; margin-top: 20px;">
+                <ContentTemplate>--%>
+            <asp:Panel ID="pnl" runat="server" DefaultButton="btnSMESave">
+                <div class="row">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        <div class="row" style="margin-bottom: 10px; margin-top: 20px;">
                             <div class="col-md-4"></div>
-                            <div class="col-md-4" style="text-align: center;">
-                                <h6>Assign Subject Expertise</h6>
+                            <div class="col-md-4" style="margin-top: 5px; text-align: center;">
+                                <asp:Button ID="btnNew" runat="server" Text="Clear" CssClass="btn btn-primary" OnClick="btnNew_Click" />
                             </div>
                             <div class="col-md-4">
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 20px">
-                            <div class="col-lg-4"></div>
-                            <div class="col-lg-8">
-                                <div class="form-group">
-                                    <asp:Repeater ID="rptAssignSME" runat="server" OnItemDataBound="rptAssignSME_ItemDataBound">
+                        <div class="form-group">
+                            <asp:Label ID="lblFirstName" runat="server" Text="FirstName*"></asp:Label>
+                            <asp:TextBox ID="txtFirstName" runat="server" CssClass="form-control" MaxLength="100" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"></asp:TextBox>
+
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="lblLastName" runat="server" Text="LastName*"></asp:Label>
+                            <asp:TextBox ID="txtLastName" runat="server" CssClass="form-control" MaxLength="100" onkeypress="return (event.charCode > 64 && event.charCode < 91) || (event.charCode > 96 && event.charCode < 123)"></asp:TextBox>
+
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="Label3" runat="server" Text="Contact No#"></asp:Label>
+                            <asp:TextBox ID="txtContactNo" runat="server" CssClass="form-control onlynumber" MaxLength="12"></asp:TextBox>
+
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="lblEmail" runat="server" Text="Email ID"></asp:Label>
+                            <asp:TextBox ID="txtEmailID" runat="server" CssClass="form-control" MaxLength="99" ValidationGroup="vd"></asp:TextBox>
+                            <div class="help-block">
+                                <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ErrorMessage="Invalid E-Mail ID" ControlToValidate="txtEmailID" Style="color: red; margin-left: 15px;" ValidationGroup="vd" ValidationExpression="^[a-zA-Z0-9._+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$"></asp:RegularExpressionValidator>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="lblUsername" runat="server" Text="UserName*"></asp:Label>
+                            <asp:TextBox ID="txtUserName" runat="server" CssClass="form-control" MaxLength="20"></asp:TextBox>
+                        </div>
+                        <div class="form-group">
+                            <asp:Label ID="lblPassword" runat="server" Text="Password*"></asp:Label>
+                            <asp:TextBox ID="txtPassword" runat="server" CssClass="form-control" MaxLength="20"></asp:TextBox>
+                            <div class="help-block">
+                                <asp:RegularExpressionValidator ControlToValidate="txtPassword" ID="RegularExpressionValidator3" ValidationExpression="^[\s\S]{8,20}$" runat="server" ErrorMessage="Min 8 Characters Required" Style="color: red" ValidationGroup="vd"></asp:RegularExpressionValidator>
+                            </div>
+                            <div class="help-block center" id="divError" runat="server" style="display: none">
+                                <asp:Label ID="lblError" runat="server" Style="color: red" Text="Please Enter Class"></asp:Label>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-bottom: 5px; margin-top: 20px;">
+                            <div class="col-md-4"></div>
+                            <div class="col-md-4" style="text-align: center;">
+                                <asp:Button ID="btnSMESave" runat="server" Text="Save" CssClass="btn btn-primary" ValidationGroup="vd" OnClick="btnSMESave_Click" />
+                            </div>
+                            <div class="col-md-4">
+                            </div>
+                        </div>
+                        <div style="display: none; text-align: center" id="myMessage1" runat="server" class="alert alert-success col-sm-12">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <asp:Label ID="lblMsg" runat="server" Text="Subject Matter Expert Saved Successfully"></asp:Label>
+                        </div>
+                    </div>
+                    <div class="col-lg-4"></div>
+                </div>
+                <div class="row" style="margin-bottom: 5px; margin-top: 20px;">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-4" style="text-align: center;">
+                        <h6>Assign Subject Expertise</h6>
+                    </div>
+                    <div class="col-md-4">
+                    </div>
+                </div>
+                <hr />
+                <div class="row" style="margin-top: 20px">
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <asp:Repeater ID="rptAssignSME" runat="server" OnItemDataBound="rptAssignSME_ItemDataBound">
+                                <ItemTemplate>
+                                    <%--<div class="panel-group" id="accordion1" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingOne1">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion1" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
+                                                       <h6 class="panel-title">Curriculum Type:&nbsp; &nbsp; Sub-Level:</h6>
+                                                    </a>
+                                            </div>
+                                            <div id="collapseOne1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne1">
+                                                <div class="panel-body">
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>--%>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            Curriculum Type: 
+                                        </div>
+                                        <div class="col-md-3">
+                                            <h6 style="text-decoration:underline"><asp:Label ID="lblCurriculumType" runat="server" Text='<%# Eval("CurriculumType") %>'></asp:Label></h6>
+                                        </div>
+                                        <div class="col-md-2">
+                                            Sub-Level:
+                                        </div>
+                                        <div class="col-md-3">
+                                             <h6 style="text-decoration:underline"><asp:Label ID="lblLevel" runat="server" Text='<%# Eval("LevelName") %>'></asp:Label></h6>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-2">
+                                           <label>Sub-Level</label>
+                                        </div>
+                                        <div class="col-10">
+                                           <label>Subject</label>
+                                        </div>
+                                    </div>
+                                    <asp:Repeater ID="rptSME" runat="server" OnItemDataBound="rptSME_ItemDataBound">
                                         <ItemTemplate>
                                             <div class="row">
-                                                <div class="col-md-3">
-                                                    <asp:Label ID="lblCurriculumType" runat="server" Text='<%# Eval("CurriculumTypeId") %>'></asp:Label>
+                                                <div class="col-1">
+                                                    <asp:CheckBox ID="chkSubLevel" runat="server" CssClass="checkbox" Text='<%# Eval("SubLevel") %>' OnCheckedChanged="chkSubLevel_CheckedChanged1" AutoPostBack="true" />
+                                                    <asp:HiddenField ID="hdnSubLevelId" runat="server" Value='<%# Eval("SubLevelId") %>' />
                                                 </div>
-                                                <div class="col-md-3">
-                                                    <asp:Label ID="lblLevel" runat="server" Text='<%# Eval("LevelName") %>'></asp:Label>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-2">
-                                                    <label>Select Sub-Level</label>
-                                                </div>
-                                                <div class="col-10">
-                                                    <label>Select Subject</label>
+                                                <div class="col-11">
+                                                    <asp:CheckBoxList ID="chkSubjects" runat="server" CssClass="checkbox chkboxlist" RepeatDirection="Horizontal" Enabled="false"></asp:CheckBoxList>
                                                 </div>
                                             </div>
-                                            <%--<asp:Repeater ID="rptSME" runat="server" OnItemDataBound="rptSME_ItemDataBound">
-                                                <ItemTemplate>
-                                                    <div class="row">
-                                                        <div class="col-1">
-                                                            <asp:CheckBox ID="chkSubLevel" runat="server" CssClass="checkbox" Text='<%# Eval("SubLevel") %>' OnCheckedChanged="chkSubLevel_CheckedChanged" AutoPostBack="true" />
-                                                            <asp:HiddenField ID="hdnSubLevelId" runat="server" Value='<%# Eval("SubLevelId") %>' />
-                                                        </div>
-                                                        <div class="col-11">
-                                                            <asp:CheckBoxList ID="chkSubjects" runat="server" CssClass="checkbox chkboxlist" RepeatDirection="Horizontal" Enabled="false"></asp:CheckBoxList>
-                                                        </div>
-                                                    </div>
-                                                </ItemTemplate>
-                                            </asp:Repeater>--%>
                                         </ItemTemplate>
-                                        <FooterTemplate>
-                                            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                                                <div class="panel panel-default">
-                                                    <div class="panel-heading" role="tab" id="headingOne">
-                                                        <h6 class="panel-title">
-                                                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">Add Subject Expertise
-                                                            </a>
-                                                        </h6>
-                                                    </div>
-                                                    <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                                                        <div class="panel-body">
+                                    </asp:Repeater>
+                                    <div class="row" style="margin-top: 10px; margin-bottom:30px">
+                                        <div class="col-md-6" style="text-align: center;">
+                                            <asp:Button ID="btnUpdateAssign" CssClass="btn btn-primary" runat="server" Text="Update" Visible="false" OnClick="btnUpdateAssign_Click" />
+                                        </div>
+                                    </div>
+                                    <hr />
+                                </ItemTemplate>
+                                <FooterTemplate>
+                                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" role="tab" id="headingOne">
+                                                <h6 class="panel-title">
+                                                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne"><i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>Add Subject Expertise
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                                <div class="panel-body">
+                                                    <asp:UpdatePanel ID="updPnl13" runat="server">
+                                                        <ContentTemplate>
                                                             <div class="row">
                                                                 <div class="col-lg-6">
                                                                     <div class="form-group">
-                                                                        <asp:Label ID="Label2" runat="server" Text="Curriculum Type"></asp:Label>
+                                                                        <asp:Label ID="lblCurriculum" runat="server" Text="Curriculum Type"></asp:Label>
                                                                         <asp:DropDownList ID="ddlCurriculumType" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlCurriculumType_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <asp:Label ID="Label1" runat="server" Text="Level"></asp:Label>
+                                                                        <asp:Label ID="lblLevel1" runat="server" Text="Level"></asp:Label>
                                                                         <asp:DropDownList ID="ddlLevel" runat="server" CssClass="form-control" OnSelectedIndexChanged="ddlLevel_SelectedIndexChanged" AutoPostBack="true"></asp:DropDownList>
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row" id="divSelectHeader" runat="server" style="display:none">
+                                                                <div class="col-3">
+                                                                    <label>Select Sub-Level</label>
+                                                                </div>
+                                                                <div class="col-9">
+                                                                    <label>Select Subject</label>
                                                                 </div>
                                                             </div>
                                                             <asp:Repeater ID="rptFooter" runat="server" OnItemDataBound="rptFooter_ItemDataBound">
                                                                 <ItemTemplate>
                                                                     <div class="row" style="margin-left: 2px">
-                                                                        <div class="col-1">
+                                                                        <div class="col-2">
                                                                             <asp:CheckBox ID="chkSubLevel" runat="server" CssClass="checkbox" Text='<%# Eval("SubLevel") %>' OnCheckedChanged="chkSubLevel_CheckedChanged" AutoPostBack="true" />
                                                                             <asp:HiddenField ID="hdnSublevelId" runat="server" Value='<%# Eval("SubLevelId") %>' />
                                                                         </div>
-                                                                        <div class="col-11">
+                                                                        <div class="col-10">
                                                                             <asp:CheckBoxList ID="chkSubjects" runat="server" CssClass="checkbox chkboxlist" RepeatDirection="Horizontal" Enabled="false"></asp:CheckBoxList>
                                                                         </div>
                                                                     </div>
                                                                 </ItemTemplate>
                                                             </asp:Repeater>
-                                                            <div class="row" style="margin-top: 10px">
-                                                                <div class="col-md-6" style="text-align: center;">
-                                                                    <asp:Button ID="btnAssign" CssClass="btn btn-primary" runat="server" Text="Assign" Visible="false" />
+                                                            <div class="row" runat="server" id="divAssignError" style="display:none">
+                                                                <div class="col-md-2"></div>
+                                                                <div class="col-md-10">
+                                                                <asp:Label ID="lblErr" runat="server" Style="color: red" Text="No Sub-Level Found"></asp:Label>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
+                                                            <div class="row" style="margin-top: 10px">
+                                                                <div class="col-md-6" style="text-align: center;">
+                                                                    <asp:Button ID="btnAssign" CssClass="btn btn-primary" runat="server" Text="Assign" Visible="false" OnClick="btnAssign_Click" />
+                                                                </div>
+                                                            </div>
+                                                        </ContentTemplate>
+                                                    </asp:UpdatePanel>
                                                 </div>
                                             </div>
-
-                                        </FooterTemplate>
-                                    </asp:Repeater>
-                                </div>
-                            </div>
+                                        </div>
+                                    </div>
+                                </FooterTemplate>
+                            </asp:Repeater>
                         </div>
+                    </div>
+                </div>
 
-                    </asp:Panel>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+            </asp:Panel>
+            <%--</ContentTemplate>
+            </asp:UpdatePanel>--%>
         </div>
 
         <div class="card-header">
@@ -274,7 +319,7 @@
                 <div class="col-lg-3"></div>
                 <div class="col-lg-6">
                     <div class="table-responsive">
-                        <asp:GridView ID="gridSME" runat="server" CssClass="table table-bordered" AutoGenerateColumns="false" Style="margin-bottom: 15px; margin-top: 15px;" Width="100%" EmptyDataRowStyle-BorderStyle="None" EmptyDataRowStyle-BorderColor="#F1F1F1" DataKeyNames="SMEId" OnRowDataBound="gridSME_RowDataBound" OnSelectedIndexChanged="gridSME_SelectedIndexChanged">
+                        <asp:GridView ID="gridSME" runat="server" CssClass="table table-bordered" AutoGenerateColumns="false" Style="margin-bottom: 15px; margin-top: 15px;" Width="100%" EmptyDataRowStyle-BorderStyle="None" EmptyDataRowStyle-BorderColor="#F1F1F1" DataKeyNames="SMEId" OnRowDataBound="gridSME_RowDataBound" OnSelectedIndexChanged="gridSME_SelectedIndexChanged" SelectedRowStyle-BackColor="LightGray">
                             <Columns>
                                 <asp:BoundField DataField="SMEFirstName" HeaderText="First Name" HeaderStyle-HorizontalAlign="Center" />
                                 <asp:BoundField DataField="SMELastName" HeaderText="Last Name" HeaderStyle-HorizontalAlign="Center" />
