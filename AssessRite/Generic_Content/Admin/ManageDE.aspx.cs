@@ -131,7 +131,6 @@ namespace AssessRite.Generic_Content.Admin
             }
         }
 
-
         [System.Web.Services.WebMethod]
         public static string DeleteDE(int DEid)
         {

@@ -173,7 +173,15 @@ namespace AssessRite.Generic_Content.WebService
         [WebMethod(EnableSession = true)]
         public string getDEData()
         {
-            string qur = "SELECT DE.DEId, DE.DEFirstName, DE.DELastName, DE.DEContactNo, DE.DEEmailId, L.UserName,L.Password FROM DE LEFT OUTER JOIN AssessRiteMaster_Dev.dbo.Login L ON DE.DEId = L.DEId where DE.IsDeleted='0' and AddedByAdminId='" + HttpContext.Current.Session["AdminId"].ToString() + "'";
+            string qur = "";
+            if (Session["IsStateAdmin"].ToString() == "True")
+            {
+                qur = "SELECT DE.DEId, DE.DEFirstName, DE.DELastName, DE.DEContactNo, DE.DEEmailId, L.UserName,L.Password FROM DE LEFT OUTER JOIN AssessRiteMaster_Dev.dbo.Login L ON DE.DEId = L.DEId where DE.IsDeleted='0'";
+            }
+            else
+            {
+                qur = "SELECT DE.DEId, DE.DEFirstName, DE.DELastName, DE.DEContactNo, DE.DEEmailId, L.UserName,L.Password FROM DE LEFT OUTER JOIN AssessRiteMaster_Dev.dbo.Login L ON DE.DEId = L.DEId where DE.IsDeleted='0' and AddedByAdminId='" + HttpContext.Current.Session["AdminId"].ToString() + "'";
+            }
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, HttpContext.Current.Session["ConnStr"].ToString());
             if (ds.Tables[0].Rows.Count > 0)
             {

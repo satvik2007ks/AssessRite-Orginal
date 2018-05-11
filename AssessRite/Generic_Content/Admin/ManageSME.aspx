@@ -51,29 +51,7 @@
             opacity: 0.5;
         }
     </style>
-    <script src="../../Scripts/jquery-1.11.1.min.js"></script>
-    <%--<script src="../../Scripts/bootstrap.min.js"></script>--%>
-    <script src="../../Scripts/vendor/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        function runEffect1() {
-            //alert("working");
-            $("#<%=myMessage1.ClientID%>").show();
-            setTimeout(function () {
-                var selectedEffect = 'blind';
-                var options = {};
-                $("#<%=myMessage1.ClientID%>").hide();
-            }, 8000);
-            return false;
-        }
-        //function openModalDetails() {
-        //       jQuery.noConflict();
-        //    $("#myModal").modal("show");
-        //}
-        function openModal() {
-            jQuery.noConflict();
-            $("#myModal1").modal("show");
-        }
-    </script>
+  
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
@@ -154,7 +132,7 @@
                         </div>
                         <div style="display: none; text-align: center" id="myMessage1" runat="server" class="alert alert-success col-sm-12">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <asp:Label ID="lblMsg" runat="server" Text="Subject Matter Expert Saved Successfully"></asp:Label>
+                            <asp:Label ID="lblMsg" runat="server" Text=""></asp:Label>
                         </div>
                     </div>
                     <div class="col-lg-4"></div>
@@ -193,41 +171,50 @@
                                             Curriculum Type: 
                                         </div>
                                         <div class="col-md-3">
-                                            <h6 style="text-decoration:underline"><asp:Label ID="lblCurriculumType" runat="server" Text='<%# Eval("CurriculumType") %>'></asp:Label></h6>
+                                            <h6 style="text-decoration: underline">
+                                                <asp:Label ID="lblCurriculumType" runat="server" Text='<%# Eval("CurriculumType") %>'></asp:Label></h6>
                                         </div>
                                         <div class="col-md-2">
                                             Sub-Level:
                                         </div>
                                         <div class="col-md-3">
-                                             <h6 style="text-decoration:underline"><asp:Label ID="lblLevel" runat="server" Text='<%# Eval("LevelName") %>'></asp:Label></h6>
+                                            <h6 style="text-decoration: underline">
+                                                <asp:Label ID="lblLevel" runat="server" Text='<%# Eval("LevelName") %>'></asp:Label></h6>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-2">
-                                           <label>Sub-Level</label>
+                                            <label>Sub-Level</label>
                                         </div>
                                         <div class="col-10">
-                                           <label>Subject</label>
+                                            <label>Subject</label>
                                         </div>
                                     </div>
-                                    <asp:Repeater ID="rptSME" runat="server" OnItemDataBound="rptSME_ItemDataBound">
-                                        <ItemTemplate>
-                                            <div class="row">
-                                                <div class="col-1">
-                                                    <asp:CheckBox ID="chkSubLevel" runat="server" CssClass="checkbox" Text='<%# Eval("SubLevel") %>' OnCheckedChanged="chkSubLevel_CheckedChanged1" AutoPostBack="true" />
-                                                    <asp:HiddenField ID="hdnSubLevelId" runat="server" Value='<%# Eval("SubLevelId") %>' />
-                                                </div>
-                                                <div class="col-11">
-                                                    <asp:CheckBoxList ID="chkSubjects" runat="server" CssClass="checkbox chkboxlist" RepeatDirection="Horizontal" Enabled="false"></asp:CheckBoxList>
+                                    <asp:UpdatePanel ID="updpnlitem" runat="server">
+                                        <Triggers>
+                                            <asp:PostBackTrigger ControlID="btnUpdateAssign" />
+                                        </Triggers>
+                                        <ContentTemplate>
+                                            <asp:Repeater ID="rptSME" runat="server" OnItemDataBound="rptSME_ItemDataBound">
+                                                <ItemTemplate>
+                                                    <div class="row">
+                                                        <div class="col-1">
+                                                            <asp:CheckBox ID="chkSubLevel" runat="server" CssClass="checkbox" Text='<%# Eval("SubLevel") %>' OnCheckedChanged="chkSubLevel_CheckedChanged1" AutoPostBack="true" />
+                                                            <asp:HiddenField ID="hdnSubLevelId" runat="server" Value='<%# Eval("SubLevelId") %>' />
+                                                        </div>
+                                                        <div class="col-11">
+                                                            <asp:CheckBoxList ID="chkSubjects" runat="server" CssClass="checkbox chkboxlist" RepeatDirection="Horizontal" Enabled="false"></asp:CheckBoxList>
+                                                        </div>
+                                                    </div>
+                                                </ItemTemplate>
+                                            </asp:Repeater>
+                                            <div class="row" style="margin-top: 10px; margin-bottom: 30px">
+                                                <div class="col-md-6" style="text-align: center;">
+                                                    <asp:Button ID="btnUpdateAssign" CssClass="btn btn-primary" runat="server" Text="Update" Visible="false" OnClick="btnUpdateAssign_Click" />
                                                 </div>
                                             </div>
-                                        </ItemTemplate>
-                                    </asp:Repeater>
-                                    <div class="row" style="margin-top: 10px; margin-bottom:30px">
-                                        <div class="col-md-6" style="text-align: center;">
-                                            <asp:Button ID="btnUpdateAssign" CssClass="btn btn-primary" runat="server" Text="Update" Visible="false" OnClick="btnUpdateAssign_Click" />
-                                        </div>
-                                    </div>
+                                        </ContentTemplate>
+                                    </asp:UpdatePanel>
                                     <hr />
                                 </ItemTemplate>
                                 <FooterTemplate>
@@ -255,7 +242,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="row" id="divSelectHeader" runat="server" style="display:none">
+                                                            <div class="row" id="divSelectHeader" runat="server" style="display: none">
                                                                 <div class="col-3">
                                                                     <label>Select Sub-Level</label>
                                                                 </div>
@@ -276,10 +263,10 @@
                                                                     </div>
                                                                 </ItemTemplate>
                                                             </asp:Repeater>
-                                                            <div class="row" runat="server" id="divAssignError" style="display:none">
+                                                            <div class="row" runat="server" id="divAssignError" style="display: none">
                                                                 <div class="col-md-2"></div>
                                                                 <div class="col-md-10">
-                                                                <asp:Label ID="lblErr" runat="server" Style="color: red" Text="No Sub-Level Found"></asp:Label>
+                                                                    <asp:Label ID="lblErr" runat="server" Style="color: red" Text="No Sub-Level Found"></asp:Label>
                                                                 </div>
                                                             </div>
                                                             <div class="row" style="margin-top: 10px">
@@ -316,8 +303,8 @@
         </div>
         <div class="card-body">
             <div class="row">
-                <div class="col-lg-3"></div>
-                <div class="col-lg-6">
+                <div class="col-lg-2"></div>
+                <div class="col-lg-8">
                     <div class="table-responsive">
                         <asp:GridView ID="gridSME" runat="server" CssClass="table table-bordered" AutoGenerateColumns="false" Style="margin-bottom: 15px; margin-top: 15px;" Width="100%" EmptyDataRowStyle-BorderStyle="None" EmptyDataRowStyle-BorderColor="#F1F1F1" DataKeyNames="SMEId" OnRowDataBound="gridSME_RowDataBound" OnSelectedIndexChanged="gridSME_SelectedIndexChanged" SelectedRowStyle-BackColor="LightGray">
                             <Columns>
@@ -358,11 +345,39 @@
                         <!-- /.modal-dialog -->
                     </div>
                 </div>
-                <div class="col-lg-3"></div>
+                <div class="col-lg-2"></div>
             </div>
         </div>
 
     </div>
+      <script src="../../Scripts/jquery-1.11.1.min.js"></script>
+    <%--<script src="../../Scripts/bootstrap.min.js"></script>--%>
+    <script src="../../Scripts/vendor/bootstrap/js/bootstrap.js"></script>
+    <%--<script src="../../Scripts/vendor/bootstrap/js/bootstrap.min.js"></script>--%>
+    <!-- jQuery library -->
+    <script src="../../Scripts/Modal.js"></script>
+<!-- Latest compiled JavaScript -->
+    <script type="text/javascript">
+        function runEffect1() {
+            //alert("working");
+            $("#<%=myMessage1.ClientID%>").show();
+            setTimeout(function () {
+                var selectedEffect = 'blind';
+                var options = {};
+                $("#<%=myMessage1.ClientID%>").hide();
+            }, 8000);
+            return false;
+        }
+        //function openModalDetails() {
+        //       jQuery.noConflict();
+        //    $("#myModal").modal("show");
+        //}
+        
+        function openModal() {
+            // jQuery.noConflict();
+            $("#myModal1").modal("show");
+        }
+    </script>
     <script>
         $(document).ready(function () {
             $('#<%=txtFirstName.ClientID%>').keypress(function (e) {

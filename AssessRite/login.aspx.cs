@@ -20,7 +20,7 @@ namespace AssessRite
         protected void btnLogin_Click(object sender, EventArgs e)
         {
             divError.Attributes.Add("Style", "display:none");
-            string qur = "SELECT Login.UserName, Login.UserId, Login.UserTypeId,Login.InstitutionId,Login.DefaultDB, Login.TeacherId, Login.StudentId, Login.AdminId, Login.DEId, Login.SMEId, Admin.IsGCAdmin, Admin.CountryId, Admin.StateId, InstitutionInfo.InstitutionName FROM  Login LEFT OUTER JOIN InstitutionInfo ON Login.InstitutionId = InstitutionInfo.InstitutionId LEFT OUTER JOIN Admin ON Login.AdminId = Admin.AdminId where Login.UserName='" + txtUserName.Text + "' and Login.Password='" + txtPassword.Text + "' and Login.IsDeleted='0'";
+            string qur = "SELECT Login.UserName, Login.UserId, Login.UserTypeId,Login.InstitutionId,Login.DefaultDB, Login.TeacherId, Login.StudentId, Login.AdminId, Login.DEId, Login.SMEId, Admin.IsGCAdmin, Admin.IsStateAdmin, Admin.CountryId, Admin.StateId, InstitutionInfo.InstitutionName FROM  Login LEFT OUTER JOIN InstitutionInfo ON Login.InstitutionId = InstitutionInfo.InstitutionId LEFT OUTER JOIN Admin ON Login.AdminId = Admin.AdminId where Login.UserName='" + txtUserName.Text + "' and Login.Password='" + txtPassword.Text + "' and Login.IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -29,7 +29,7 @@ namespace AssessRite
                 Session["UserName"] = ds.Tables[0].Rows[0]["UserName"].ToString();
                 Session["SchoolName"] = ds.Tables[0].Rows[0]["InstitutionName"].ToString();
                 Session["InstitutionId"] = ds.Tables[0].Rows[0]["InstitutionId"].ToString();
-                Session["DefaultDB"]= ds.Tables[0].Rows[0]["DefaultDB"].ToString();
+                Session["DefaultDB"] = ds.Tables[0].Rows[0]["DefaultDB"].ToString();
                 string defaultdb = ds.Tables[0].Rows[0]["DefaultDB"].ToString();
                 Session["ConnStr"] = dbLibrary.getConnectionString(defaultdb);
                 if (Session["UserType"].ToString() == "6")
@@ -57,6 +57,7 @@ namespace AssessRite
                     Session["AdminId"] = ds.Tables[0].Rows[0]["AdminId"].ToString();
                     if (bool.Parse(ds.Tables[0].Rows[0]["IsGCAdmin"].ToString()))
                     {
+                        Session["IsStateAdmin"] = ds.Tables[0].Rows[0]["IsStateAdmin"].ToString();
                         Session["IsGCAdmin"] = ds.Tables[0].Rows[0]["IsGCAdmin"].ToString();
                         Session["CountryId"] = ds.Tables[0].Rows[0]["CountryId"].ToString();
                         Session["StateId"] = ds.Tables[0].Rows[0]["StateId"].ToString();

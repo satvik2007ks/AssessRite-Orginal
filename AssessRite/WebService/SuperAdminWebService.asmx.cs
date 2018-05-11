@@ -279,7 +279,7 @@ namespace AssessRite.WebMethods
         [WebMethod]
         public string GetGCAdmins()
         {
-            string qur = "SELECT Admin.AdminId, Admin.AdminName, Admin.AdminAddress, Admin.AdminContactNo, Admin.AdminEmailId, Login.UserName, Login.Password, Login.DefaultDB, Admin.CountryId, " +
+            string qur = "SELECT Admin.AdminId, Admin.AdminName, Admin.AdminAddress, Admin.AdminContactNo, Admin.AdminEmailId,Admin.IsStateAdmin, Login.UserName, Login.Password, Login.DefaultDB, Admin.CountryId, " +
                          " Admin.StateId, Country.CountryName, State.StateName " +
                          " FROM  Admin INNER JOIN " +
                          " Login ON Admin.AdminId = Login.AdminId INNER JOIN " +

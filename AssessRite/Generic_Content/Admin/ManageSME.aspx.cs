@@ -45,7 +45,15 @@ namespace AssessRite.Generic_Content.Admin
 
         private void LoadGrid()
         {
-            string qur = "SELECT B.SMEId, B.SMEFirstName, B.SMELastName, B.SMEContactNo, B.SMEEmailId, A.UserName, A.Password FROM AssessRiteMaster_Dev.dbo.Login A INNER JOIN SME B ON A.SMEId = B.SMEId where B.IsDeleted='0' and B.AddedByAdminId='" + Session["AdminId"].ToString() + "'";
+            string qur = "";
+            if (Session["IsStateAdmin"].ToString() == "True")
+            {
+                qur = "SELECT B.SMEId, B.SMEFirstName, B.SMELastName, B.SMEContactNo, B.SMEEmailId, A.UserName, A.Password FROM AssessRiteMaster_Dev.dbo.Login A INNER JOIN SME B ON A.SMEId = B.SMEId where B.IsDeleted='0'";
+            }
+            else
+            {
+                qur = "SELECT B.SMEId, B.SMEFirstName, B.SMELastName, B.SMEContactNo, B.SMEEmailId, A.UserName, A.Password FROM AssessRiteMaster_Dev.dbo.Login A INNER JOIN SME B ON A.SMEId = B.SMEId where B.IsDeleted='0' and B.AddedByAdminId='" + Session["AdminId"].ToString() + "'";
+            }
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, Session["ConnStr"].ToString());
             gridSME.DataSource = ds;
             gridSME.DataBind();
@@ -224,12 +232,11 @@ namespace AssessRite.Generic_Content.Admin
         protected void btnDeleteYes_Click(object sender, EventArgs e)
         {
             string qur = dbLibrary.idBuildQuery("[proc_DeleteSME]", btnDeleteYes.CommandArgument);
-            dbLibrary.idExecute(qur);
+            dbLibrary.idExecuteWithConnectionString(qur,Session["ConnStr"].ToString());
             LoadGrid();
             //Clear();
             lblMsg.Text = "SME Deleted Successfully";
             ScriptManager.RegisterStartupScript(this, this.GetType(), "CallMyFunction1", "runEffect1()", true);
-
         }
 
         protected void gridSME_RowDataBound(object sender, GridViewRowEventArgs e)
@@ -487,8 +494,9 @@ namespace AssessRite.Generic_Content.Admin
             else
             {
                 ddlLevel.Items.Clear();
+             //   ddlLevel_SelectedIndexChanged(ddlLevel, EventArgs.Empty);
             }
-            ddlLevel_SelectedIndexChanged(ddlLevel, EventArgs.Empty);
+           ddlLevel_SelectedIndexChanged(ddlLevel, EventArgs.Empty);
         }
 
         protected void ddlLevel_SelectedIndexChanged(object sender, EventArgs e)
@@ -502,11 +510,22 @@ namespace AssessRite.Generic_Content.Admin
             string qur = "";
             if (gridSME.SelectedDataKey != null)
             {
-                qur = "SELECT SubLevel.SubLevel, SubLevel.SubLevelId FROM SubLevel Where SubLevelId in (Select SubLevelId from Subject where IsDeleted='0') and SubLevel.LevelId='" + ddlLevel.SelectedValue + "' and  SubLevel.IsDeleted='0' and SubLevelId not in (Select SubLevelId from SMESubLevelDetails where SMEID='" + gridSME.SelectedDataKey.Value.ToString() + "')";
+                // qur = "SELECT SubLevel.SubLevel, SubLevel.SubLevelId FROM SubLevel Where SubLevelId in (Select SubLevelId from Subject where IsDeleted='0') and SubLevel.LevelId='" + ddlLevel.SelectedValue + "' and  SubLevel.IsDeleted='0' and SubLevelId not in (Select SubLevelId from SMESubLevelDetails where SMEID='" + gridSME.SelectedDataKey.Value.ToString() + "')";
+                qur = "Select A.SubLevel, A.SubLevelId from SubLevel A INNER JOIN AssessRiteMaster_Dev.dbo.Level B on A.LevelId = B.LevelId " +
+                    " INNER JOIN AssessRiteMaster_Dev.dbo.CurriculumType C ON C.CurriculumTypeId = B.CurriculumTypeId " +
+                    " Where SubLevelId in (Select SubLevelId from Subject where IsDeleted = '0') and A.LevelId='"+ddlLevel.SelectedValue+"' and" +
+                    " C.CurriculumTypeId Not in (SELECT Distinct(B.CurriculumTypeId) FROM SMESubLevelDetails " +
+                    " INNER JOIN SubLevel AB ON SMESubLevelDetails.SubLevelId = AB.SubLevelId " +
+                    " INNER JOIN AssessRiteMaster_Dev.dbo.[Level] A on A.LevelId = AB.LevelId " +
+                    " INNER JOIN AssessRiteMaster_Dev.dbo.CurriculumType B on B.CurriculumTypeId = A.CurriculumTypeId " +
+                    " Where SMESubLevelDetails.SMEId = '" + gridSME.SelectedDataKey.Value.ToString() + "')";
             }
             else
             {
-                qur = "SELECT SubLevel.SubLevel, SubLevel.SubLevelId FROM SubLevel Where SubLevelId in (Select SubLevelId from Subject where IsDeleted='0') and SubLevel.LevelId='" + ddlLevel.SelectedValue + "' and  SubLevel.IsDeleted='0'";
+                qur = "Select A.SubLevel, A.SubLevelId from SubLevel A INNER JOIN AssessRiteMaster_Dev.dbo.Level B on A.LevelId = B.LevelId " +
+                  " INNER JOIN AssessRiteMaster_Dev.dbo.CurriculumType C ON C.CurriculumTypeId = B.CurriculumTypeId " +
+                  " Where SubLevelId in (Select SubLevelId from Subject where IsDeleted = '0') and A.LevelId='" + ddlLevel.SelectedValue + "'";
+              //  qur = "SELECT SubLevel.SubLevel, SubLevel.SubLevelId FROM SubLevel Where SubLevelId in (Select SubLevelId from Subject where IsDeleted='0') and SubLevel.LevelId='" + ddlLevel.SelectedValue + "' and  SubLevel.IsDeleted='0'";
             }
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, Session["ConnStr"].ToString());
             if (ds.Tables[0].Rows.Count > 0)
@@ -675,6 +694,8 @@ namespace AssessRite.Generic_Content.Admin
             }
             if (insert)
             {
+                lblMsg.Text = "Subject Expertise Added Successfully";
+                ScriptManager.RegisterStartupScript(this, this.GetType(), "CallMyFunction1", "runEffect1()", true);
                 LoadSubjectsForAssigning(Session["SMEID"].ToString());
                 CheckAssignedDetails();
             }
@@ -789,6 +810,9 @@ namespace AssessRite.Generic_Content.Admin
                     }
                 }
             }
+            lblMsg.Text = "Subject Expertise Updated Successfully";
+            ScriptManager.RegisterStartupScript(this, this.GetType(), "CallMyFunction1", "runEffect1()", true);
+
         }
 
         protected void chkSubLevel_CheckedChanged1(object sender, EventArgs e)

@@ -19,9 +19,9 @@ namespace AssessRite.SuperAdmin
             }
         }
         [System.Web.Services.WebMethod(EnableSession = true)]
-        public static string SaveGCAdmin(int adminid, int countryid, int stateid, string adminname, string address, string contactno, string emailid, string defaultdb, string[] curriculumids, string username, string password, string buttontext)
+        public static string SaveGCAdmin(int adminid, int countryid, int stateid, string adminname, string address, string contactno, string emailid, string defaultdb,string isstateadmin, string[] curriculumids, string username, string password, string buttontext)
         {
-            string qur = "SELECT AdminId FROM Admin where Countryid='" + countryid + "' and StateId='" + stateid + "' and AdminName='" + adminname + "' and  AdminContactNo='" + contactno.Trim() + "' and AdminEmailId='" + emailid.Trim() + "' and IsDeleted='0'";
+            string qur = "SELECT AdminId FROM Admin where Countryid='" + countryid + "' and StateId='" + stateid + "' and AdminName='" + adminname + "' and  AdminContactNo='" + contactno.Trim() + "' and AdminEmailId='" + emailid.Trim() + "' and IsStateAdmin='"+ isstateadmin + "' and IsDeleted='0'";
             DataSet ds = dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
             if (ds.Tables[0].Rows.Count > 0)
             {
@@ -42,7 +42,7 @@ namespace AssessRite.SuperAdmin
                         }
                         else
                         {
-                            qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), defaultdb, "1", username, password, "Update");
+                            qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), defaultdb, isstateadmin, "1", username, password, "Update");
                             dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
                             foreach (string item in curriculumids)
                             {
@@ -86,7 +86,7 @@ namespace AssessRite.SuperAdmin
                     }
                     else
                     {
-                        qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", "", "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), defaultdb, "1", username, password, "Insert");
+                        qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", "", "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), defaultdb, isstateadmin, "1", username, password, "Insert");
                         DataSet dsAdminId=dbLibrary.idGetDataAsDataset(qur, dbLibrary.MasterconStr);
                         string id = "";
                         if(dsAdminId.Tables[0].Rows.Count>0)
@@ -127,7 +127,7 @@ namespace AssessRite.SuperAdmin
                     }
                     else
                     {
-                        qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), defaultdb, "1", username, password, "Update");
+                        qur = dbLibrary.idBuildQuery("[proc_AddAdmin]", adminid.ToString(), "0", countryid.ToString(), stateid.ToString(), adminname.Trim(), address.Trim(), contactno.Trim(), emailid.Trim(), defaultdb, isstateadmin, "1", username, password, "Update");
                         dbLibrary.idExecuteWithConnectionString(qur, dbLibrary.MasterconStr);
                         foreach (string item in curriculumids)
                         {

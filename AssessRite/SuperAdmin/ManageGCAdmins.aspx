@@ -62,6 +62,9 @@
                         <asp:Label ID="Label2" runat="server" Text="Default Database"></asp:Label>
                         <asp:DropDownList ID="ddlDefaultDB" runat="server" CssClass="form-control"></asp:DropDownList>
                     </div>
+                    <div class="form-group" id="divStateAdmin">
+                        <asp:CheckBox ID="chkStateAdmin" runat="server" Text="Is State Admin?" CssClass="checkbox" />
+                    </div>
                     <div class="form-group hide" id="divCurriculum">
                         <asp:Label ID="Label3" runat="server" Text="Assign Admin with Curriculum Type"></asp:Label>
                         <div style="overflow-y: scroll; height: 120px; margin-bottom: 20px;" id="dvCheckBoxListControl">
@@ -98,6 +101,7 @@
                                     <th style="display: none">CountryId</th>
                                     <th style="display: none">StateId</th>
                                     <th style="display: none">DefaultDB</th>
+                                    <th style="display: none">IsStateAdmin</th>
                                 </tr>
                             </thead>
                         </table>
@@ -319,15 +323,35 @@
             });
             if (counter > 0) {
                 $('#divCurriculum').show();
+                //$('#divStateAdmin').show();
                 $('#dvCheckBoxListControl').append(table);
 
             }
             else {
                 alert("No Curriculum Found for " + $('#<%=ddlState.ClientID%> option:selected').text());
                 $("#chkCurriculum").empty();
+                //$('#divStateAdmin').show();
                 $('#divCurriculum').show();
             }
         }
+
+        $("#<%=chkStateAdmin.ClientID%>").change(function() {
+            if (this.checked) {
+                var checkboxes = $("[id*=chkCurriculum] input:checkbox");
+                checkboxes.each(function () {
+                    $(this).attr('checked', true);
+                    $(this).attr('disabled', true);
+                });
+            }
+            else {
+                 var checkboxes = $("[id*=chkCurriculum] input:checkbox");
+                checkboxes.each(function () {
+                    $(this).attr('checked', false);
+                    $(this).attr('disabled', false);
+
+                });
+            }
+});
 
         function loadtable(defaultpage) {
             $.ajax({
@@ -353,7 +377,9 @@
                             { className: "hide", data: 'AdminId' },
                             { className: "hide", data: 'CountryId' },
                             { className: "hide", data: 'StateId' },
-                            { className: "hide", data: 'DefaultDB' }
+                            { className: "hide", data: 'DefaultDB' },
+                            { className: "hide", data: 'IsStateAdmin' }
+
                         ]
                     });
                     table.page(defaultpage).draw(false);
@@ -384,6 +410,7 @@
                 $('#hdnAdminId').val($(this).find('td:nth-child(9)').text());
                 var CountryId = $(this).find('td:nth-child(10)').text();
                 var StateId = $(this).find('td:nth-child(11)').text();
+                var IsStateAdmin=$(this).find('td:nth-child(13)').text();
                 $('#<%=ddlCountry.ClientID%>').val(CountryId);
                 loadState(CountryId, StateId);
                 var defaultdb = $(this).find('td:nth-child(12)').text();
@@ -403,6 +430,14 @@
                 loadCurriculumCheckBoxes($(this).find('td:nth-child(9)').text());
                 $('#<%=txtUserName.ClientID%>').val($(this).find('td:nth-child(7)').text());
                 $('#<%=txtPassword.ClientID%>').val($(this).find('td:nth-child(8)').text());
+                if (IsStateAdmin == "true") {
+                    $("#<%=chkStateAdmin.ClientID%>").prop('checked', true);
+                    //$("#<%=chkStateAdmin.ClientID%>").attr('checked', true);
+                    
+                }
+                else {
+                    $("#<%=chkStateAdmin.ClientID%>").prop('checked', false);
+                }
                 $('#<%= ddlCountry.ClientID %>').prop('disabled', true);
                 $('#<%= ddlState.ClientID %>').prop('disabled', true);
                 $('#<%= ddlDefaultDB.ClientID %>').prop('disabled', true);
@@ -537,6 +572,11 @@
                 obj.contactno = $.trim($("[id*=<%=txtAdminContactNo.ClientID%>]").val());
                 obj.emailid = $.trim($("[id*=<%=txtAdminEmailId.ClientID%>]").val());
                 obj.defaultdb = $.trim($("#<%=ddlDefaultDB.ClientID%> option:selected").text());
+                 obj.isstateadmin = "0";
+                if ($('#<%=chkStateAdmin.ClientID%>').is(":checked")) {
+                    // it is checked
+                    obj.isstateadmin = "1";
+                }
                 obj.curriculumids = $("#chkCurriculum input:checkbox:checked").map(function () {
                     return $(this).val();
                 }).get();
@@ -652,7 +692,8 @@
             //  $("#chkCurriculum").empty();
             $("#dvCheckBoxListControl").empty();
             $('#divCurriculum').hide();
-
+            $("#<%=chkStateAdmin.ClientID%>").prop('checked', false);
+            //$('#divStateAdmin').hide();
         }
     </script>
     <script>

@@ -4,7 +4,7 @@
 
 <html>
 <head runat="server">
-     <meta charset="utf-8" />
+    <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
@@ -19,7 +19,7 @@
     <!-- Custom styles for this template-->
     <link href="../../css/sb-admin.css" rel="stylesheet" />
     <script src="../../Scripts/jquery-1.10.2.min.js"></script>
-      <style>
+    <style>
         .sidenav-toggled #lblSchoolName {
             visibility: hidden;
         }
@@ -120,7 +120,7 @@
                         <li id="liSubject">
                             <a href="Subject.aspx">Add/View Subject</a>
                         </li>
-                     <%--   <li id="liConcept">
+                        <%--   <li id="liConcept">
                             <a href="Concepts.aspx">Add/View Concept</a>
                         </li>
                         <li id="liObjective">
@@ -132,12 +132,12 @@
                         <li id="liViewQuestions">
                             <a href="ViewQuestion.aspx">View Questions</a>
                         </li>
-                       <%-- <li id="liReviewQuestions">
+                        <%-- <li id="liReviewQuestions">
                             <a href="ReviewQuestion.aspx">Review Questions</a>
                         </li>--%>
                     </ul>
                 </li>
-            
+
                 <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Add/View Student">
                     <a class="nav-link" href="ManageDE.aspx">
                         <i class="fa fa-fw fa-file"></i>
@@ -171,13 +171,13 @@
             </ul>
         </div>
     </nav>
-     <div class="content-wrapper">
+    <div class="content-wrapper">
         <div class="container-fluid" style="margin-top: 11px !important">
-    <form id="form1" runat="server">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
-            <!-- Logout Modal-->
+            <form id="form1" runat="server">
+                <div>
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                    <!-- Logout Modal-->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -195,9 +195,9 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </form>
         </div>
-    </form>
-             </div>
         <!-- /.container-fluid-->
         <!-- /.content-wrapper-->
         <footer class="sticky-footer">
@@ -219,14 +219,12 @@
         <!-- Core plugin JavaScript-->
         <script src="../../Scripts/vendor/jquery-easing/jquery.easing.min.js"></script>
         <!-- Page level plugin JavaScript-->
-        <%--<script src="../../Scripts/vendor/chart.js/Chart.min.js"></script>--%>
         <script src="../../Scripts/vendor/datatables/jquery.dataTables.js"></script>
         <script src="../../Scripts/vendor/datatables/dataTables.bootstrap4.js"></script>
         <!-- Custom scripts for all pages-->
         <script src="../../js/sb-admin.min.js"></script>
         <!-- Custom scripts for this page-->
         <script src="../../js/sb-admin-datatables.min.js"></script>
-        <%--<script src="../js/sb-admin-charts.min.js"></script>--%>
     </div>
 </body>
 </html>
